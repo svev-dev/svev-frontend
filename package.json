@@ -28,6 +28,9 @@
     "format:fix": "oxfmt",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@preact/signals": "^2.5.1"
+  },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@vitest/coverage-v8": "^2.1.8",

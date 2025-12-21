@@ -1,8 +1,5 @@
-// Main entry point for the library
-export const hello = (_name: string): string => {
-  if (_name === null) {
-    return 'abc';
-  }
+export { BoolInput } from './elements/inputs/BoolInput';
+export { BoolView } from './views/BoolView';
+export { ViewFactory } from './views/ViewFactory';
 
-  return '123';
-};
+export { render } from './render';
