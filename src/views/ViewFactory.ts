@@ -25,9 +25,7 @@ export class ViewFactory {
     this._registry.set(elementClass as ElementConstructor, viewClass as ViewConstructor);
   }
 
-  public getView<TElement extends BaseElement>(
-    element: TElement
-  ): new (element: TElement) => BaseView {
+  public createView<TElement extends BaseElement>(element: TElement): BaseView {
     const elementClass = element.constructor as ElementConstructor;
     const viewClass = this._registry.get(elementClass) as
       | (new (element: TElement) => BaseView)
@@ -35,6 +33,6 @@ export class ViewFactory {
     if (viewClass === undefined) {
       throw new Error(`No view constructor found for element ${element}`);
     }
-    return viewClass;
+    return new viewClass(element);
   }
 }

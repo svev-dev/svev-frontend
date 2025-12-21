@@ -1,14 +1,21 @@
-export abstract class BaseView {
+import { BaseElement } from '../elements/BaseElement';
+
+export abstract class BaseView<T extends BaseElement = BaseElement> {
+  public readonly element: T;
   private _cleanups: VoidFunction[] = [];
 
-  public abstract onMount(): HTMLElement;
+  constructor(el: T) {
+    this.element = el;
+  }
 
-  public onUnmount(): void {
+  public abstract get htmlElement(): HTMLElement;
+
+  public dispose(): void {
     this._cleanups.forEach((cleanup) => cleanup());
     this._cleanups = [];
   }
 
-  protected onCleanup(cleanup: VoidFunction): void {
+  protected onDispose(cleanup: VoidFunction): void {
     this._cleanups.push(cleanup);
   }
 }
