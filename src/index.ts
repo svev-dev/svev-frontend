@@ -4,5 +4,5 @@ export const hello = (_name: string): string => {
     return 'abc';
   }
 
-  return '123';
+  return '1234';
 };

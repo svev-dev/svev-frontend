@@ -3,6 +3,6 @@ import { hello } from './index.js';
 
 describe('hello', () => {
   it('should greet the user', () => {
-    expect(hello('World')).toBe('123');
+    expect(hello('World')).toBe('1234');
   });
 });
