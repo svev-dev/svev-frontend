@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { BaseElement } from './elements/BaseElement';
 import { Fragment } from './Fragment';
 import { ViewFactory } from './views/ViewFactory';
