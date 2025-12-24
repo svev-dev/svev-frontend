@@ -1,3 +1,3 @@
 export abstract class UIElement {
-  public abstract createUI(): Node;
+  public abstract createUI(): ChildNode;
 }
