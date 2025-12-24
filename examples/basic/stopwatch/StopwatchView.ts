@@ -17,26 +17,22 @@ export class StopwatchView extends UIElement {
 
     const startButton = new Button();
     startButton.label('Start');
-    startButton.onAction = () => {
-      this._model.start();
-    };
+    startButton.onAction = this._model.start;
 
     const stopButton = new Button();
     stopButton.label('Stop');
-    stopButton.onAction = () => {
-      this._model.stop();
-    };
+    stopButton.onAction = this._model.stop;
 
     const resetButton = new Button();
     resetButton.label('Reset');
-    resetButton.onAction = () => {
-      this._model.reset();
-    };
+    resetButton.onAction = this._model.reset;
 
     effect(() => {
+      const currentTime = this._model.currentTime();
       const isRunning = this._model.isRunning();
       startButton.isEnabled(!isRunning);
       stopButton.isEnabled(isRunning);
+      resetButton.isEnabled(currentTime !== 0);
     });
 
     const buttonStack = new Stack([startButton, stopButton, resetButton]);

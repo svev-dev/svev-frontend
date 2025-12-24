@@ -7,15 +7,15 @@ export class StopwatchModel {
   private _isRunning = signal(false);
   private readonly _currentTime = signal(0);
 
-  get currentTime(): ReadonlySignal<number> {
+  public get currentTime(): ReadonlySignal<number> {
     return this._currentTime;
   }
 
-  get isRunning(): ReadonlySignal<boolean> {
+  public get isRunning(): ReadonlySignal<boolean> {
     return this._isRunning;
   }
 
-  start(): void {
+  public start = (): void => {
     if (this._isRunning()) {
       return; // Already running
     }
@@ -28,9 +28,9 @@ export class StopwatchModel {
     this._intervalId = window.setInterval(() => {
       this._updateTime();
     }, 10);
-  }
+  };
 
-  stop(): void {
+  public stop = (): void => {
     if (!this._isRunning) {
       return; // Already stopped
     }
@@ -48,13 +48,13 @@ export class StopwatchModel {
     }
 
     this._updateTime();
-  }
+  };
 
-  reset(): void {
+  public reset = (): void => {
     this.stop();
     this._elapsedTime = 0;
     this._updateTime();
-  }
+  };
 
   private _updateTime(): void {
     if (this._isRunning() && this._startTime !== null) {
