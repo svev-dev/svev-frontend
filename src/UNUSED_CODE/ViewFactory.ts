@@ -1,5 +1,4 @@
-import { BaseElement } from '../elements/BaseElement';
-import { BaseView } from './BaseView';
+// @ts-nocheck
 
 type ElementConstructor = new (...args: unknown[]) => BaseElement;
 type ViewConstructor = new (element: BaseElement) => BaseView;
