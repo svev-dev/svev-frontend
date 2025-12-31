@@ -16,10 +16,12 @@ export class TodoItemView extends UIElement {
     });
 
     const completeButton = new Button();
-    completeButton.label('Complete');
+    completeButton.label('✔️');
+    completeButton.size('sm');
+    completeButton.variant('success');
     completeButton.onAction = this._model.complete;
 
-    const layout = new Stack([label, completeButton]);
+    const layout = new Stack([completeButton, label]);
     layout.alignItems('center');
     layout.gap('8px');
     return layout.createUI();
