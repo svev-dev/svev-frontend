@@ -16,6 +16,7 @@ export class TodoView extends UIElement {
 
     const addButton = new Button();
     addButton.label('Add');
+    addButton.variant('primary');
     effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
@@ -37,6 +38,7 @@ export class TodoView extends UIElement {
     const todosStack = new Stack([]);
     todosStack.mapChildren(this._model.todos, (model) => new TodoItemView(model));
     todosStack.direction('column');
+    todosStack.gap('4px');
 
     const layout = new Stack([newTodoLayout, todosStack, todoCount]);
     layout.direction('column');
