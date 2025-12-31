@@ -34,12 +34,11 @@ export class TodoView extends UIElement {
       todoCount.text(`Todo count: ${this._model.todos().length}`);
     });
 
-    const todoItems = this._model.todos().map((todoItemModel) => new TodoItemView(todoItemModel));
+    const todosStack = new Stack([]);
+    todosStack.mapChildren(this._model.todos, (model) => new TodoItemView(model));
+    todosStack.direction('column');
 
-    const warningText = new Paragraph();
-    warningText.text('NOT ABLE TO RENDER DYNAMIC LIST YET');
-
-    const layout = new Stack([newTodoLayout, ...todoItems, warningText, todoCount]);
+    const layout = new Stack([newTodoLayout, todosStack, todoCount]);
     layout.direction('column');
     layout.gap('16px');
     return layout.createUI();

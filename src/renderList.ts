@@ -1,5 +1,6 @@
 import { effect, ReadonlySignal } from './signals/signals';
 import { UIElement } from './elements/UIElement';
+import { MultiMap } from './utils/MultiMap';
 
 /**
  *
@@ -27,7 +28,7 @@ import { UIElement } from './elements/UIElement';
  */
 export function renderList<T>(
   parentNode: HTMLElement,
-  items: ReadonlySignal<T[]>,
+  items: ReadonlySignal<readonly T[]>,
   map: (item: T) => UIElement
 ): void {
   const start = document.createComment('start');
@@ -35,10 +36,10 @@ export function renderList<T>(
   parentNode.appendChild(start);
   parentNode.appendChild(end);
 
-  const nodeCache = new NodeCache<T>();
+  const nodeCache = new MultiMap<T, ChildNode>();
 
   const cleanupDom = () => {
-    const nodesToBeRemoved = nodeCache.getAllNodes();
+    const nodesToBeRemoved = nodeCache.getAllValues();
     nodeCache.clear();
     nodesToBeRemoved.forEach((node) => {
       node.remove();
@@ -51,7 +52,7 @@ export function renderList<T>(
 
     // Step 1
     for (const item of itemsToRender) {
-      const cachedNode = nodeCache.getAndRemoveNode(item);
+      const cachedNode = nodeCache.popFirst(item);
       const node = cachedNode || map(item).createUI();
       nodes.push([item, node]);
     }
@@ -73,40 +74,4 @@ export function renderList<T>(
     // Step 3
     nodes.forEach(([items, node]) => nodeCache.insert(items, node));
   });
-}
-
-class NodeCache<T> {
-  private readonly _itemNodesMap: Map<T, ChildNode[]> = new Map();
-
-  public insert = (item: T, node: ChildNode): void => {
-    const nodesArray = this._itemNodesMap.get(item);
-    if (!nodesArray) {
-      this._itemNodesMap.set(item, [node]);
-      return;
-    }
-    nodesArray.push(node);
-  };
-
-  public getAndRemoveNode = (item: T): ChildNode | undefined => {
-    const nodes = this._itemNodesMap.get(item);
-    if (!nodes || nodes.length === 0) {
-      return;
-    }
-
-    const [firstNode, ...remainingNodes] = nodes;
-    this._itemNodesMap.set(item, remainingNodes);
-    return firstNode;
-  };
-
-  public getAllNodes = (): ChildNode[] => {
-    const allNodes: ChildNode[] = [];
-    for (const nodes of this._itemNodesMap.values()) {
-      allNodes.push(...nodes);
-    }
-    return allNodes;
-  };
-
-  public clear = (): void => {
-    this._itemNodesMap.clear();
-  };
 }
