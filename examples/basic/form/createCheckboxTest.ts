@@ -52,6 +52,6 @@ export function createCheckboxTest() : UIElement {
     label,
   ]);
   layout.direction("column");
-  layout.gap("16px");
+  layout.gap("4px");
   return layout;
 }
