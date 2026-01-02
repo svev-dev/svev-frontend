@@ -7,7 +7,7 @@ export class Text extends UIElement {
 
   public override createUI(): HTMLElement {
     const span = document.createElement('span');
-    
+
     effect(() => {
       if (this.bold()) {
         span.innerHTML = `<strong>${this.text()}</strong>`;
@@ -15,7 +15,7 @@ export class Text extends UIElement {
         span.textContent = this.text();
       }
     });
-    
+
     return span;
   }
 }

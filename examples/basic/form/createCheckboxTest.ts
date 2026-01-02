@@ -1,38 +1,38 @@
-import { Stack, Text, effect, Checkbox, StringInput, UIElement } from "svev-frontend";
+import { Stack, Text, effect, Checkbox, StringInput, UIElement } from 'svev-frontend';
 
-export function createCheckboxTest() : UIElement {
+export function createCheckboxTest(): UIElement {
   const header = new Text();
-  header.text("Test of " + Checkbox.name + ":");
+  header.text('Test of ' + Checkbox.name + ':');
   header.bold(true);
 
   const checkbox = new Checkbox();
-  checkbox.label("This is a checkbox");
+  checkbox.label('This is a checkbox');
 
   const settings = new Text();
-  settings.text("Settings: ");
+  settings.text('Settings: ');
 
   const isVisible = new Checkbox();
-  isVisible.label("Is visible?");
+  isVisible.label('Is visible?');
   isVisible.isChecked(checkbox.isVisible());
 
   const isEnabled = new Checkbox();
-  isEnabled.label("Is enabled?");
+  isEnabled.label('Is enabled?');
   isEnabled.isChecked(checkbox.isEnabled());
 
   const isChecked = new Checkbox();
-  isChecked.label("Is checked?");
+  isChecked.label('Is checked?');
   isChecked.isChecked(checkbox.isChecked());
 
   const isIndeterminate = new Checkbox();
-  isIndeterminate.label("Is indeterminate?");
+  isIndeterminate.label('Is indeterminate?');
   isIndeterminate.isChecked(checkbox.isIndeterminate());
 
   const isSwitch = new Checkbox();
-  isSwitch.label("Is switch?");
+  isSwitch.label('Is switch?');
   isSwitch.isChecked(checkbox.isSwitch());
 
   const label = new StringInput();
-  label.placeholder("Label");
+  label.placeholder('Label');
   label.value(checkbox.label());
 
   effect(() => {
@@ -57,7 +57,7 @@ export function createCheckboxTest() : UIElement {
     isSwitch,
     label,
   ]);
-  layout.direction("column");
-  layout.gap("4px");
+  layout.direction('column');
+  layout.gap('4px');
   return layout;
 }
