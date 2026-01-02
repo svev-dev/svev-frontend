@@ -11,6 +11,10 @@ export function createCheckboxTest() : UIElement {
   const settings = new Text();
   settings.text("Settings: ");
 
+  const isVisible = new Checkbox();
+  isVisible.label("Is visible?");
+  isVisible.isChecked(checkbox.isVisible());
+
   const isEnabled = new Checkbox();
   isEnabled.label("Is enabled?");
   isEnabled.isChecked(checkbox.isEnabled());
@@ -32,6 +36,7 @@ export function createCheckboxTest() : UIElement {
   label.value(checkbox.label());
 
   effect(() => {
+    checkbox.isVisible(isVisible.isChecked());
     checkbox.isEnabled(isEnabled.isChecked());
     checkbox.isChecked(isChecked.isChecked());
     checkbox.isIndeterminate(isIndeterminate.isChecked());
@@ -45,6 +50,7 @@ export function createCheckboxTest() : UIElement {
     header,
     checkbox,
     settings,
+    isVisible,
     isEnabled,
     isChecked,
     isIndeterminate,

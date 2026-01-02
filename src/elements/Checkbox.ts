@@ -5,6 +5,7 @@ import { UIElement } from "./UIElement";
 
 export class Checkbox extends UIElement {
   public label = signal("");
+  public isVisible = signal(true);
   public isEnabled = signal(true);
   public isChecked = signal(false);
   public isIndeterminate = signal(false);
@@ -17,6 +18,7 @@ export class Checkbox extends UIElement {
 
     const inputElement = <HTMLInputElement>document.createElement("input"); 
     inputElement.type = "checkbox";
+    
     inputElement.className = "form-check-input";
     inputElement.id = "checkbox" + Math.random().toString();
     inputElement.indeterminate = true;
@@ -31,15 +33,19 @@ export class Checkbox extends UIElement {
     container.appendChild(labelElement);
 
     effect(() => {
-      inputElement.role = this.isSwitch() ? "switch" : "checkbox";
+      container.style.display = this.isVisible() ? '' : 'none';
+      if (!this.isVisible())
+        return; // No need to update other properties if not visible
+
+      container.className = this.isSwitch() ? "form-check form-switch" : "form-check";
+
       inputElement.disabled = !this.isEnabled();
       inputElement.checked = this.isChecked();
       inputElement.indeterminate = this.isIndeterminate();
+      inputElement.role = this.isSwitch() ? "switch" : "checkbox";
 
       labelElement.innerText = this.label();
       labelElement.ariaLabel = this.label();
-
-      container.className = this.isSwitch() ? "form-check form-switch" : "form-check";
     });
     inputElement.onchange = () => {
       this.isChecked(inputElement.checked);

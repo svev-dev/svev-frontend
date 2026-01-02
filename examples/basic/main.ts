@@ -14,10 +14,10 @@ const stopwatchView = new StopwatchView(stopwatchModel);
 // Todo app
 const todoModel = new TodoModel();
 const todoView = new TodoView(todoModel);
-const checkboxView = createCheckboxTest();
+const checkboxTest = createCheckboxTest();
 
 // Layout for the Stopwatch and Todo app
-const layout = new Stack([stopwatchView, todoView, checkboxView]);
+const layout = new Stack([stopwatchView, todoView, checkboxTest]);
 layout.direction('column');
 layout.gap('100px');
 layout.alignItems('center');
