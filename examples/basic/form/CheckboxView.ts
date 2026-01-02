@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, Text, effect, Checkbox, Paragraph, StringInput } from 'svev-frontend';
+import { Stack, UIElement, Text, effect, Checkbox, StringInput } from 'svev-frontend';
 
 export class CheckboxView extends UIElement {
   public createUI(): HTMLElement {
