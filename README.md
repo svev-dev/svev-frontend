@@ -46,15 +46,16 @@ npm run build
 
 ## Linting & Formatting
 
-- **Linting**: Uses `oxlint` (Oxc) with strict rules. Warnings are treated as errors.
-- **Formatting**: Uses `oxfmt`. Auto-format on save is configured for VSCode/Cursor.
+- **Linting**: Uses `eslint` with TypeScript ESLint and strict rules. Warnings are treated as errors.
+- **Formatting**: Uses `prettier`. Auto-format on save is configured for VSCode/Cursor.
 - **Type Checking**: Strict TypeScript configuration with all strict flags enabled.
 
 ### VSCode/Cursor Extensions
 
 For the best experience, install these extensions:
 
-- **Oxc** (`oxc.oxc-vscode`) - For linting with oxlint and formatting with oxlint
+- **ESLint** (`dbaeumer.vscode-eslint`) - For linting with eslint
+- **Prettier** (`esbenp.prettier-vscode`) - For code formatting with prettier
 
 ## Example Apps
 
