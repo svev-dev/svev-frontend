@@ -43,6 +43,7 @@ export default [
       'no-useless-return': 'error',
       'no-void': 'error',
       'no-with': 'error',
+      '@typescript-eslint/explicit-member-accessibility': 'error',
       radix: 'error',
       yoda: 'error',
     },
