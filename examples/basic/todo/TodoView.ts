@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, StringInput, effect, Paragraph } from 'svev-frontend';
+import { Stack, UIElement, Button, StringInput, Paragraph } from 'svev-frontend';
 import { TodoModel } from './TodoModel';
 import { TodoItemView } from './TodoItemView';
 
@@ -17,7 +17,7 @@ export class TodoView extends UIElement {
     const addButton = new Button();
     addButton.label('Add');
     addButton.variant('primary');
-    effect(() => {
+    this.effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
 
@@ -31,7 +31,7 @@ export class TodoView extends UIElement {
     newTodoLayout.gap('8px');
 
     const todoCount = new Paragraph();
-    effect(() => {
+    this.effect(() => {
       todoCount.text(`Todo count: ${this._model.todos().length}`);
     });
 
@@ -40,7 +40,7 @@ export class TodoView extends UIElement {
     todosStack.direction('column');
     todosStack.gap('4px');
 
-    const layout = new Stack([newTodoLayout, todosStack, todoCount]);
+    const layout = this.createElement(() => new Stack([newTodoLayout, todosStack, todoCount]));
     layout.direction('column');
     layout.gap('16px');
     return layout.createUI();

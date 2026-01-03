@@ -1,5 +1,4 @@
-import { renderList } from '../renderList';
-import { effect, signal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { Container } from './Container';
 
 export class Stack extends Container {
@@ -11,13 +10,13 @@ export class Stack extends Container {
     const element = <HTMLDivElement>document.createElement('div');
     element.style.display = 'flex';
 
-    effect(() => {
+    this.effect(() => {
       element.style.flexDirection = this.direction();
       element.style.alignItems = this.alignItems();
       element.style.gap = this.gap();
     });
 
-    renderList(element, this.children, (el) => el);
+    this.renderList(element, this.children);
 
     return element;
   }
