@@ -15,19 +15,17 @@ export class StopwatchView extends UIElement {
       duration.text(StopwatchModel.format(this._model.currentTime()));
     });
 
-    const startButton = new Button();
-    startButton.label('Start');
-    startButton.onAction = this._model.start;
-    startButton.shortcut({ altOrOption: true, code: 'KeyS' });
+    const startButton = new Button()
+      .label('Start')
+      .shortcut({ altOrOption: true, code: 'KeyS' })
+      .setOnInvoke(this._model.start);
 
-    const stopButton = new Button();
-    stopButton.label('Stop');
-    stopButton.onAction = this._model.stop;
-    stopButton.shortcut({ altOrOption: true, code: 'KeyS' });
+    const stopButton = new Button()
+      .label('Stop')
+      .shortcut({ altOrOption: true, code: 'KeyS' })
+      .setOnInvoke(this._model.stop);
 
-    const resetButton = new Button();
-    resetButton.label('Reset');
-    resetButton.onAction = this._model.reset;
+    const resetButton = new Button().label('Reset').setOnInvoke(this._model.reset);
 
     this.effect(() => {
       const currentTime = this._model.currentTime();
@@ -37,13 +35,13 @@ export class StopwatchView extends UIElement {
       resetButton.isEnabled(currentTime !== 0);
     });
 
-    const buttonStack = new Stack([startButton, stopButton, resetButton]);
-    buttonStack.direction('row');
-    buttonStack.gap('8px');
+    const buttonStack = new Stack([startButton, stopButton, resetButton])
+      .direction('row')
+      .gap('8px');
 
-    const layout = this.createElement(() => new Stack([duration, buttonStack]));
-    layout.direction('column');
-    layout.alignItems('center');
+    const layout = this.createElement(() => new Stack([duration, buttonStack]))
+      .direction('column')
+      .alignItems('center');
     return layout.createUI();
   }
 }

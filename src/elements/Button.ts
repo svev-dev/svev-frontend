@@ -1,15 +1,14 @@
 import { Shortcut } from '../Shortcut';
-import { signal } from '../signals/signals';
+import { IInvokable } from './IInvokable';
 import { ShortcutElement } from './ShortcutElement';
 import { UIElement } from './UIElement';
 
-export class Button extends UIElement {
-  public label = signal('');
-  public size = signal<Size>('md');
-  public variant = signal<Variant | undefined>(undefined);
-  public isEnabled = signal(true);
-  public shortcut = signal<Shortcut | undefined>(undefined);
-  public onAction?: VoidFunction;
+export class Button extends UIElement implements IInvokable {
+  public label = this.prop('');
+  public size = this.prop<Size>('md');
+  public variant = this.prop<Variant | undefined>(undefined);
+  public shortcut = this.prop<Shortcut | undefined>(undefined);
+  private _onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const button = <HTMLButtonElement>document.createElement('button');
@@ -42,9 +41,7 @@ export class Button extends UIElement {
         return;
       }
 
-      const shortcutElement = new ShortcutElement();
-      shortcutElement.shortcut(shortcut);
-      shortcutElement.onAction = (): void => this.onAction?.();
+      const shortcutElement = new ShortcutElement().shortcut(shortcut).setOnInvoke(this.invoke);
       const shortcutNode = shortcutElement.createUI();
       button.appendChild(shortcutNode);
       return (): void => {
@@ -52,12 +49,19 @@ export class Button extends UIElement {
         shortcutElement.dispose();
       };
     });
-    button.onclick = (): void => {
-      this.onAction?.();
-    };
+    button.onclick = this.invoke;
 
     return button;
   }
+
+  public setOnInvoke = (fn: VoidFunction): this => {
+    this._onInvoke = fn;
+    return this;
+  };
+
+  public invoke = (): void => {
+    this._onInvoke?.();
+  };
 }
 
 type Variant =

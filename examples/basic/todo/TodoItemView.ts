@@ -15,15 +15,15 @@ export class TodoItemView extends UIElement {
       label.text(this._model.label());
     });
 
-    const completeButton = new Button();
-    completeButton.label('✔️');
-    completeButton.size('sm');
-    completeButton.variant('success');
-    completeButton.onAction = this._model.complete;
+    const completeButton = new Button()
+      .label('✔️')
+      .size('sm')
+      .variant('success')
+      .setOnInvoke(this._model.complete);
 
-    const layout = this.createElement(() => new Stack([completeButton, label]));
-    layout.alignItems('center');
-    layout.gap('8px');
+    const layout = this.createElement(() => new Stack([completeButton, label]))
+      .alignItems('center')
+      .gap('8px');
     return layout.createUI();
   }
 }

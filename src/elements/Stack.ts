@@ -1,10 +1,9 @@
-import { signal } from '../signals/signals';
 import { Container } from './Container';
 
 export class Stack extends Container {
-  public direction = signal<'row' | 'column'>('row');
-  public alignItems = signal<'start' | 'end' | 'center'>('start');
-  public gap = signal<string>('');
+  public direction = this.prop<'row' | 'column'>('row');
+  public alignItems = this.prop<'start' | 'end' | 'center'>('start');
+  public gap = this.prop<string>('');
 
   public override createUI(): HTMLElement {
     const element = <HTMLDivElement>document.createElement('div');

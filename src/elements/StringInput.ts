@@ -1,11 +1,8 @@
-import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
 
 export class StringInput extends UIElement {
-  public value = signal('');
-  public placeholder = signal('');
-  public isEnabled = signal(true);
-  public onAction?: VoidFunction;
+  public value = this.prop('');
+  public placeholder = this.prop('');
 
   public override createUI(): HTMLElement {
     const input = <HTMLInputElement>document.createElement('input');

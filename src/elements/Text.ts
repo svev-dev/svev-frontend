@@ -1,9 +1,8 @@
-import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
 
 export class Text extends UIElement {
-  public text = signal('');
-  public bold = signal(false);
+  public text = this.prop('');
+  public bold = this.prop(false);
 
   public override createUI(): HTMLElement {
     const span = document.createElement('span');

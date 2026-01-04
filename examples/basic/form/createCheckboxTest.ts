@@ -1,39 +1,17 @@
 import { Stack, Text, effect, Checkbox, StringInput, UIElement } from 'svev-frontend';
 
 export function createCheckboxTest(): UIElement {
-  const header = new Text();
-  header.text('Test of ' + Checkbox.name + ':');
-  header.bold(true);
-
-  const checkbox = new Checkbox();
-  checkbox.label('This is a checkbox');
-
-  const settings = new Text();
-  settings.text('Settings: ');
-
-  const isVisible = new Checkbox();
-  isVisible.label('Is visible?');
-  isVisible.isChecked(checkbox.isVisible());
-
-  const isEnabled = new Checkbox();
-  isEnabled.label('Is enabled?');
-  isEnabled.isChecked(checkbox.isEnabled());
-
-  const isChecked = new Checkbox();
-  isChecked.label('Is checked?');
-  isChecked.isChecked(checkbox.isChecked());
-
-  const isIndeterminate = new Checkbox();
-  isIndeterminate.label('Is indeterminate?');
-  isIndeterminate.isChecked(checkbox.isIndeterminate());
-
-  const isSwitch = new Checkbox();
-  isSwitch.label('Is switch?');
-  isSwitch.isChecked(checkbox.isSwitch());
-
-  const label = new StringInput();
-  label.placeholder('Label');
-  label.value(checkbox.label());
+  const header = new Text().text('Test of ' + Checkbox.name + ':').bold(true);
+  const checkbox = new Checkbox().label('This is a checkbox');
+  const settings = new Text().text('Settings: ');
+  const isVisible = new Checkbox().label('Is visible?').isChecked(checkbox.isVisible());
+  const isEnabled = new Checkbox().label('Is enabled?').isChecked(checkbox.isEnabled());
+  const isChecked = new Checkbox().label('Is checked?').isChecked(checkbox.isChecked());
+  const isIndeterminate = new Checkbox()
+    .label('Is indeterminate?')
+    .isChecked(checkbox.isIndeterminate());
+  const isSwitch = new Checkbox().label('Is switch?').isChecked(checkbox.isSwitch());
+  const label = new StringInput().placeholder('Label').value(checkbox.label());
 
   effect(() => {
     checkbox.isVisible(isVisible.isChecked());
@@ -56,8 +34,8 @@ export function createCheckboxTest(): UIElement {
     isIndeterminate,
     isSwitch,
     label,
-  ]);
-  layout.direction('column');
-  layout.gap('4px');
+  ])
+    .direction('column')
+    .gap('4px');
   return layout;
 }
