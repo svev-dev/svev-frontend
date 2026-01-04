@@ -17,7 +17,11 @@ export class MultiMap<Key, Value> {
     }
 
     const [first, ...remaining] = array;
-    this._map.set(item, remaining);
+    if (remaining.length === 0) {
+      this._map.delete(item);
+    } else {
+      this._map.set(item, remaining);
+    }
     return first;
   };
 
