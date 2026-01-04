@@ -13,13 +13,14 @@ export class TodoView extends UIElement {
   public createUI(): HTMLElement {
     const newTodoInput = new StringInput().placeholder('Buy milk...');
 
-    const addButton = new Button()
-      .label('Add')
-      .variant('primary')
-      .setOnInvoke(() => {
-        this._model.addTodo(newTodoInput.value());
-        newTodoInput.value('');
-      });
+    const addTodo = (): void => {
+      this._model.addTodo(newTodoInput.value());
+      newTodoInput.value('');
+    };
+
+    newTodoInput.setOnInvoke(addTodo);
+
+    const addButton = new Button().label('Add').variant('primary').setOnInvoke(addTodo);
     this.effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
