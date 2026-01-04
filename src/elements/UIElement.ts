@@ -1,8 +1,11 @@
 import { effect } from '../signals/signals';
 import { Dispose } from '../types';
+import { Random } from '../utils/Random';
 import { Property, property } from './Property';
 
 export abstract class UIElement {
+  public readonly id = this.prop(Random.string(8));
+  public readonly isVisible = this.prop(true);
   public readonly isEnabled = this.prop(true);
 
   private _disposables: Dispose[] = [];

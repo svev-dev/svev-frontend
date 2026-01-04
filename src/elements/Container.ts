@@ -100,7 +100,7 @@ export abstract class Container extends UIElement {
     };
 
     this.effect(() => {
-      const elementsToRender = elements();
+      const elementsToRender = elements().filter((element) => element.isVisible());
       const nodes: [UIElement, ChildNode][] = [];
 
       // Step 1

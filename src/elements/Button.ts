@@ -3,6 +3,8 @@ import { IInvokable } from './IInvokable';
 import { ShortcutElement } from './ShortcutElement';
 import { UIElement } from './UIElement';
 
+// https://daisyui.com/components/button/
+
 export class Button extends UIElement implements IInvokable {
   public label = this.prop('');
   public size = this.prop<Size>('md');
@@ -12,23 +14,17 @@ export class Button extends UIElement implements IInvokable {
 
   public override createUI(): HTMLElement {
     const button = <HTMLButtonElement>document.createElement('button');
-    button.role = 'button';
-    const baseClassName = ['btn'];
     this.effect(() => {
       const isEnabled = this.isEnabled();
       button.innerText = this.label();
       button.disabled = !isEnabled;
-      const classNames = [...baseClassName];
+      const classNames = ['btn'];
 
       const size = this.size();
-      if (size !== 'md') {
-        classNames.push(`btn-${size}`);
-      }
+      classNames.push(this.getSizeClass(size));
 
       const variant = this.variant();
-      if (variant !== undefined) {
-        classNames.push(`btn-${variant}`);
-      }
+      classNames.push(this.getVariantClass(variant));
       button.className = classNames.join(' ');
     });
 
@@ -41,7 +37,10 @@ export class Button extends UIElement implements IInvokable {
         return;
       }
 
-      const shortcutElement = new ShortcutElement().shortcut(shortcut).setOnInvoke(this.invoke);
+      const shortcutElement = new ShortcutElement()
+        .shortcut(shortcut)
+        .size('sm')
+        .setOnInvoke(this.invoke);
       const shortcutNode = shortcutElement.createUI();
       button.appendChild(shortcutNode);
       return (): void => {
@@ -62,17 +61,45 @@ export class Button extends UIElement implements IInvokable {
   public invoke = (): void => {
     this._onInvoke?.();
   };
+
+  private getVariantClass(variant?: Variant): string {
+    if (!variant) return '';
+
+    // https://tailwindcss.com/docs/detecting-classes-in-source-files
+    const variantMap: Record<Variant, string> = {
+      neutral: 'btn-neutral',
+      primary: 'btn-primary',
+      secondary: 'btn-secondary',
+      accent: 'btn-accent',
+      info: 'btn-info',
+      success: 'btn-success',
+      warning: 'btn-warning',
+      error: 'btn-error',
+    };
+    return variantMap[variant];
+  }
+
+  private getSizeClass(size: Size): string {
+    // https://tailwindcss.com/docs/detecting-classes-in-source-files
+    const classMap: Record<Size, string> = {
+      xs: 'btn-xs',
+      sm: 'btn-sm',
+      md: '',
+      lg: 'btn-lg',
+      xl: 'btn-xl',
+    };
+    return classMap[size];
+  }
 }
 
 type Variant =
+  | 'neutral'
   | 'primary'
   | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'warning'
+  | 'accent'
   | 'info'
-  | 'light'
-  | 'dark'
-  | 'link';
+  | 'success'
+  | 'warning'
+  | 'error';
 
-type Size = 'sm' | 'md' | 'lg';
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
