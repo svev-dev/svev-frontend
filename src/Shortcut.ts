@@ -38,24 +38,24 @@ export function onShortcut(shortcut: Shortcut, callback: () => void): Dispose {
  * Returns a human-readable string representation of a shortcut.
  * OS-sensitive: uses "Cmd" on Mac, "Ctrl" on other platforms.
  */
-export function shortcutToString(shortcut: Shortcut): string {
+export function shortcutToStringParts(shortcut: Shortcut): string[] {
   const parts: string[] = [];
   const mac = isMac();
 
   if (shortcut.ctrlOrCommand) {
-    parts.push(mac ? 'Cmd' : 'Ctrl');
+    parts.push(mac ? '⌘' : 'Ctrl');
   }
   if (shortcut.altOrOption) {
-    parts.push(mac ? 'Option' : 'Alt');
+    parts.push(mac ? '⌥' : 'Alt');
   }
   if (shortcut.shift) {
-    parts.push('Shift');
+    parts.push('⇧');
   }
 
   const keyName = codeToKeyName(shortcut.code);
   parts.push(keyName);
 
-  return parts.join(' + ');
+  return parts;
 }
 
 /**
