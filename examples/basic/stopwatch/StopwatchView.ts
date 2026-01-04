@@ -17,13 +17,13 @@ export class StopwatchView extends UIElement {
 
     const startButton = new Button()
       .label('Start')
-      .variant('accent')
+      .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
       .setOnInvoke(this._model.start);
 
     const stopButton = new Button()
       .label('Stop')
-      .variant('accent')
+      .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
       .setOnInvoke(this._model.stop);
 
