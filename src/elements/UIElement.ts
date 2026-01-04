@@ -1,7 +1,9 @@
-import { effect } from '../signals/signals';
+import { effect, signal } from '../signals/signals';
 import { Dispose } from '../types';
 
 export abstract class UIElement {
+  public readonly isEnabled = signal(true);
+
   private _disposables: Dispose[] = [];
 
   /**

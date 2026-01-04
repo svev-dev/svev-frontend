@@ -4,7 +4,6 @@ import { UIElement } from './UIElement';
 export class StringInput extends UIElement {
   public value = signal('');
   public placeholder = signal('');
-  public isEnabled = signal(true);
   public onAction?: VoidFunction;
 
   public override createUI(): HTMLElement {

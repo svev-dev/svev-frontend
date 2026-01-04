@@ -7,7 +7,6 @@ export class Button extends UIElement {
   public label = signal('');
   public size = signal<Size>('md');
   public variant = signal<Variant | undefined>(undefined);
-  public isEnabled = signal(true);
   public shortcut = signal<Shortcut | undefined>(undefined);
   public onAction?: VoidFunction;
 

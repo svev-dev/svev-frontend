@@ -6,7 +6,6 @@ import { UIElement } from './UIElement';
 export class Checkbox extends UIElement {
   public label = signal('');
   public isVisible = signal(true);
-  public isEnabled = signal(true);
   public isChecked = signal(false);
   public isIndeterminate = signal(false);
   public isSwitch = signal(false);
