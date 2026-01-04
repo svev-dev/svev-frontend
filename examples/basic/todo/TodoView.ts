@@ -11,38 +11,34 @@ export class TodoView extends UIElement {
   }
 
   public createUI(): HTMLElement {
-    const newTodoInput = new StringInput();
-    newTodoInput.placeholder('Buy milk...');
+    const newTodoInput = new StringInput().placeholder('Buy milk...');
 
-    const addButton = new Button();
-    addButton.label('Add');
-    addButton.variant('primary');
+    const addButton = new Button()
+      .label('Add')
+      .variant('primary')
+      .setOnInvoke(() => {
+        this._model.addTodo(newTodoInput.value());
+        newTodoInput.value('');
+      });
     this.effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
 
-    addButton.onAction = (): void => {
-      this._model.addTodo(newTodoInput.value());
-      newTodoInput.value('');
-    };
-
-    const newTodoLayout = new Stack([newTodoInput, addButton]);
-    newTodoLayout.direction('row');
-    newTodoLayout.gap('8px');
+    const newTodoLayout = new Stack([newTodoInput, addButton]).direction('row').gap('8px');
 
     const todoCount = new Paragraph();
     this.effect(() => {
       todoCount.text(`Todo count: ${this._model.todos().length}`);
     });
 
-    const todosStack = new Stack([]);
-    todosStack.mapChildren(this._model.todos, (model) => new TodoItemView(model));
-    todosStack.direction('column');
-    todosStack.gap('4px');
+    const todosStack = new Stack([])
+      .direction('column')
+      .gap('4px')
+      .mapChildren(this._model.todos, (model) => new TodoItemView(model));
 
-    const layout = this.createElement(() => new Stack([newTodoLayout, todosStack, todoCount]));
-    layout.direction('column');
-    layout.gap('16px');
+    const layout = this.createElement(() => new Stack([newTodoLayout, todosStack, todoCount]))
+      .direction('column')
+      .gap('16px');
     return layout.createUI();
   }
 }

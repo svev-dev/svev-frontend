@@ -18,11 +18,12 @@ export abstract class Container extends UIElement {
     this._children(children);
   }
 
-  public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): void {
+  public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): this {
     const elements = this.createAndUpdateUIElementList(items, map);
     this.effect(() => {
       this._children(elements());
     });
+    return this;
   }
 
   private createAndUpdateUIElementList<T>(

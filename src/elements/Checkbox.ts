@@ -1,15 +1,15 @@
-import { signal } from '../signals/signals';
+import { IInvokable } from './IInvokable';
 import { UIElement } from './UIElement';
 
 // https://getbootstrap.com/docs/5.3/forms/checks-radios/
 
-export class Checkbox extends UIElement {
-  public label = signal('');
-  public isVisible = signal(true);
-  public isChecked = signal(false);
-  public isIndeterminate = signal(false);
-  public isSwitch = signal(false);
-  public onAction?: VoidFunction;
+export class Checkbox extends UIElement implements IInvokable {
+  public label = this.prop('');
+  public isVisible = this.prop(true);
+  public isChecked = this.prop(false);
+  public isIndeterminate = this.prop(false);
+  public isSwitch = this.prop(false);
+  private _onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const container = <HTMLDivElement>document.createElement('div');
@@ -47,8 +47,17 @@ export class Checkbox extends UIElement {
     });
     inputElement.onchange = (): void => {
       this.isChecked(inputElement.checked);
-      this.onAction?.();
+      this.invoke();
     };
     return container;
   }
+
+  public setOnInvoke(fn: VoidFunction): this {
+    this._onInvoke = fn;
+    return this;
+  }
+
+  public invoke = (): void => {
+    this._onInvoke?.();
+  };
 }

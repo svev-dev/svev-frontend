@@ -1,10 +1,19 @@
-import { effect, signal } from '../signals/signals';
+import { effect } from '../signals/signals';
 import { Dispose } from '../types';
+import { Property, property } from './Property';
 
 export abstract class UIElement {
-  public readonly isEnabled = signal(true);
+  public readonly isEnabled = this.prop(true);
 
   private _disposables: Dispose[] = [];
+
+  /**
+   * Helper method to create a property without explicitly passing `this`.
+   * Usage: `public label = this.prop('');`
+   */
+  protected prop<T>(value: T): Property<T, this> {
+    return property(value, this);
+  }
 
   /**
    * The one that calls `createUI` owns the UIElement and is responsible for calling `dispose`.
