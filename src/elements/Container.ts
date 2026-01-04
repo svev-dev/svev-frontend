@@ -89,7 +89,7 @@ export abstract class Container extends UIElement {
 
     const nodeCache = new MultiMap<UIElement, ChildNode>();
 
-    const cleanup = () => {
+    const cleanup = (): void => {
       const entriesToBeRemoved = nodeCache.getAllEntries();
       entriesToBeRemoved.forEach(([element, nodes]) => {
         nodes.forEach((node) => node.remove());

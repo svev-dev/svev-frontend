@@ -10,7 +10,7 @@ export class TodoModel {
 
   public addTodo(label: string): void {
     const newTodo = new TodoItemModel(label);
-    newTodo.onComplete = () => this.completeTodo(newTodo);
+    newTodo.onComplete = (): void => this.completeTodo(newTodo);
     this._todos([...this._todos.peek(), newTodo]);
   }
 

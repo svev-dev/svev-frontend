@@ -21,7 +21,7 @@ export class TodoView extends UIElement {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
 
-    addButton.onAction = () => {
+    addButton.onAction = (): void => {
       this._model.addTodo(newTodoInput.value());
       newTodoInput.value('');
     };
