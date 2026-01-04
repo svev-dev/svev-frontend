@@ -21,6 +21,14 @@ export class MultiMap<Key, Value> {
     return first;
   };
 
+  public getAllEntries = (): [Key, Value[]][] => {
+    const allEntries: [Key, Value[]][] = [];
+    for (const entry of this._map.entries()) {
+      allEntries.push(entry);
+    }
+    return allEntries;
+  };
+
   public getAllValues = (): Value[] => {
     const allValues: Value[] = [];
     for (const values of this._map.values()) {

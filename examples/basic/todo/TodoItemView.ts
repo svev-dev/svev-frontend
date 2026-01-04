@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, Text, effect } from 'svev-frontend';
+import { Stack, UIElement, Button, Text } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
 
 export class TodoItemView extends UIElement {
@@ -11,7 +11,7 @@ export class TodoItemView extends UIElement {
 
   public createUI(): HTMLElement {
     const label = new Text();
-    effect(() => {
+    this.effect(() => {
       label.text(this._model.label());
     });
 
@@ -21,7 +21,7 @@ export class TodoItemView extends UIElement {
     completeButton.variant('success');
     completeButton.onAction = this._model.complete;
 
-    const layout = new Stack([completeButton, label]);
+    const layout = this.createElement(() => new Stack([completeButton, label]));
     layout.alignItems('center');
     layout.gap('8px');
     return layout.createUI();

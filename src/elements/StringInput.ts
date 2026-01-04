@@ -1,4 +1,4 @@
-import { effect, signal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
 
 export class StringInput extends UIElement {
@@ -11,7 +11,7 @@ export class StringInput extends UIElement {
     const input = <HTMLInputElement>document.createElement('input');
     input.type = 'text';
     input.className = 'form-control';
-    effect(() => {
+    this.effect(() => {
       input.placeholder = this.placeholder();
       input.disabled = !this.isEnabled();
       input.value = this.value();

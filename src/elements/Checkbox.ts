@@ -1,4 +1,4 @@
-import { effect, signal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
 
 // https://getbootstrap.com/docs/5.3/forms/checks-radios/
@@ -32,7 +32,7 @@ export class Checkbox extends UIElement {
     labelElement.style.userSelect = 'none';
     container.appendChild(labelElement);
 
-    effect(() => {
+    this.effect(() => {
       container.style.display = this.isVisible() ? '' : 'none';
       if (!this.isVisible()) return; // No need to update other properties if not visible
 

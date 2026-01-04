@@ -1,4 +1,4 @@
-import { effect, signal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
 
 export class Paragraph extends UIElement {
@@ -6,7 +6,7 @@ export class Paragraph extends UIElement {
 
   public override createUI(): HTMLElement {
     const element = <HTMLParagraphElement>document.createElement('p');
-    effect(() => {
+    this.effect(() => {
       element.textContent = this.text();
     });
     return element;

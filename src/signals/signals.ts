@@ -5,6 +5,7 @@ import {
   batch as preactBatch,
   untracked as preactUntracked,
 } from '@preact/signals';
+import { Dispose } from '../types';
 
 export type ReadonlySignal<T> = {
   (): T;
@@ -50,8 +51,6 @@ export function computed<T>(fn: () => T): ReadonlySignal<T> {
 
   return computedGetter;
 }
-
-type Dispose = VoidFunction;
 
 export function effect(fn: VoidFunction): Dispose {
   const innerDispose = preactEffect(fn);

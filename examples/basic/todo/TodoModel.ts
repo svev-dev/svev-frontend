@@ -4,7 +4,7 @@ import { TodoItemModel } from './TodoItemModel';
 export class TodoModel {
   private _todos = signal<TodoItemModel[]>([]);
 
-  get todos(): ReadonlySignal<TodoItemModel[]> {
+  public get todos(): ReadonlySignal<TodoItemModel[]> {
     return this._todos;
   }
 
