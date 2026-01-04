@@ -17,7 +17,7 @@ export class StringInput extends UIElement {
       input.value = this.value();
     });
 
-    input.oninput = () => {
+    input.oninput = (): void => {
       this.value(input.value);
     };
 

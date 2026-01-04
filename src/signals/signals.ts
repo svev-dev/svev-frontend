@@ -35,7 +35,7 @@ export function signal<T>(initializedValue: T): Signal<T> {
     }
   }
 
-  signalGetterSetter.peek = () => innerSignal.peek();
+  signalGetterSetter.peek = (): T => innerSignal.peek();
 
   return signalGetterSetter;
 }
@@ -47,7 +47,7 @@ export function computed<T>(fn: () => T): ReadonlySignal<T> {
     return innerComputed.value;
   }
 
-  computedGetter.peek = () => innerComputed.peek();
+  computedGetter.peek = (): T => innerComputed.peek();
 
   return computedGetter;
 }

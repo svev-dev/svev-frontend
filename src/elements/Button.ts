@@ -44,15 +44,15 @@ export class Button extends UIElement {
 
       const shortcutElement = new ShortcutElement();
       shortcutElement.shortcut(shortcut);
-      shortcutElement.onAction = () => this.onAction?.();
+      shortcutElement.onAction = (): void => this.onAction?.();
       const shortcutNode = shortcutElement.createUI();
       button.appendChild(shortcutNode);
-      return () => {
+      return (): void => {
         shortcutNode.remove();
         shortcutElement.dispose();
       };
     });
-    button.onclick = () => {
+    button.onclick = (): void => {
       this.onAction?.();
     };
 

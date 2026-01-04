@@ -46,7 +46,7 @@ export class Checkbox extends UIElement {
       labelElement.innerText = this.label();
       labelElement.ariaLabel = this.label();
     });
-    inputElement.onchange = () => {
+    inputElement.onchange = (): void => {
       this.isChecked(inputElement.checked);
       this.onAction?.();
     };

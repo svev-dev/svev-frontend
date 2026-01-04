@@ -44,6 +44,7 @@ export default [
       'no-void': 'error',
       'no-with': 'error',
       '@typescript-eslint/explicit-member-accessibility': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'error',
       radix: 'error',
       yoda: 'error',
     },

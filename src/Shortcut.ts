@@ -17,7 +17,7 @@ export function onShortcut(shortcut: Shortcut, callback: () => void): Dispose {
   const shift = shortcut.shift ?? false;
   const code = shortcut.code;
 
-  const handler = (event: KeyboardEvent) => {
+  const handler = (event: KeyboardEvent): void => {
     if (isMac() && event.metaKey !== ctrlOrCommand) return;
     if (!isMac() && event.ctrlKey !== ctrlOrCommand) return;
     if (event.altKey !== altOrOption) return;
