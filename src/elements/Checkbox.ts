@@ -1,63 +1,47 @@
-import { IInvokable } from './IInvokable';
 import { UIElement } from './UIElement';
 
-// https://getbootstrap.com/docs/5.3/forms/checks-radios/
+// https://daisyui.com/components/checkbox/
+// https://daisyui.com/components/toggle/
 
-export class Checkbox extends UIElement implements IInvokable {
-  public label = this.prop('');
-  public isVisible = this.prop(true);
-  public isChecked = this.prop(false);
-  public isIndeterminate = this.prop(false);
-  public isSwitch = this.prop(false);
-  private _onInvoke?: VoidFunction;
+export class Checkbox extends UIElement {
+  public readonly label = this.prop('');
+  public readonly isChecked = this.prop(false);
+  public readonly isIndeterminate = this.prop(false);
+  public readonly isSwitch = this.prop(false);
 
   public override createUI(): HTMLElement {
-    const container = <HTMLDivElement>document.createElement('div');
-    container.role = 'checkbox';
+    const label = <HTMLLabelElement>document.createElement('label');
+    label.className = 'label';
 
-    const inputElement = <HTMLInputElement>document.createElement('input');
-    inputElement.type = 'checkbox';
+    const input = <HTMLInputElement>document.createElement('input');
+    input.type = 'checkbox';
 
-    inputElement.className = 'form-check-input';
-    inputElement.id = 'checkbox' + Math.random().toString();
-    inputElement.indeterminate = true;
-    inputElement.style.userSelect = 'none';
+    const text = document.createTextNode(this.label());
 
-    container.appendChild(inputElement);
-
-    const labelElement = <HTMLLabelElement>document.createElement('label');
-    labelElement.className = 'form-check-label';
-    labelElement.htmlFor = inputElement.id;
-    labelElement.style.userSelect = 'none';
-    container.appendChild(labelElement);
+    label.append(input, text);
 
     this.effect(() => {
-      container.style.display = this.isVisible() ? '' : 'none';
-      if (!this.isVisible()) return; // No need to update other properties if not visible
+      input.id = this.id();
+      input.className = this.isSwitch() ? 'toggle' : 'checkbox';
 
-      container.className = this.isSwitch() ? 'form-check form-switch' : 'form-check';
+      text.textContent = this.label();
 
-      inputElement.disabled = !this.isEnabled();
-      inputElement.checked = this.isChecked();
-      inputElement.indeterminate = this.isIndeterminate();
-      inputElement.role = this.isSwitch() ? 'switch' : 'checkbox';
+      input.indeterminate = this.isIndeterminate();
 
-      labelElement.innerText = this.label();
-      labelElement.ariaLabel = this.label();
+      const isChecked = this.isChecked();
+      if (isChecked) {
+        input.setAttribute('checked', 'checked');
+        input.checked = true;
+      } else {
+        input.removeAttribute('checked');
+        input.checked = false;
+      }
+
+      input.disabled = !this.isEnabled();
     });
-    inputElement.onchange = (): void => {
-      this.isChecked(inputElement.checked);
-      this.invoke();
+    input.onchange = (): void => {
+      this.isChecked(input.checked);
     };
-    return container;
+    return label;
   }
-
-  public setOnInvoke(fn: VoidFunction): this {
-    this._onInvoke = fn;
-    return this;
-  }
-
-  public invoke = (): void => {
-    this._onInvoke?.();
-  };
 }

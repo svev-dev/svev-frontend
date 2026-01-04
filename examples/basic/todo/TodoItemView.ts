@@ -17,7 +17,7 @@ export class TodoItemView extends UIElement {
 
     const completeButton = new Button()
       .label('✔️')
-      .size('sm')
+      .size('xs')
       .variant('success')
       .setOnInvoke(this._model.complete);
 

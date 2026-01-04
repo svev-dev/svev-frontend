@@ -1,3 +1,4 @@
+import './style.css';
 import { Stack } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';

@@ -1,6 +1,8 @@
 import { IInvokable } from './IInvokable';
 import { UIElement } from './UIElement';
 
+// https://daisyui.com/components/input/
+
 export class StringInput extends UIElement implements IInvokable {
   public value = this.prop('');
   public placeholder = this.prop('');
@@ -9,7 +11,7 @@ export class StringInput extends UIElement implements IInvokable {
   public override createUI(): HTMLElement {
     const input = <HTMLInputElement>document.createElement('input');
     input.type = 'text';
-    input.className = 'form-control';
+    input.className = 'input';
     this.effect(() => {
       input.placeholder = this.placeholder();
       input.disabled = !this.isEnabled();
@@ -17,7 +19,7 @@ export class StringInput extends UIElement implements IInvokable {
     });
 
     input.onkeydown = (event): void => {
-      if (event.code === 'Enter') {
+      if (event.code === 'Enter' && input.value !== '') {
         this.invoke();
       }
     };
