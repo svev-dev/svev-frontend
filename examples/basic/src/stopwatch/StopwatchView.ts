@@ -2,7 +2,7 @@ import { Stack, UIElement, Button, Text } from 'svev-frontend';
 import { StopwatchModel } from './StopwatchModel';
 
 export class StopwatchView extends UIElement {
-  private _model: StopwatchModel;
+  private readonly _model: StopwatchModel;
 
   public constructor(model: StopwatchModel) {
     super();

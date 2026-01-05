@@ -4,7 +4,7 @@ export class StopwatchModel {
   private _startTime: number | null = null;
   private _elapsedTime: number = 0;
   private _intervalId: number | null = null;
-  private _isRunning = signal(false);
+  private readonly _isRunning = signal(false);
   private readonly _currentTime = signal(0);
 
   public get currentTime(): ReadonlySignal<number> {

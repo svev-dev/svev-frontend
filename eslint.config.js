@@ -7,16 +7,23 @@ export default [
   {
     ignores: [
       'node_modules/**',
-      'dist/**',
-      'coverage/**',
+      '**/dist/**',
+      '**/coverage/**',
       '*.log',
       'src/UNUSED_CODE/**',
-      'playwright-report/**',
-      'test-results/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
     ],
   },
   js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
+  },
   {
     languageOptions: {
       globals: {
@@ -53,6 +60,7 @@ export default [
       'no-with': 'error',
       '@typescript-eslint/explicit-member-accessibility': 'error',
       '@typescript-eslint/explicit-function-return-type': 'error',
+      '@typescript-eslint/prefer-readonly': 'error',
       radix: 'error',
       yoda: 'error',
     },

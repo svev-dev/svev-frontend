@@ -4,7 +4,7 @@ import { TodoItemView } from './TodoItemView';
 import AddIcon from './icons/Add.svg?raw';
 
 export class TodoView extends UIElement {
-  private _model: TodoModel;
+  private readonly _model: TodoModel;
 
   public constructor(model: TodoModel) {
     super();

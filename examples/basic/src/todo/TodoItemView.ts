@@ -3,7 +3,7 @@ import { TodoItemModel } from './TodoItemModel';
 import CheckIcon from './icons/Check.svg?raw';
 
 export class TodoItemView extends UIElement {
-  private _model: TodoItemModel;
+  private readonly _model: TodoItemModel;
 
   public constructor(model: TodoItemModel) {
     super();

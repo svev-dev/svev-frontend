@@ -6,15 +6,15 @@ import { UIElement } from './UIElement';
 // https://daisyui.com/components/button/
 
 export class Button extends UIElement implements IInvokable {
-  public label = this.prop('');
-  public icon = this.prop<SVGElement | undefined>(undefined);
-  public size = this.prop<Size>('md');
-  public variant = this.prop<Variant | undefined>(undefined);
-  public shortcut = this.prop<Shortcut | undefined>(undefined);
+  public readonly label = this.prop('');
+  public readonly icon = this.prop<SVGElement | undefined>(undefined);
+  public readonly size = this.prop<Size>('md');
+  public readonly variant = this.prop<Variant | undefined>(undefined);
+  public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   private _onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
-    const button = <HTMLButtonElement>document.createElement('button');
+    const button = document.createElement('button');
     this.effect(() => {
       const isEnabled = this.isEnabled();
       const label = this.label();

@@ -2,7 +2,7 @@ import { ReadonlySignal, signal } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
 
 export class TodoModel {
-  private _todos = signal<TodoItemModel[]>([]);
+  private readonly _todos = signal<TodoItemModel[]>([]);
 
   public get todos(): ReadonlySignal<TodoItemModel[]> {
     return this._todos;

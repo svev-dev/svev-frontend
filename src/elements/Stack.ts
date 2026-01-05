@@ -1,12 +1,12 @@
 import { Container } from './Container';
 
 export class Stack extends Container {
-  public direction = this.prop<'row' | 'column'>('row');
-  public alignItems = this.prop<'start' | 'end' | 'center'>('start');
-  public gap = this.prop<string>('');
+  public readonly direction = this.prop<'row' | 'column'>('row');
+  public readonly alignItems = this.prop<'start' | 'end' | 'center'>('start');
+  public readonly gap = this.prop<string>('');
 
   public override createUI(): HTMLElement {
-    const element = <HTMLDivElement>document.createElement('div');
+    const element = document.createElement('div');
     element.style.display = 'flex';
 
     this.effect(() => {

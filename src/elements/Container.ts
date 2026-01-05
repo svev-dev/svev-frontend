@@ -3,7 +3,7 @@ import { MultiMap } from '../utils/MultiMap';
 import { UIElement } from './UIElement';
 
 export abstract class Container extends UIElement {
-  private _children: Signal<readonly UIElement[]>;
+  private readonly _children: Signal<readonly UIElement[]>;
 
   public constructor(children: readonly UIElement[]) {
     super();

@@ -5,10 +5,9 @@
     "lib": ["ES2022", "DOM"],
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowJs": false,
+    "allowJs": true,
     "checkJs": false,
     "outDir": "./dist",
-    "rootDir": "./src",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -35,6 +34,6 @@
     "esModuleInterop": true,
     "isolatedModules": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+  "include": ["src/**/*", "vitest.config.ts", "eslint.config.js"],
+  "exclude": ["node_modules", "**/dist/**"]
 }

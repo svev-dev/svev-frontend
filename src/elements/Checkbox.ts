@@ -10,10 +10,10 @@ export class Checkbox extends UIElement {
   public readonly isSwitch = this.prop(false);
 
   public override createUI(): HTMLElement {
-    const label = <HTMLLabelElement>document.createElement('label');
+    const label = document.createElement('label');
     label.className = 'label';
 
-    const input = <HTMLInputElement>document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'checkbox';
 
     const text = document.createTextNode(this.label());
