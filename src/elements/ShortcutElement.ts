@@ -5,12 +5,12 @@ import { UIElement } from './UIElement';
 // https://daisyui.com/components/kbd/
 
 export class ShortcutElement extends UIElement implements IInvokable {
-  public size = this.prop<Size>('md');
-  public shortcut = this.prop<Shortcut | undefined>(undefined);
+  public readonly size = this.prop<Size>('md');
+  public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   private _onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
-    const element = <HTMLSpanElement>document.createElement('span');
+    const element = document.createElement('span');
     element.style.display = 'flex';
     element.style.gap = '2px';
 
