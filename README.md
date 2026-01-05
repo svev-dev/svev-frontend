@@ -67,3 +67,10 @@ To run an example:
 cd examples/basic
 npm run dev
 ```
+
+To run "storybook":
+
+```bash
+cd examples/stories
+npm run dev
+```

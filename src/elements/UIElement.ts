@@ -1,6 +1,7 @@
 import { effect } from '../signals/signals';
 import { Dispose } from '../types';
 import { Random } from '../utils/Random';
+import { IPropertyRegister } from './IPropertyRegister';
 import { Property, property } from './Property';
 
 export abstract class UIElement {
@@ -22,6 +23,12 @@ export abstract class UIElement {
    * The one that calls `createUI` owns the UIElement and is responsible for calling `dispose`.
    */
   public abstract createUI(): ChildNode;
+
+  public registerProperties(register: IPropertyRegister): void {
+    register.addHeader('UIElement');
+    register.addBool('Is Visible', this.isVisible);
+    register.addBool('Is Enabled', this.isEnabled);
+  }
 
   protected effect(fn: VoidFunction): void {
     const dispose = effect(fn);
