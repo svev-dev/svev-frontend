@@ -6,5 +6,7 @@ export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';
 
+export { createSVGElement } from './utils/svg';
+
 export { signal, effect, computed, batch, untracked } from './signals/signals';
 export type { Signal, ReadonlySignal } from './signals/signals';
