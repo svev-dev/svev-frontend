@@ -5,7 +5,15 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.log', 'src/UNUSED_CODE'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      '*.log',
+      'src/UNUSED_CODE/**',
+      'playwright-report/**',
+      'test-results/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

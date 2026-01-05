@@ -1,6 +1,9 @@
 {
   "name": "svev-frontend",
   "version": "0.1.0",
+  "workspaces": [
+    "examples/basic"
+  ],
   "description": "",
   "keywords": [],
   "license": "ISC",
@@ -29,10 +32,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@preact/signals": "^2.5.1",
-    "@tailwindcss/vite": "^4.1.18",
-    "daisyui": "^5.5.14",
-    "tailwindcss": "^4.1.18"
+    "@preact/signals": "^2.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
