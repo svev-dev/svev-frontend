@@ -1,6 +1,7 @@
-import { Stack, UIElement, Button, StringInput, Paragraph } from 'svev-frontend';
+import { Stack, UIElement, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
 import { TodoModel } from './TodoModel';
 import { TodoItemView } from './TodoItemView';
+import AddIcon from './icons/Add.svg?raw';
 
 export class TodoView extends UIElement {
   private _model: TodoModel;
@@ -20,7 +21,11 @@ export class TodoView extends UIElement {
 
     newTodoInput.setOnInvoke(addTodo);
 
-    const addButton = new Button().label('Add').variant('primary').setOnInvoke(addTodo);
+    const addButton = new Button()
+      .label('Add')
+      .icon(createSVGElement(AddIcon))
+      .variant('primary')
+      .setOnInvoke(addTodo);
     this.effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });

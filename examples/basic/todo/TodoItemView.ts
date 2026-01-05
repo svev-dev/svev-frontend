@@ -1,5 +1,6 @@
-import { Stack, UIElement, Button, Text } from 'svev-frontend';
+import { Stack, UIElement, Button, Text, createSVGElement } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
+import CheckIcon from './icons/Check.svg?raw';
 
 export class TodoItemView extends UIElement {
   private _model: TodoItemModel;
@@ -16,7 +17,7 @@ export class TodoItemView extends UIElement {
     });
 
     const completeButton = new Button()
-      .label('✔️')
+      .icon(createSVGElement(CheckIcon))
       .size('xs')
       .variant('success')
       .setOnInvoke(this._model.complete);

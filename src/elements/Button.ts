@@ -7,6 +7,7 @@ import { UIElement } from './UIElement';
 
 export class Button extends UIElement implements IInvokable {
   public label = this.prop('');
+  public icon = this.prop<SVGElement | undefined>(undefined);
   public size = this.prop<Size>('md');
   public variant = this.prop<Variant | undefined>(undefined);
   public shortcut = this.prop<Shortcut | undefined>(undefined);
@@ -16,9 +17,19 @@ export class Button extends UIElement implements IInvokable {
     const button = <HTMLButtonElement>document.createElement('button');
     this.effect(() => {
       const isEnabled = this.isEnabled();
-      button.innerText = this.label();
+      const label = this.label();
+      button.innerText = label;
       button.disabled = !isEnabled;
       const classNames = ['btn'];
+
+      const icon = this.icon();
+      if (icon !== undefined) {
+        button.prepend(icon);
+      }
+
+      if (icon !== undefined && label === '') {
+        classNames.push('btn-square');
+      }
 
       const size = this.size();
       classNames.push(this.getSizeClass(size));
