@@ -24,6 +24,11 @@ export function createCheckboxTest(): UIElement {
     isChecked.isEnabled(!checkbox.isIndeterminate());
   });
 
+  effect(() => {
+    // Update the other way around, if you check the main checkbox, then the option `isChecked` should reflect that.
+    isChecked.isChecked(checkbox.isChecked());
+  });
+
   const layout = new Stack([
     header,
     checkbox,
