@@ -31,7 +31,7 @@ export class StopwatchModel {
   };
 
   public stop = (): void => {
-    if (!this._isRunning) {
+    if (!this._isRunning()) {
       return; // Already stopped
     }
 

@@ -42,13 +42,13 @@ export function shortcutToStringParts(shortcut: Shortcut): string[] {
   const parts: string[] = [];
   const mac = isMac();
 
-  if (shortcut.ctrlOrCommand) {
+  if (shortcut.ctrlOrCommand === true) {
     parts.push(mac ? '⌘' : 'Ctrl');
   }
-  if (shortcut.altOrOption) {
+  if (shortcut.altOrOption === true) {
     parts.push(mac ? '⌥' : 'Alt');
   }
-  if (shortcut.shift) {
+  if (shortcut.shift === true) {
     parts.push('⇧');
   }
 

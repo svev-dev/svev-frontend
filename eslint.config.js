@@ -61,6 +61,7 @@ export default [
       '@typescript-eslint/explicit-member-accessibility': 'error',
       '@typescript-eslint/explicit-function-return-type': 'error',
       '@typescript-eslint/prefer-readonly': 'error',
+      '@typescript-eslint/strict-boolean-expressions': 'error',
       radix: 'error',
       yoda: 'error',
     },
