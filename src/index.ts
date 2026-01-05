@@ -5,6 +5,7 @@ export { Checkbox } from './elements/Checkbox';
 export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';
+export { Modal } from './elements/Modal';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';
 export type { Signal, ReadonlySignal } from './signals/signals';
