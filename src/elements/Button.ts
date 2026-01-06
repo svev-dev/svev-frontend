@@ -1,4 +1,5 @@
 import { Shortcut } from '../Shortcut';
+import { IS_DEV } from '../utils/isDev';
 import { IInvokable } from './IInvokable';
 import { IPropertyRegister } from './IPropertyRegister';
 import { ShortcutElement } from './ShortcutElement';
@@ -12,7 +13,7 @@ export class Button extends UIElement implements IInvokable {
   public readonly size = this.prop<Size>('md');
   public readonly variant = this.prop<Variant | undefined>(undefined);
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
-  private _onInvoke?: VoidFunction;
+  #_onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const button = document.createElement('button');
@@ -33,10 +34,10 @@ export class Button extends UIElement implements IInvokable {
       }
 
       const size = this.size();
-      classNames.push(this.getSizeClass(size));
+      classNames.push(this.#getSizeClass(size));
 
       const variant = this.variant();
-      classNames.push(this.getVariantClass(variant));
+      classNames.push(this.#getVariantClass(variant));
       button.className = classNames.join(' ');
     });
 
@@ -66,51 +67,38 @@ export class Button extends UIElement implements IInvokable {
   }
 
   public setOnInvoke = (fn: VoidFunction): this => {
-    this._onInvoke = fn;
+    this.#_onInvoke = fn;
     return this;
   };
 
   public invoke = (): void => {
-    this._onInvoke?.();
+    this.#_onInvoke?.();
   };
 
   public override registerProperties(register: IPropertyRegister): void {
-    super.registerProperties(register);
-    register.addHeader('Button');
-    register.addString('Label', this.label);
-    register.addOptionalIcon('Icon', this.icon);
-    register.addOptions('Size', this.size, Sizes);
-    register.addOptionalOptions('Variant', this.variant, Variants);
-    register.addOptionalShortcut('Shortcut', this.shortcut);
+    if (IS_DEV) {
+      super.registerProperties(register);
+      register.addHeader('Button');
+      register.addString('Label', this.label);
+      register.addOptionalIcon('Icon', this.icon);
+      register.addOptions('Size', this.size, Sizes);
+      register.addOptionalOptions('Variant', this.variant, Variants);
+      register.addOptionalShortcut('Shortcut', this.shortcut);
+    }
   }
 
-  private getVariantClass(variant?: Variant): string {
+  #getVariantClass(variant?: Variant): string {
     if (!variant) return '';
-
+    return `btn-${variant}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    const variantMap: Record<Variant, string> = {
-      neutral: 'btn-neutral',
-      primary: 'btn-primary',
-      secondary: 'btn-secondary',
-      accent: 'btn-accent',
-      info: 'btn-info',
-      success: 'btn-success',
-      warning: 'btn-warning',
-      error: 'btn-error',
-    };
-    return variantMap[variant];
+    // btn-neutral, btn-primary, btn-secondary, btn-accent, btn-info, btn-success, btn-warning, btn-error
   }
 
-  private getSizeClass(size: Size): string {
+  #getSizeClass(size: Size): string {
+    if (size === 'md') return '';
+    return `btn-${size}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    const classMap: Record<Size, string> = {
-      xs: 'btn-xs',
-      sm: 'btn-sm',
-      md: '',
-      lg: 'btn-lg',
-      xl: 'btn-xl',
-    };
-    return classMap[size];
+    // btn-xs, btn-sm, btn-lg, btn-xl
   }
 }
 

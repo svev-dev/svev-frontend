@@ -14,18 +14,18 @@ import BookmarkIcon from './icons/Bookmark.svg?raw';
 import ClipboardIcon from './icons/Clipboard.svg?raw';
 
 export class Styling extends UIElement implements IPropertyRegister {
-  private readonly _elements: UIElement[] = [];
+  readonly #_elements: UIElement[] = [];
 
   public createUI(): ChildNode {
     const layout = this.createElement(() =>
-      new Stack(this._elements).direction('column').gap('10px')
+      new Stack(this.#_elements).direction('column').gap('10px')
     );
     return layout.createUI();
   }
 
   public addHeader(name: string): void {
     const header = new Text().text(name).bold(true);
-    this._elements.push(header);
+    this.#_elements.push(header);
   }
 
   public addBool(name: string, property: Property<boolean, unknown>): void {
@@ -33,7 +33,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     this.effect(() => {
       property(checkbox.isChecked());
     });
-    this._elements.push(checkbox);
+    this.#_elements.push(checkbox);
   }
 
   public addString(name: string, property: Property<string, unknown>): void {
@@ -41,7 +41,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     this.effect(() => {
       property(stringInput.value());
     });
-    this._elements.push(stringInput);
+    this.#_elements.push(stringInput);
   }
 
   public addOptions<T extends string | number>(
@@ -53,7 +53,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     this.effect(() => {
       property(select.requiredValue());
     });
-    this._elements.push(select);
+    this.#_elements.push(select);
   }
 
   public addOptionalOptions<T extends string | number>(
@@ -77,7 +77,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     const layout = this.createElement(() =>
       new Stack([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
     );
-    this._elements.push(layout);
+    this.#_elements.push(layout);
   }
 
   public addOptionalIcon(name: string, property: Property<SVGElement | undefined, unknown>): void {
@@ -107,7 +107,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     const layout = this.createElement(() =>
       new Stack([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
     );
-    this._elements.push(layout);
+    this.#_elements.push(layout);
   }
 
   public addOptionalShortcut(

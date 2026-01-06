@@ -9,6 +9,7 @@ export type Shortcut = {
    * https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values
    */
   code: string;
+  codeDisplayName?: string;
 };
 
 export function onShortcut(shortcut: Shortcut, callback: () => void): Dispose {
@@ -52,9 +53,12 @@ export function shortcutToStringParts(shortcut: Shortcut): string[] {
     parts.push('⇧');
   }
 
-  const keyName = codeToKeyName(shortcut.code);
-  parts.push(keyName);
+  if (shortcut.codeDisplayName !== undefined) {
+    parts.push(shortcut.codeDisplayName);
+    return parts;
+  }
 
+  parts.push(codeToKeyName(shortcut.code));
   return parts;
 }
 
@@ -71,37 +75,8 @@ function codeToKeyName(code: string): string {
     return code.slice(5);
   }
   // Handle function keys (F1 -> F1)
-  if (code.startsWith('F') && /^F\d+$/.test(code)) {
+  if (/^F\d+$/.test(code)) {
     return code;
   }
-  // Handle special keys
-  const specialKeys: Record<string, string> = {
-    Space: 'Space',
-    Enter: 'Enter',
-    Escape: 'Esc',
-    Tab: 'Tab',
-    Backspace: 'Backspace',
-    Delete: 'Delete',
-    ArrowUp: '↑',
-    ArrowDown: '↓',
-    ArrowLeft: '←',
-    ArrowRight: '→',
-    Home: 'Home',
-    End: 'End',
-    PageUp: 'Page Up',
-    PageDown: 'Page Down',
-    Insert: 'Insert',
-    Minus: '-',
-    Equal: '=',
-    BracketLeft: '[',
-    BracketRight: ']',
-    Backslash: '\\',
-    Semicolon: ';',
-    Quote: "'",
-    Comma: ',',
-    Period: '.',
-    Slash: '/',
-    Backquote: '`',
-  };
-  return specialKeys[code] ?? code;
+  return code;
 }

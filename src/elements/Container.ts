@@ -3,30 +3,30 @@ import { MultiMap } from '../utils/MultiMap';
 import { UIElement } from './UIElement';
 
 export abstract class Container extends UIElement {
-  private readonly _children: Signal<readonly UIElement[]>;
+  readonly #_children: Signal<readonly UIElement[]>;
 
   public constructor(children: readonly UIElement[]) {
     super();
-    this._children = signal(children);
+    this.#_children = signal(children);
   }
 
   public get children(): ReadonlySignal<readonly UIElement[]> {
-    return this._children;
+    return this.#_children;
   }
 
   public setChildren(children: readonly UIElement[]): void {
-    this._children(children);
+    this.#_children(children);
   }
 
   public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): this {
-    const elements = this.createAndUpdateUIElementList(items, map);
+    const elements = this.#createAndUpdateUIElementList(items, map);
     this.effect(() => {
-      this._children(elements());
+      this.#_children(elements());
     });
     return this;
   }
 
-  private createAndUpdateUIElementList<T>(
+  #createAndUpdateUIElementList<T>(
     items: ReadonlySignal<readonly T[]>,
     map: (item: T) => UIElement
   ): ReadonlySignal<readonly UIElement[]> {

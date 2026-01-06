@@ -6,6 +6,7 @@ import {
   untracked as preactUntracked,
 } from '@preact/signals';
 import { Dispose } from '../types';
+import { IS_DEV } from '../utils/isDev';
 
 export type ReadonlySignal<T> = {
   (): T;
@@ -30,7 +31,9 @@ export function signal<T>(initializedValue: T): Signal<T> {
         break;
       default:
         throw new Error(
-          `Signal can only be called with exactly zero or one argument (${arguments.length} provided)`
+          IS_DEV
+            ? `Signal can only be called with exactly zero or one argument (${arguments.length} provided)`
+            : ''
         );
     }
   }
