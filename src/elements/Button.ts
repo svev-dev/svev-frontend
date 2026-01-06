@@ -1,5 +1,6 @@
 import { Shortcut } from '../Shortcut';
 import { IInvokable } from './IInvokable';
+import { IPropertyRegister } from './IPropertyRegister';
 import { ShortcutElement } from './ShortcutElement';
 import { UIElement } from './UIElement';
 
@@ -73,6 +74,16 @@ export class Button extends UIElement implements IInvokable {
     this._onInvoke?.();
   };
 
+  public override registerProperties(register: IPropertyRegister): void {
+    super.registerProperties(register);
+    register.addHeader('Button');
+    register.addString('Label', this.label);
+    register.addOptionalIcon('Icon', this.icon);
+    register.addOptions('Size', this.size, Sizes);
+    register.addOptionalOptions('Variant', this.variant, Variants);
+    register.addOptionalShortcut('Shortcut', this.shortcut);
+  }
+
   private getVariantClass(variant?: Variant): string {
     if (!variant) return '';
 
@@ -103,14 +114,18 @@ export class Button extends UIElement implements IInvokable {
   }
 }
 
-type Variant =
-  | 'neutral'
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'error';
+const Variants = [
+  'neutral',
+  'primary',
+  'secondary',
+  'accent',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
 
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type Variant = (typeof Variants)[number];
+
+const Sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+type Size = (typeof Sizes)[number];

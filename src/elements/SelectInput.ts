@@ -23,6 +23,16 @@ export class SelectInput<Value extends string | number> extends UIElement {
       if (placeholder !== '') {
         const option = this.createOptionElement(placeholder, this.value() === undefined, true);
         select.appendChild(option);
+      } else {
+        // If we have options, no placeholder, and the value is undefined, then the value does not match
+        // what is being rendered (as the browser renders the first option by default).
+        // We should set the value to the first option.
+        const options = this._options();
+        const value = this.value();
+        const firstOption = options[0];
+        if (firstOption !== undefined && value === undefined) {
+          this.value(firstOption[0]);
+        }
       }
 
       const options = this._options();
@@ -61,13 +71,18 @@ export class SelectInput<Value extends string | number> extends UIElement {
     return value;
   }
 
-  public setOptions(optionsArray: Value[]): this;
-  public setOptions(optionsArray: Value[], map: (value: Value) => Label): this;
+  public setOptions(optionsArray: readonly Value[]): this;
+  public setOptions(optionsArray: readonly Value[], map: (value: Value) => Label): this;
   public setOptions(optionsMap: Record<Value, Label>): this;
-  public setOptions(options: Value[] | Record<Value, Label>, map?: (value: Value) => Label): this {
+  public setOptions(
+    options: readonly Value[] | Record<Value, Label>,
+    map?: (value: Value) => Label
+  ): this {
     if (Array.isArray(options)) {
+      // A manual type assertion is necessary here because TypeScript cannot infer the type of the options array.
+      const optionsArray = options as readonly Value[];
       this._options(
-        options.map((value) => [value, map?.(value) ?? value.toString(), value.toString()])
+        optionsArray.map((value) => [value, map?.(value) ?? value.toString(), value.toString()])
       );
       return this;
     }

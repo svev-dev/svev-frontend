@@ -7,6 +7,10 @@ export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';
 export { SelectInput } from './elements/SelectInput';
 
+export type { IPropertyRegister } from './elements/IPropertyRegister';
+export type { Property } from './elements/Property';
+export type { Shortcut } from './Shortcut';
+
 export { createSVGElement } from './utils/svg';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';

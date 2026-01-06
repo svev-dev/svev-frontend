@@ -2,6 +2,7 @@
   "name": "svev-frontend",
   "version": "0.1.0",
   "workspaces": [
+    "examples/stories",
     "examples/basic"
   ],
   "description": "",
