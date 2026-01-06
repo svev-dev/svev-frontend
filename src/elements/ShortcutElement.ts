@@ -7,7 +7,7 @@ import { UIElement } from './UIElement';
 export class ShortcutElement extends UIElement implements IInvokable {
   public readonly size = this.prop<Size>('md');
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
-  private _onInvoke?: VoidFunction;
+  #_onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const element = document.createElement('span');
@@ -23,7 +23,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
 
       const parts = shortcutToStringParts(shortcut);
       parts.forEach((text) => {
-        const kbdElement = this.createKbdElement(text);
+        const kbdElement = this.#createKbdElement(text);
         element.appendChild(kbdElement);
       });
 
@@ -35,33 +35,27 @@ export class ShortcutElement extends UIElement implements IInvokable {
   }
 
   public setOnInvoke(fn: VoidFunction): this {
-    this._onInvoke = fn;
+    this.#_onInvoke = fn;
     return this;
   }
 
   public invoke = (): void => {
-    this._onInvoke?.();
+    this.#_onInvoke?.();
   };
 
-  private createKbdElement(text: string): HTMLElement {
+  #createKbdElement(text: string): HTMLElement {
     const element = document.createElement('kbd');
     const classNames = ['kbd'];
-    classNames.push(this.getSizeClass(this.size()));
+    classNames.push(this.#getSizeClass(this.size()));
     element.className = classNames.join(' ');
     element.innerText = text;
     return element;
   }
 
-  private getSizeClass(size: Size): string {
+  #getSizeClass(size: Size): string {
+    return `kbd-${size}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    const classMap: Record<Size, string> = {
-      xs: 'kbd-xs',
-      sm: 'kbd-sm',
-      md: 'kbd-md',
-      lg: 'kbd-lg',
-      xl: 'kbd-xl',
-    };
-    return classMap[size];
+    // kbd-xs, kbd-sm, kbd-md, kbd-lg, kbd-xl
   }
 }
 

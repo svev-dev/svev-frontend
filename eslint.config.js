@@ -42,6 +42,24 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "PropertyDefinition[accessibility='private']",
+          message:
+            "Use native JavaScript private fields (#field) instead of the 'private' keyword.",
+        },
+        {
+          selector: "MethodDefinition[accessibility='private']",
+          message:
+            "Use native JavaScript private methods (#method) instead of the 'private' keyword.",
+        },
+        {
+          selector: "TSParameterProperty[accessibility='private']",
+          message:
+            'Native private fields cannot be used in constructor parameters. Move the declaration to a class field.',
+        },
+      ],
       'no-var': 'error',
       'prefer-const': 'error',
       'prefer-arrow-callback': 'error',

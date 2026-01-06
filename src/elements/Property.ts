@@ -1,4 +1,5 @@
 import { ReadonlySignal, signal } from '../signals/signals';
+import { IS_DEV } from '../utils/isDev';
 
 export type Property<T, Self> = ReadonlySignal<T> & {
   (newValue: T): Self;
@@ -18,7 +19,9 @@ export function property<T, Self>(value: T, self: Self): Property<T, Self> {
         return self;
       default:
         throw new Error(
-          `Property can only be called with exactly zero or one argument (${arguments.length} provided)`
+          IS_DEV
+            ? `Property can only be called with exactly zero or one argument (${arguments.length} provided)`
+            : ''
         );
     }
   }

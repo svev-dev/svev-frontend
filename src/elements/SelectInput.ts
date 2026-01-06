@@ -1,4 +1,5 @@
 import { signal } from '../signals/signals';
+import { IS_DEV } from '../utils/isDev';
 import { UIElement } from './UIElement';
 
 // https://daisyui.com/components/select/
@@ -6,7 +7,7 @@ import { UIElement } from './UIElement';
 export class SelectInput<Value extends string | number> extends UIElement {
   public readonly value = this.prop<Value | undefined>(undefined);
   public readonly placeholder = this.prop('');
-  private readonly _options = signal<[Value, Label, ValueAsString][]>([]);
+  readonly #_options = signal<[Value, Label, ValueAsString][]>([]);
 
   public override createUI(): HTMLElement {
     const select = document.createElement('select');
@@ -21,13 +22,13 @@ export class SelectInput<Value extends string | number> extends UIElement {
       select.innerHTML = '';
       const placeholder = this.placeholder();
       if (placeholder !== '') {
-        const option = this.createOptionElement(placeholder, this.value() === undefined, true);
+        const option = this.#createOptionElement(placeholder, this.value() === undefined, true);
         select.appendChild(option);
       } else {
         // If we have options, no placeholder, and the value is undefined, then the value does not match
         // what is being rendered (as the browser renders the first option by default).
         // We should set the value to the first option.
-        const options = this._options();
+        const options = this.#_options();
         const value = this.value();
         const firstOption = options[0];
         if (firstOption !== undefined && value === undefined) {
@@ -35,9 +36,9 @@ export class SelectInput<Value extends string | number> extends UIElement {
         }
       }
 
-      const options = this._options();
+      const options = this.#_options();
       for (const [value, label, valueAsString] of options) {
-        const option = this.createOptionElement(
+        const option = this.#createOptionElement(
           label,
           this.value() === value,
           false,
@@ -48,7 +49,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
     });
 
     select.onchange = (): void => {
-      const option = this._options().find(
+      const option = this.#_options().find(
         ([_, __, valueAsString]) => valueAsString === select.value
       );
       if (option) {
@@ -66,7 +67,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
   public requiredValue(): Value {
     const value = this.value();
     if (value === undefined) {
-      throw new Error('A value is not set');
+      throw new Error(IS_DEV ? 'A value is not set' : '');
     }
     return value;
   }
@@ -81,7 +82,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
     if (Array.isArray(options)) {
       // A manual type assertion is necessary here because TypeScript cannot infer the type of the options array.
       const optionsArray = options as readonly Value[];
-      this._options(
+      this.#_options(
         optionsArray.map((value) => [value, map?.(value) ?? value.toString(), value.toString()])
       );
       return this;
@@ -90,11 +91,11 @@ export class SelectInput<Value extends string | number> extends UIElement {
     const result = Object.entries(options).map(
       ([value, label]) => [value, label, value.toString()] as [Value, Label, ValueAsString]
     );
-    this._options(result);
+    this.#_options(result);
     return this;
   }
 
-  private createOptionElement(
+  #createOptionElement(
     label: Label,
     selected: boolean,
     disabled: boolean,
