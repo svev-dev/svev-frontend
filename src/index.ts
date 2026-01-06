@@ -5,6 +5,7 @@ export { Checkbox } from './elements/Checkbox';
 export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';
+export { SelectInput } from './elements/SelectInput';
 
 export { createSVGElement } from './utils/svg';
 

@@ -5,6 +5,7 @@ import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { createCheckboxTest } from './form/createCheckboxTest';
+import { createSelectTest } from './form/createSelectTest';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -16,11 +17,12 @@ const stopwatchView = new StopwatchView(stopwatchModel);
 const todoModel = new TodoModel();
 const todoView = new TodoView(todoModel);
 const checkboxTest = createCheckboxTest();
+const selectTest = createSelectTest();
 
 // Layout for the Stopwatch and Todo app
-const layout = new Stack([stopwatchView, todoView, checkboxTest])
+const layout = new Stack([stopwatchView, todoView, checkboxTest, selectTest])
   .direction('column')
-  .gap('100px')
+  .gap('25px')
   .alignItems('center');
 
 app.appendChild(layout.createUI());

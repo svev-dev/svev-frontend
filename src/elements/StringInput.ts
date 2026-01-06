@@ -10,6 +10,7 @@ export class StringInput extends UIElement implements IInvokable {
 
   public override createUI(): HTMLElement {
     const input = document.createElement('input');
+    input.id = this.id();
     input.type = 'text';
     input.className = 'input';
     this.effect(() => {
