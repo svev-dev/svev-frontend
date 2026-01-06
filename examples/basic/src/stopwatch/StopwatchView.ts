@@ -40,11 +40,9 @@ export class StopwatchView extends UIElement {
       resetButton.isEnabled(currentTime !== 0);
     });
 
-    const buttonStack = new Flex([startButton, stopButton, resetButton])
-      .direction('row')
-      .gap('8px');
+    const buttonFlex = new Flex([startButton, stopButton, resetButton]).direction('row').gap('8px');
 
-    const layout = this.createElement(() => new Flex([duration, buttonStack]))
+    const layout = this.createElement(() => new Flex([duration, buttonFlex]))
       .direction('column')
       .alignItems('center');
     return layout.createUI();
