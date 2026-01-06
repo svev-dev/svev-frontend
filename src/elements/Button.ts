@@ -13,7 +13,7 @@ export class Button extends UIElement implements IInvokable {
   public readonly size = this.prop<Size>('md');
   public readonly variant = this.prop<Variant | undefined>(undefined);
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
-  #_onInvoke?: VoidFunction;
+  #onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const button = document.createElement('button');
@@ -67,12 +67,12 @@ export class Button extends UIElement implements IInvokable {
   }
 
   public setOnInvoke = (fn: VoidFunction): this => {
-    this.#_onInvoke = fn;
+    this.#onInvoke = fn;
     return this;
   };
 
   public invoke = (): void => {
-    this.#_onInvoke?.();
+    this.#onInvoke?.();
   };
 
   public override registerProperties(register: IPropertyRegister): void {
@@ -91,14 +91,14 @@ export class Button extends UIElement implements IInvokable {
     if (!variant) return '';
     return `btn-${variant}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // btn-neutral, btn-primary, btn-secondary, btn-accent, btn-info, btn-success, btn-warning, btn-error
+    // btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error
   }
 
   #getSizeClass(size: Size): string {
     if (size === 'md') return '';
     return `btn-${size}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // btn-xs, btn-sm, btn-lg, btn-xl
+    // btn-xs btn-sm btn-lg btn-xl
   }
 }
 

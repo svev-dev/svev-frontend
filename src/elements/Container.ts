@@ -3,25 +3,25 @@ import { MultiMap } from '../utils/MultiMap';
 import { UIElement } from './UIElement';
 
 export abstract class Container extends UIElement {
-  readonly #_children: Signal<readonly UIElement[]>;
+  readonly #children: Signal<readonly UIElement[]>;
 
   public constructor(children: readonly UIElement[]) {
     super();
-    this.#_children = signal(children);
+    this.#children = signal(children);
   }
 
   public get children(): ReadonlySignal<readonly UIElement[]> {
-    return this.#_children;
+    return this.#children;
   }
 
   public setChildren(children: readonly UIElement[]): void {
-    this.#_children(children);
+    this.#children(children);
   }
 
   public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): this {
     const elements = this.#createAndUpdateUIElementList(items, map);
     this.effect(() => {
-      this.#_children(elements());
+      this.#children(elements());
     });
     return this;
   }
@@ -84,9 +84,7 @@ export abstract class Container extends UIElement {
     elements: ReadonlySignal<readonly UIElement[]>
   ): void {
     const start = document.createComment('start');
-    const end = document.createComment('end');
     parentNode.appendChild(start);
-    parentNode.appendChild(end);
 
     const nodeCache = new MultiMap<UIElement, ChildNode>();
 
@@ -131,7 +129,6 @@ export abstract class Container extends UIElement {
     this.addDisposable(() => {
       cleanup();
       start.remove();
-      end.remove();
     });
   }
 }
