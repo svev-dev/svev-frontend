@@ -1,4 +1,4 @@
-import { Stack, Text, effect, UIElement, SelectInput } from 'svev-frontend';
+import { Flex, Text, effect, UIElement, SelectInput } from 'svev-frontend';
 
 export function createSelectTest(): UIElement {
   const header = new Text().text('Test of ' + SelectInput.name + ':').bold(true);
@@ -28,7 +28,7 @@ export function createSelectTest(): UIElement {
     selectedSizeText.text(`Selected size: ${sizeSelectInput.value() ?? 'No size selected'}`);
   });
 
-  const layout = new Stack([
+  const layout = new Flex([
     header,
     carSelectInput,
     selectedCarText,

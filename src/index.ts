@@ -1,5 +1,5 @@
 export { UIElement } from './elements/UIElement';
-export { Stack } from './elements/Stack';
+export { Flex } from './elements/Flex';
 export { Button } from './elements/Button';
 export { Checkbox } from './elements/Checkbox';
 export { Text } from './elements/Text';

@@ -1,5 +1,5 @@
 import './style.css';
-import { Stack } from 'svev-frontend';
+import { Flex } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -20,7 +20,7 @@ const checkboxTest = createCheckboxTest();
 const selectTest = createSelectTest();
 
 // Layout for the Stopwatch and Todo app
-const layout = new Stack([stopwatchView, todoView, checkboxTest, selectTest])
+const layout = new Flex([stopwatchView, todoView, checkboxTest, selectTest])
   .direction('column')
   .gap('25px')
   .alignItems('center');
