@@ -1,4 +1,4 @@
-import { Stack, Text, effect, Checkbox, StringInput, UIElement } from 'svev-frontend';
+import { Flex, Text, effect, Checkbox, StringInput, UIElement } from 'svev-frontend';
 
 export function createCheckboxTest(): UIElement {
   const header = new Text().text('Test of ' + Checkbox.name + ':').bold(true);
@@ -29,7 +29,7 @@ export function createCheckboxTest(): UIElement {
     isChecked.isChecked(checkbox.isChecked());
   });
 
-  const layout = new Stack([
+  const layout = new Flex([
     header,
     checkbox,
     settings,

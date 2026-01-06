@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
+import { Flex, UIElement, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
 import { TodoModel } from './TodoModel';
 import { TodoItemView } from './TodoItemView';
 import AddIcon from './icons/Add.svg?raw';
@@ -30,19 +30,19 @@ export class TodoView extends UIElement {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
 
-    const newTodoLayout = new Stack([newTodoInput, addButton]).direction('row').gap('8px');
+    const newTodoLayout = new Flex([newTodoInput, addButton]).direction('row').gap('8px');
 
     const todoCount = new Paragraph();
     this.effect(() => {
       todoCount.text(`Todo count: ${this.#_model.todos().length}`);
     });
 
-    const todosStack = new Stack([])
+    const todosFlex = new Flex([])
       .direction('column')
       .gap('4px')
       .mapChildren(this.#_model.todos, (model) => new TodoItemView(model));
 
-    const layout = this.createElement(() => new Stack([newTodoLayout, todosStack, todoCount]))
+    const layout = this.createElement(() => new Flex([newTodoLayout, todosFlex, todoCount]))
       .direction('column')
       .gap('16px');
     return layout.createUI();

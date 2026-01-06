@@ -1,6 +1,6 @@
 import {
   Checkbox,
-  Stack,
+  Flex,
   StringInput,
   UIElement,
   IPropertyRegister,
@@ -18,7 +18,7 @@ export class Styling extends UIElement implements IPropertyRegister {
 
   public createUI(): ChildNode {
     const layout = this.createElement(() =>
-      new Stack(this.#_elements).direction('column').gap('10px')
+      new Flex(this.#_elements).direction('column').gap('10px')
     );
     return layout.createUI();
   }
@@ -75,7 +75,7 @@ export class Styling extends UIElement implements IPropertyRegister {
       }
     });
     const layout = this.createElement(() =>
-      new Stack([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
+      new Flex([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
     );
     this.#_elements.push(layout);
   }
@@ -105,7 +105,7 @@ export class Styling extends UIElement implements IPropertyRegister {
       }
     });
     const layout = this.createElement(() =>
-      new Stack([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
+      new Flex([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
     );
     this.#_elements.push(layout);
   }

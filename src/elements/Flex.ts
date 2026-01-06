@@ -1,6 +1,6 @@
 import { Container } from './Container';
 
-export class Stack extends Container {
+export class Flex extends Container {
   public readonly direction = this.prop<'row' | 'column'>('row');
   public readonly alignItems = this.prop<'start' | 'end' | 'center'>('start');
   public readonly gap = this.prop<string>('');

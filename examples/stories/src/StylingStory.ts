@@ -1,4 +1,4 @@
-import { Stack, UIElement } from 'svev-frontend';
+import { Flex, UIElement } from 'svev-frontend';
 import { BaseStory } from './BaseStory';
 import { Styling } from './Styling';
 
@@ -14,7 +14,7 @@ export abstract class StylingStory extends BaseStory {
     const stylingElement = elements[0];
     stylingElement?.registerProperties(styling);
 
-    const layout = this.createElement(() => new Stack([styling, ...elements]))
+    const layout = this.createElement(() => new Flex([styling, ...elements]))
       .direction('row')
       .gap('8px');
     return layout.createUI();

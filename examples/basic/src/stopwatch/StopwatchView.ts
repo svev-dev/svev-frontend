@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, Text } from 'svev-frontend';
+import { Flex, UIElement, Button, Text } from 'svev-frontend';
 import { StopwatchModel } from './StopwatchModel';
 
 export class StopwatchView extends UIElement {
@@ -40,11 +40,11 @@ export class StopwatchView extends UIElement {
       resetButton.isEnabled(currentTime !== 0);
     });
 
-    const buttonStack = new Stack([startButton, stopButton, resetButton])
+    const buttonStack = new Flex([startButton, stopButton, resetButton])
       .direction('row')
       .gap('8px');
 
-    const layout = this.createElement(() => new Stack([duration, buttonStack]))
+    const layout = this.createElement(() => new Flex([duration, buttonStack]))
       .direction('column')
       .alignItems('center');
     return layout.createUI();

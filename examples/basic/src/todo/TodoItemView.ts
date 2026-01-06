@@ -1,4 +1,4 @@
-import { Stack, UIElement, Button, Text, createSVGElement } from 'svev-frontend';
+import { Flex, UIElement, Button, Text, createSVGElement } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
 import CheckIcon from './icons/Check.svg?raw';
 
@@ -22,7 +22,7 @@ export class TodoItemView extends UIElement {
       .variant('success')
       .setOnInvoke(this.#_model.complete);
 
-    const layout = this.createElement(() => new Stack([completeButton, label]))
+    const layout = this.createElement(() => new Flex([completeButton, label]))
       .alignItems('center')
       .gap('8px');
     return layout.createUI();
