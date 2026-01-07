@@ -6,7 +6,7 @@ import { UIElement } from './UIElement';
 export class StringInput extends UIElement implements IInvokable {
   public readonly value = this.prop('');
   public readonly placeholder = this.prop('');
-  #_onInvoke?: VoidFunction;
+  #onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const input = document.createElement('input');
@@ -33,11 +33,11 @@ export class StringInput extends UIElement implements IInvokable {
   }
 
   public setOnInvoke = (fn: VoidFunction): this => {
-    this.#_onInvoke = fn;
+    this.#onInvoke = fn;
     return this;
   };
 
   public invoke = (): void => {
-    this.#_onInvoke?.();
+    this.#onInvoke?.();
   };
 }

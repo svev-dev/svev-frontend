@@ -6,3 +6,4 @@ coverage/
 .env
 .env.local
 .jj/
+tsconfig.vitest-temp.json

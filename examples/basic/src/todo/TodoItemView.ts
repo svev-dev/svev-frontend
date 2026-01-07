@@ -3,24 +3,24 @@ import { TodoItemModel } from './TodoItemModel';
 import CheckIcon from './icons/Check.svg?raw';
 
 export class TodoItemView extends UIElement {
-  readonly #_model: TodoItemModel;
+  readonly #model: TodoItemModel;
 
   public constructor(model: TodoItemModel) {
     super();
-    this.#_model = model;
+    this.#model = model;
   }
 
   public createUI(): HTMLElement {
     const label = new Text();
     this.effect(() => {
-      label.text(this.#_model.label());
+      label.text(this.#model.label());
     });
 
     const completeButton = new Button()
       .icon(createSVGElement(CheckIcon))
       .size('xs')
       .variant('success')
-      .setOnInvoke(this.#_model.complete);
+      .setOnInvoke(this.#model.complete);
 
     const layout = this.createElement(() => new Flex([completeButton, label]))
       .alignItems('center')

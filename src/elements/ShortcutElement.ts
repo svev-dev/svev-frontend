@@ -7,7 +7,7 @@ import { UIElement } from './UIElement';
 export class ShortcutElement extends UIElement implements IInvokable {
   public readonly size = this.prop<Size>('md');
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
-  #_onInvoke?: VoidFunction;
+  #onInvoke?: VoidFunction;
 
   public override createUI(): HTMLElement {
     const element = document.createElement('span');
@@ -35,12 +35,12 @@ export class ShortcutElement extends UIElement implements IInvokable {
   }
 
   public setOnInvoke(fn: VoidFunction): this {
-    this.#_onInvoke = fn;
+    this.#onInvoke = fn;
     return this;
   }
 
   public invoke = (): void => {
-    this.#_onInvoke?.();
+    this.#onInvoke?.();
   };
 
   #createKbdElement(text: string): HTMLElement {
@@ -55,7 +55,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
   #getSizeClass(size: Size): string {
     return `kbd-${size}`;
     // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // kbd-xs, kbd-sm, kbd-md, kbd-lg, kbd-xl
+    // kbd-xs kbd-sm kbd-md kbd-lg kbd-xl
   }
 }
 

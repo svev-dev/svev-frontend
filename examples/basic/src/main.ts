@@ -25,4 +25,4 @@ const layout = new Flex([stopwatchView, todoView, checkboxTest, selectTest])
   .gap('25px')
   .alignItems('center');
 
-app.appendChild(layout.createUI());
+layout.render(app);

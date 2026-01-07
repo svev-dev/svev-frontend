@@ -4,18 +4,18 @@ import { TodoItemView } from './TodoItemView';
 import AddIcon from './icons/Add.svg?raw';
 
 export class TodoView extends UIElement {
-  readonly #_model: TodoModel;
+  readonly #model: TodoModel;
 
   public constructor(model: TodoModel) {
     super();
-    this.#_model = model;
+    this.#model = model;
   }
 
   public createUI(): HTMLElement {
     const newTodoInput = new StringInput().placeholder('Buy milk...');
 
     const addTodo = (): void => {
-      this.#_model.addTodo(newTodoInput.value());
+      this.#model.addTodo(newTodoInput.value());
       newTodoInput.value('');
     };
 
@@ -34,13 +34,13 @@ export class TodoView extends UIElement {
 
     const todoCount = new Paragraph();
     this.effect(() => {
-      todoCount.text(`Todo count: ${this.#_model.todos().length}`);
+      todoCount.text(`Todo count: ${this.#model.todos().length}`);
     });
 
     const todosFlex = new Flex([])
       .direction('column')
       .gap('4px')
-      .mapChildren(this.#_model.todos, (model) => new TodoItemView(model));
+      .mapChildren(this.#model.todos, (model) => new TodoItemView(model));
 
     const layout = this.createElement(() => new Flex([newTodoLayout, todosFlex, todoCount]))
       .direction('column')

@@ -2,39 +2,39 @@ import { Flex, UIElement, Button, Text } from 'svev-frontend';
 import { StopwatchModel } from './StopwatchModel';
 
 export class StopwatchView extends UIElement {
-  readonly #_model: StopwatchModel;
+  readonly #model: StopwatchModel;
 
   public constructor(model: StopwatchModel) {
     super();
-    this.#_model = model;
+    this.#model = model;
   }
 
   public createUI(): HTMLElement {
     const duration = new Text();
     this.effect(() => {
-      duration.text(StopwatchModel.format(this.#_model.currentTime()));
+      duration.text(StopwatchModel.format(this.#model.currentTime()));
     });
 
     const startButton = new Button()
       .label('Start')
       .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
-      .setOnInvoke(this.#_model.start);
+      .setOnInvoke(this.#model.start);
 
     const stopButton = new Button()
       .label('Stop')
       .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
-      .setOnInvoke(this.#_model.stop);
+      .setOnInvoke(this.#model.stop);
 
     const resetButton = new Button()
       .label('Reset')
       .variant('secondary')
-      .setOnInvoke(this.#_model.reset);
+      .setOnInvoke(this.#model.reset);
 
     this.effect(() => {
-      const currentTime = this.#_model.currentTime();
-      const isRunning = this.#_model.isRunning();
+      const currentTime = this.#model.currentTime();
+      const isRunning = this.#model.isRunning();
       startButton.isEnabled(!isRunning);
       stopButton.isEnabled(isRunning);
       resetButton.isEnabled(currentTime !== 0);

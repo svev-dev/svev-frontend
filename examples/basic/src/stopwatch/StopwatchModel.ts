@@ -1,66 +1,66 @@
 import { ReadonlySignal, signal } from 'svev-frontend';
 
 export class StopwatchModel {
-  #_startTime: number | null = null;
-  #_elapsedTime: number = 0;
-  #_intervalId: number | null = null;
-  readonly #_isRunning = signal(false);
-  readonly #_currentTime = signal(0);
+  #startTime: number | null = null;
+  #elapsedTime: number = 0;
+  #intervalId: number | null = null;
+  readonly #isRunning = signal(false);
+  readonly #currentTime = signal(0);
 
   public get currentTime(): ReadonlySignal<number> {
-    return this.#_currentTime;
+    return this.#currentTime;
   }
 
   public get isRunning(): ReadonlySignal<boolean> {
-    return this.#_isRunning;
+    return this.#isRunning;
   }
 
   public start = (): void => {
-    if (this.#_isRunning()) {
+    if (this.#isRunning()) {
       return; // Already running
     }
 
-    this.#_isRunning(true);
-    this.#_startTime = Date.now();
-    this.#_updateTime();
+    this.#isRunning(true);
+    this.#startTime = Date.now();
+    this.#updateTime();
 
     // Update every 10ms for smooth display
-    this.#_intervalId = window.setInterval(() => {
-      this.#_updateTime();
+    this.#intervalId = window.setInterval(() => {
+      this.#updateTime();
     }, 10);
   };
 
   public stop = (): void => {
-    if (!this.#_isRunning()) {
+    if (!this.#isRunning()) {
       return; // Already stopped
     }
 
-    if (this.#_startTime !== null) {
-      this.#_elapsedTime += Date.now() - this.#_startTime;
+    if (this.#startTime !== null) {
+      this.#elapsedTime += Date.now() - this.#startTime;
     }
 
-    this.#_isRunning(false);
-    this.#_startTime = null;
+    this.#isRunning(false);
+    this.#startTime = null;
 
-    if (this.#_intervalId !== null) {
-      clearInterval(this.#_intervalId);
-      this.#_intervalId = null;
+    if (this.#intervalId !== null) {
+      clearInterval(this.#intervalId);
+      this.#intervalId = null;
     }
 
-    this.#_updateTime();
+    this.#updateTime();
   };
 
   public reset = (): void => {
     this.stop();
-    this.#_elapsedTime = 0;
-    this.#_updateTime();
+    this.#elapsedTime = 0;
+    this.#updateTime();
   };
 
-  #_updateTime(): void {
-    if (this.#_isRunning() && this.#_startTime !== null) {
-      this.#_currentTime(this.#_elapsedTime + (Date.now() - this.#_startTime));
+  #updateTime(): void {
+    if (this.#isRunning() && this.#startTime !== null) {
+      this.#currentTime(this.#elapsedTime + (Date.now() - this.#startTime));
     } else {
-      this.#_currentTime(this.#_elapsedTime);
+      this.#currentTime(this.#elapsedTime);
     }
   }
 
