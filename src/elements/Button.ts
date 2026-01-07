@@ -39,11 +39,9 @@ export class Button extends UIElement implements IInvokable {
         classNames.push('btn-square');
       }
 
-      const size = this.size();
-      classNames.push(getSizeClass(className, size));
+      classNames.push(getSizeClass(className, this.size()));
 
-      const variant = this.variant();
-      classNames.push(getVariantClass(className, variant));
+      classNames.push(getVariantClass(className, this.variant()));
       button.className = classNames.join(' ');
     });
 

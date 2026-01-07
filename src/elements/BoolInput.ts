@@ -37,7 +37,6 @@ export class BoolInput extends UIElement {
       const className = this.isSwitch() ? 'toggle' : 'checkbox';
       const classNames = [className];
       classNames.push(getSizeClass(className, this.size()));
-
       classNames.push(getVariantClass(className, this.variant()));
       input.className = classNames.join(' ');
 
@@ -65,7 +64,7 @@ export class BoolInput extends UIElement {
   public override registerProperties(register: IPropertyRegister): void {
     if (IS_DEV) {
       super.registerProperties(register);
-      register.addHeader('Checkbox');
+      register.addHeader('BoolInput');
       register.addOptions('Size', this.size, Sizes);
       register.addOptionalOptions('Variant', this.variant, Variants);
       register.addString('Label', this.label);
