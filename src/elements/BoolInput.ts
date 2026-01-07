@@ -1,7 +1,7 @@
 import { IS_DEV } from '../utils/isDev';
 import { getSizeClass, getVariantClass, Size, Sizes, Variant, Variants } from './Enums';
 import { IPropertyRegister } from './IPropertyRegister';
-import { UIElement } from './UIElement';
+import { Element, UIElement } from './UIElement';
 
 // https://daisyui.com/components/checkbox/
 // https://daisyui.com/components/toggle/
@@ -20,7 +20,7 @@ export class BoolInput extends UIElement {
   public readonly size = this.prop<Size>('md');
   public readonly variant = this.prop<Variant | undefined>(undefined);
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element[] {
     const label = document.createElement('label');
     label.className = 'label';
 
@@ -58,7 +58,7 @@ export class BoolInput extends UIElement {
     input.onchange = (): void => {
       this.isChecked(input.checked);
     };
-    return label;
+    return [label];
   }
 
   public override registerProperties(register: IPropertyRegister): void {

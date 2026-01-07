@@ -10,5 +10,4 @@ const boolInputStory = new BoolInputStory();
 
 const flex = new Flex([buttonStory, boolInputStory]);
 
-//app.appendChild(buttonStory.createUI());
-app.appendChild(flex.createUI());
+flex.render({ in: app });

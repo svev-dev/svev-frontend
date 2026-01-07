@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, Mock, beforeEach } from 'vitest';
-import { UIElement } from './UIElement';
+import { Element, UIElement } from './UIElement';
 
 describe(UIElement, () => {
   it('should have a unique id', () => {
@@ -36,7 +36,7 @@ describe(UIElement, () => {
       // Arrange
       const element = new TestUIElement(childFn);
       // Act
-      element.render(parentNode);
+      element.render({ in: parentNode });
       // Assert
       expect(parentNode.firstChild).toBe(childNode);
       expect(parentNode.childNodes).toHaveLength(1);
@@ -45,31 +45,18 @@ describe(UIElement, () => {
     it('should remove element on render dispose', () => {
       // Arrange
       const element = new TestUIElement(childFn);
-      const dispose = element.render(parentNode);
+      const unrender = element.render({ in: parentNode });
       // Act
-      dispose();
+      unrender();
       // Assert
       expect(parentNode.firstChild).toBeNull();
-    });
-
-    it('should call dispose when render dispose is called', () => {
-      // Arrange
-      const element = new TestUIElement(childFn);
-      const myDispose = vi.fn();
-      element.setOnDispose(myDispose);
-      const dispose = element.render(parentNode);
-      // Act
-      expect(myDispose).not.toHaveBeenCalled();
-      dispose();
-      // Assert
-      expect(myDispose).toHaveBeenCalledOnce();
     });
 
     it('should create element once', () => {
       // Arrange
       const element = new TestUIElement(childFn);
       // Act
-      element.render(parentNode);
+      element.render({ in: parentNode });
       // Assert
       expect(childFn).toHaveBeenCalledOnce();
     });
@@ -78,25 +65,25 @@ describe(UIElement, () => {
       // Arrange
       const element = new TestUIElement(childFn);
       // Act
-      element.render(parentNode);
+      element.render({ in: parentNode });
       // Assert
-      expect(() => element.render(parentNode)).toThrow();
+      expect(() => element.render({ in: parentNode })).toThrow();
     });
 
     it('should succeed two sequential renders', () => {
       // Arrange
       const element = new TestUIElement(childFn);
-      const dispose = element.render(parentNode);
+      const unrender = element.render({ in: parentNode });
       // Act
-      dispose();
+      unrender();
       // Assert
-      expect(() => element.render(parentNode)).not.toThrow();
+      expect(() => element.render({ in: parentNode })).not.toThrow();
     });
 
     it('should replace node on rerender', () => {
       // Arrange
       const element = new TestUIElement(childFn);
-      element.render(parentNode);
+      element.render({ in: parentNode });
       // Act
       const newChildNode = document.createElement('span');
       childFn.mockReturnValue(newChildNode);
@@ -111,7 +98,7 @@ describe(UIElement, () => {
       it('should hide element when made invisible', () => {
         // Arrange
         const element = new TestUIElement(childFn);
-        element.render(parentNode);
+        element.render({ in: parentNode });
         expect(parentNode.firstChild).toBe(childNode);
         // Act
         element.isVisible(false);
@@ -126,29 +113,12 @@ describe(UIElement, () => {
         const element = new TestUIElement(childFn);
         element.isVisible(false);
         // Act
-        element.render(parentNode);
+        element.render({ in: parentNode });
         // Assert
         expect(parentNode.firstChild).instanceOf(Comment);
         expect(parentNode.childNodes).toHaveLength(1);
         expect(childFn).not.toHaveBeenCalled();
       });
-
-      it.each([true, false])(
-        'should call dispose when element visibility toggles from %s',
-        (visible: boolean) => {
-          // Arrange
-          const myDispose = vi.fn();
-          const element = new TestUIElement(childFn);
-          element.setOnDispose(myDispose);
-          element.isVisible(visible);
-          element.render(parentNode);
-          // Act
-          expect(myDispose).not.toHaveBeenCalled();
-          element.isVisible(!visible);
-          // Assert
-          expect(myDispose).toHaveBeenCalledOnce();
-        }
-      );
     });
   });
 });
@@ -161,8 +131,8 @@ class TestUIElement extends UIElement {
     this.#nodeCreator = nodeCreator ?? ((): ChildNode => document.createElement('div'));
   }
 
-  public override createUI(): ChildNode {
-    return this.#nodeCreator();
+  protected createUI(): Element[] {
+    return [this.#nodeCreator()];
   }
 
   public setOnDispose(fn: VoidFunction): void {

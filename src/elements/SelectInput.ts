@@ -1,8 +1,8 @@
-import { IS_DEV } from '../utils/isDev';
-import { getSizeClass, getVariantClass, Size, Sizes, Variant, Variants } from './Enums';
 import { signal } from '../signals/signals';
-import { UIElement } from './UIElement';
+import { IS_DEV } from '../utils/isDev';
+import { Size, Variant, getSizeClass, getVariantClass, Sizes, Variants } from './Enums';
 import { IPropertyRegister } from './IPropertyRegister';
+import { UIElement } from './UIElement';
 
 // https://daisyui.com/components/select/
 
@@ -19,7 +19,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
 
   readonly #options = signal<[Value, Label, ValueAsString][]>([]);
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element[] {
     const select = document.createElement('select');
     select.id = this.id();
 
@@ -75,7 +75,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
       }
     };
 
-    return select;
+    return [select];
   }
 
   /**

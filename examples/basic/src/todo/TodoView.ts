@@ -1,17 +1,19 @@
-import { Flex, UIElement, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
+import { Flex, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
 import { TodoModel } from './TodoModel';
 import { TodoItemView } from './TodoItemView';
 import AddIcon from './icons/Add.svg?raw';
 
-export class TodoView extends UIElement {
+export class TodoView extends Flex {
   readonly #model: TodoModel;
 
   public constructor(model: TodoModel) {
-    super();
+    super([]);
     this.#model = model;
+    this.direction('column').gap('16px');
+    this.initialize();
   }
 
-  public createUI(): HTMLElement {
+  public initialize(): void {
     const newTodoInput = new StringInput().placeholder('Buy milk...');
 
     const addTodo = (): void => {
@@ -26,6 +28,7 @@ export class TodoView extends UIElement {
       .icon(createSVGElement(AddIcon))
       .variant('primary')
       .setOnInvoke(addTodo);
+
     this.effect(() => {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
@@ -42,9 +45,6 @@ export class TodoView extends UIElement {
       .gap('4px')
       .mapChildren(this.#model.todos, (model) => new TodoItemView(model));
 
-    const layout = this.createElement(() => new Flex([newTodoLayout, todosFlex, todoCount]))
-      .direction('column')
-      .gap('16px');
-    return layout.createUI();
+    this.setChildren([newTodoLayout, todosFlex, todoCount]);
   }
 }

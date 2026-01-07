@@ -23,4 +23,4 @@ const layout = new Flex([stopwatchView, todoView, selectTest])
   .gap('25px')
   .alignItems('center');
 
-layout.render(app);
+layout.render({ in: app });

@@ -10,6 +10,7 @@ export { SelectInput } from './elements/SelectInput';
 export type { IPropertyRegister } from './elements/IPropertyRegister';
 export type { Property } from './elements/Property';
 export type { Shortcut } from './Shortcut';
+export type { Element } from './elements/UIElement';
 
 export { createSVGElement } from './utils/svg';
 
