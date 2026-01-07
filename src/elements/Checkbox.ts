@@ -1,3 +1,5 @@
+import { IS_DEV } from '../utils/isDev';
+import { IPropertyRegister } from './IPropertyRegister';
 import { UIElement } from './UIElement';
 
 // https://daisyui.com/components/checkbox/
@@ -43,5 +45,16 @@ export class Checkbox extends UIElement {
       this.isChecked(input.checked);
     };
     return label;
+  }
+
+  public override registerProperties(register: IPropertyRegister): void {
+    if (IS_DEV) {
+      super.registerProperties(register);
+      register.addHeader('Checkbox');
+      register.addString('Label', this.label);
+      register.addBool('Is checked', this.isChecked);
+      register.addBool('Is indeterminate', this.isIndeterminate);
+      register.addBool('Is switch', this.isSwitch);
+    }
   }
 }
