@@ -1,24 +1,42 @@
-import { signal } from '../signals/signals';
 import { IS_DEV } from '../utils/isDev';
+import { getSizeClass, getVariantClass, Size, Sizes, Variant, Variants } from './Enums';
+import { signal } from '../signals/signals';
 import { UIElement } from './UIElement';
+import { IPropertyRegister } from './IPropertyRegister';
 
 // https://daisyui.com/components/select/
 
+// https://tailwindcss.com/docs/detecting-classes-in-source-files
+// select-neutral select-primary select-secondary select-accent select-info select-success select-warning select-error
+// select-xs select-sm select-lg select-xl
+// select-ghost
 export class SelectInput<Value extends string | number> extends UIElement {
   public readonly value = this.prop<Value | undefined>(undefined);
   public readonly placeholder = this.prop('');
+  public readonly isGhost = this.prop(false);
+  public readonly size = this.prop<Size>('md');
+  public readonly variant = this.prop<Variant | undefined>(undefined);
+
   readonly #options = signal<[Value, Label, ValueAsString][]>([]);
 
   public override createUI(): HTMLElement {
     const select = document.createElement('select');
     select.id = this.id();
-    select.className = 'select';
 
     this.effect(() => {
       select.disabled = !this.isEnabled();
     });
 
     this.effect(() => {
+      const className = 'select';
+      const classNames = [className];
+      if (this.isGhost()) {
+        classNames.push(`${className}-ghost`);
+      }
+      classNames.push(getSizeClass(className, this.size()));
+      classNames.push(getVariantClass(className, this.variant()));
+      select.className = classNames.join(' ');
+
       select.innerHTML = '';
       const placeholder = this.placeholder();
       if (placeholder !== '') {
@@ -111,6 +129,16 @@ export class SelectInput<Value extends string | number> extends UIElement {
       option.value = value;
     }
     return option;
+  }
+
+  public override registerProperties(register: IPropertyRegister): void {
+    if (IS_DEV) {
+      super.registerProperties(register);
+      register.addHeader('SelectInput');
+      register.addBool('Is Ghost', this.isGhost);
+      register.addOptions('Size', this.size, Sizes);
+      register.addOptionalOptions('Variant', this.variant, Variants);
+    }
   }
 }
 

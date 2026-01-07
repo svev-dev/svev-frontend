@@ -1,8 +1,12 @@
 import { onShortcut, Shortcut, shortcutToStringParts } from '../Shortcut';
+import { getSizeClass, Size } from './Enums';
 import { IInvokable } from './IInvokable';
 import { UIElement } from './UIElement';
 
 // https://daisyui.com/components/kbd/
+
+// https://tailwindcss.com/docs/detecting-classes-in-source-files
+// kbd-xs kbd-sm kbd-md kbd-lg kbd-xl
 
 export class ShortcutElement extends UIElement implements IInvokable {
   public readonly size = this.prop<Size>('md');
@@ -44,19 +48,12 @@ export class ShortcutElement extends UIElement implements IInvokable {
   };
 
   #createKbdElement(text: string): HTMLElement {
-    const element = document.createElement('kbd');
-    const classNames = ['kbd'];
-    classNames.push(this.#getSizeClass(this.size()));
+    const className = 'kbd';
+    const element = document.createElement(className);
+    const classNames = [className];
+    classNames.push(getSizeClass(className, this.size()));
     element.className = classNames.join(' ');
     element.innerText = text;
     return element;
   }
-
-  #getSizeClass(size: Size): string {
-    return `kbd-${size}`;
-    // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // kbd-xs kbd-sm kbd-md kbd-lg kbd-xl
-  }
 }
-
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
