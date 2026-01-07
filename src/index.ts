@@ -1,7 +1,7 @@
 export { UIElement } from './elements/UIElement';
 export { Flex } from './elements/Flex';
 export { Button } from './elements/Button';
-export { Checkbox } from './elements/Checkbox';
+export { BoolInput } from './elements/BoolInput';
 export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';

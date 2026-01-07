@@ -1,14 +1,14 @@
 import { Flex } from 'svev-frontend';
 import { ButtonStory } from './src/ButtonStory';
-import { CheckboxStory } from './src/CheckboxStory';
+import { BoolInputStory } from './src/BoolInputStory';
 import './style.css';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
 const buttonStory = new ButtonStory();
-const checkboxStory = new CheckboxStory();
+const boolInputStory = new BoolInputStory();
 
-const flex = new Flex([buttonStory, checkboxStory]);
+const flex = new Flex([buttonStory, boolInputStory]);
 
 //app.appendChild(buttonStory.createUI());
 app.appendChild(flex.createUI());
