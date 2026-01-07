@@ -1,11 +1,16 @@
-import { Shortcut } from '../Shortcut';
 import { IS_DEV } from '../utils/isDev';
+import { getSizeClass, getVariantClass, Size, Sizes, Variant, Variants } from './Enums';
+import { Shortcut } from '../Shortcut';
 import { IInvokable } from './IInvokable';
 import { IPropertyRegister } from './IPropertyRegister';
 import { ShortcutElement } from './ShortcutElement';
 import { UIElement } from './UIElement';
 
 // https://daisyui.com/components/button/
+
+// https://tailwindcss.com/docs/detecting-classes-in-source-files
+// btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error
+// btn-xs btn-sm btn-lg btn-xl
 
 export class Button extends UIElement implements IInvokable {
   public readonly label = this.prop('');
@@ -22,22 +27,23 @@ export class Button extends UIElement implements IInvokable {
       const label = this.label();
       button.innerText = label;
       button.disabled = !isEnabled;
-      const classNames = ['btn'];
 
       const icon = this.icon();
       if (icon !== undefined) {
         button.prepend(icon);
       }
 
+      const className = 'btn';
+      const classNames = [className];
       if (icon !== undefined && label === '') {
         classNames.push('btn-square');
       }
 
       const size = this.size();
-      classNames.push(this.#getSizeClass(size));
+      classNames.push(getSizeClass(className, size));
 
       const variant = this.variant();
-      classNames.push(this.#getVariantClass(variant));
+      classNames.push(getVariantClass(className, variant));
       button.className = classNames.join(' ');
     });
 
@@ -79,41 +85,11 @@ export class Button extends UIElement implements IInvokable {
     if (IS_DEV) {
       super.registerProperties(register);
       register.addHeader('Button');
-      register.addString('Label', this.label);
-      register.addOptionalIcon('Icon', this.icon);
       register.addOptions('Size', this.size, Sizes);
       register.addOptionalOptions('Variant', this.variant, Variants);
+      register.addString('Label', this.label);
+      register.addOptionalIcon('Icon', this.icon);
       register.addOptionalShortcut('Shortcut', this.shortcut);
     }
   }
-
-  #getVariantClass(variant?: Variant): string {
-    if (!variant) return '';
-    return `btn-${variant}`;
-    // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error
-  }
-
-  #getSizeClass(size: Size): string {
-    if (size === 'md') return '';
-    return `btn-${size}`;
-    // https://tailwindcss.com/docs/detecting-classes-in-source-files
-    // btn-xs btn-sm btn-lg btn-xl
-  }
 }
-
-const Variants = [
-  'neutral',
-  'primary',
-  'secondary',
-  'accent',
-  'info',
-  'success',
-  'warning',
-  'error',
-] as const;
-
-type Variant = (typeof Variants)[number];
-
-const Sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
-type Size = (typeof Sizes)[number];

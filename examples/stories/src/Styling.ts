@@ -1,5 +1,5 @@
 import {
-  Checkbox,
+  BoolInput,
   Flex,
   StringInput,
   UIElement,
@@ -29,7 +29,7 @@ export class Styling extends UIElement implements IPropertyRegister {
   }
 
   public addBool(name: string, property: Property<boolean, unknown>): void {
-    const checkbox = new Checkbox().label(name).isChecked(property());
+    const checkbox = new BoolInput().label(name).isChecked(property());
     this.effect(() => {
       property(checkbox.isChecked());
     });
@@ -63,7 +63,7 @@ export class Styling extends UIElement implements IPropertyRegister {
   ): void {
     const initialValue = property();
     const text = this.createElement(() => new Text().text(name));
-    const activeCheckbox = new Checkbox().isChecked(initialValue !== undefined);
+    const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<T>().setOptions(options).value(initialValue);
     this.effect(() => {
       const isEnabled = activeCheckbox.isChecked();
@@ -93,7 +93,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     const Keys = Object.keys(icons) as IconKey[];
     const initialValue = property();
     const text = this.createElement(() => new Text().text(name));
-    const activeCheckbox = new Checkbox().isChecked(initialValue !== undefined);
+    const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<IconKey>().setOptions(Keys);
     this.effect(() => {
       const isEnabled = activeCheckbox.isChecked();
