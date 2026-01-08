@@ -9,7 +9,7 @@ import { IPropertyRegister } from './IPropertyRegister';
 // https://tailwindcss.com/docs/detecting-classes-in-source-files
 // select-neutral select-primary select-secondary select-accent select-info select-success select-warning select-error
 // select-xs select-sm select-lg select-xl
-// select-ghost
+
 export class SelectInput<Value extends string | number> extends UIElement {
   public readonly value = this.prop<Value | undefined>(undefined);
   public readonly placeholder = this.prop('');
@@ -31,7 +31,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
       const className = 'select';
       const classNames = [className];
       if (this.isGhost()) {
-        classNames.push(`${className}-ghost`);
+        classNames.push(`select-ghost`);
       }
       classNames.push(getSizeClass(className, this.size()));
       classNames.push(getVariantClass(className, this.variant()));
