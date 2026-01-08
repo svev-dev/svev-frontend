@@ -36,7 +36,7 @@ export class Button extends UIElement implements IInvokable {
       const className = 'btn';
       const classNames = [className];
       if (icon !== undefined && label === '') {
-        classNames.push('btn-square');
+        classNames.push(`btn-square`);
       }
 
       classNames.push(getSizeClass(className, this.size()));
