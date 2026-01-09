@@ -66,7 +66,7 @@ export abstract class UIElement {
       this.#beingRendered = false;
     });
 
-    return this.#disposeRender;
+    return () => this.#disposeRender();
   }
 
   /**
@@ -353,12 +353,12 @@ export abstract class UIElement {
     }
   }
 
-  readonly #disposeRender = (): void => {
+  #disposeRender(): void {
     for (const dispose of this.#renderDisposables) {
       dispose();
     }
     this.#renderDisposables = [];
-  };
+  }
 }
 
 /**
