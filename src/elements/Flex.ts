@@ -7,7 +7,7 @@ export class Flex extends Container {
   public readonly gap = this.prop<string>('');
   public readonly padding = this.prop<string>('');
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const element = document.createElement('div');
     element.style.display = 'flex';
 
@@ -21,6 +21,6 @@ export class Flex extends Container {
     const dispose = this.fragment.render({ in: element });
     this.addDisposable(dispose);
 
-    return [element];
+    return element;
   }
 }

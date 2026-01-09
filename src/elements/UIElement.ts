@@ -1,6 +1,6 @@
 import { effect, ReadonlySignal, signal, untracked } from '../signals/signals';
 import { Dispose } from '../types';
-import { last, reverse } from '../utils/array';
+import { last, reverse, toArray } from '../utils/array';
 import { IS_DEV } from '../utils/isDev';
 import { randomString } from '../utils/Random';
 import { IPropertyRegister } from './IPropertyRegister';
@@ -15,7 +15,9 @@ export abstract class UIElement {
   public readonly isEnabled = this.prop(true);
 
   #disposables: Dispose[] = [];
+  #renderDisposables: Dispose[] = [];
   #beingRendered = false;
+  #isCreatingUI = false;
   #renderedElements: readonly [Element, Unrender][] = [];
   readonly #dummyNode = document.createComment('dummy');
   readonly #triggerRender = signal(0);
@@ -23,7 +25,7 @@ export abstract class UIElement {
   /**
    * The one that calls `createUI` owns the UIElement and is responsible for calling `dispose`.
    */
-  protected abstract createUI(): readonly Element[];
+  protected abstract createUI(): Element | readonly Element[];
 
   /**
    * Renders the UIElement inside the parent node.
@@ -38,6 +40,7 @@ export abstract class UIElement {
 
     const elementsToRender = signal<readonly Element[]>([]);
     const dispose = effect(() => {
+      // We only call this signal to react to `rerender` calls.
       this.#triggerRender();
 
       if (!this.isVisible()) {
@@ -48,17 +51,22 @@ export abstract class UIElement {
       // We don't want to listen to signals in createUI to rerender.
       // Instead, one must call `rerender` to rerender the UIElement.
       untracked(() => {
-        elementsToRender(this.createUI());
+        this.#isCreatingUI = true;
+        const elements = this.createUI();
+        this.#isCreatingUI = false;
+        elementsToRender(toArray(elements));
       });
     });
 
     const unrenderList = this.#renderList(elementsToRender, placement);
 
-    return (): void => {
+    this.#renderDisposables.push(() => {
       dispose();
       unrenderList();
       this.#beingRendered = false;
-    };
+    });
+
+    return this.#disposeRender;
   }
 
   /**
@@ -132,7 +140,10 @@ export abstract class UIElement {
    * Adds a disposable function that will be called when dispose() is called.
    */
   protected addDisposable(dispose: Dispose): void {
-    // TODO: disinguish between render disposables and regular disposables
+    if (this.#isCreatingUI) {
+      this.#renderDisposables.push(dispose);
+      return;
+    }
     this.#disposables.push(dispose);
   }
 
@@ -140,6 +151,7 @@ export abstract class UIElement {
    * Disposes all registered disposables and clears the set.
    */
   protected dispose = (): void => {
+    this.#disposeRender();
     for (const dispose of this.#disposables) {
       dispose();
     }
@@ -340,6 +352,13 @@ export abstract class UIElement {
       referenceElement.after(nodeToInsert);
     }
   }
+
+  readonly #disposeRender = (): void => {
+    for (const dispose of this.#renderDisposables) {
+      dispose();
+    }
+    this.#renderDisposables = [];
+  };
 }
 
 /**

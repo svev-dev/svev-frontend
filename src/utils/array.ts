@@ -7,3 +7,10 @@ export function* reverse<T>(array: readonly T[]): Generator<T> {
     yield array[i] as T;
   }
 }
+
+export function toArray<T>(item: T | readonly T[]): readonly T[] {
+  if (Array.isArray(item)) {
+    return item;
+  }
+  return [item as T];
+}

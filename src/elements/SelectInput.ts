@@ -19,7 +19,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
 
   readonly #options = signal<[Value, Label, ValueAsString][]>([]);
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const select = document.createElement('select');
     select.id = this.id();
 
@@ -75,7 +75,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
       }
     };
 
-    return [select];
+    return select;
   }
 
   /**

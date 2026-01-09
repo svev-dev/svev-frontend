@@ -8,7 +8,7 @@ export class StringInput extends UIElement implements IInvokable {
   public readonly placeholder = this.prop('');
   #onInvoke?: VoidFunction;
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const input = document.createElement('input');
     input.id = this.id();
     input.type = 'text';
@@ -29,7 +29,7 @@ export class StringInput extends UIElement implements IInvokable {
       this.value(input.value);
     };
 
-    return [input];
+    return input;
   }
 
   public setOnInvoke = (fn: VoidFunction): this => {

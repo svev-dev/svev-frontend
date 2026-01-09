@@ -20,7 +20,7 @@ export class Button extends UIElement implements IInvokable {
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   #onInvoke?: VoidFunction;
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const button = document.createElement('button');
     this.effect(() => {
       const isEnabled = this.isEnabled();
@@ -65,7 +65,7 @@ export class Button extends UIElement implements IInvokable {
     });
     button.onclick = this.invoke;
 
-    return [button];
+    return button;
   }
 
   public setOnInvoke = (fn: VoidFunction): this => {

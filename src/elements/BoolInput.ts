@@ -20,7 +20,7 @@ export class BoolInput extends UIElement {
   public readonly size = this.prop<Size>('md');
   public readonly variant = this.prop<Variant | undefined>(undefined);
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const label = document.createElement('label');
     label.className = 'label';
 
@@ -58,7 +58,7 @@ export class BoolInput extends UIElement {
     input.onchange = (): void => {
       this.isChecked(input.checked);
     };
-    return [label];
+    return label;
   }
 
   public override registerProperties(register: IPropertyRegister): void {
