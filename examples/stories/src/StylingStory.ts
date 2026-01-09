@@ -1,9 +1,9 @@
-import { Flex, UIElement } from 'svev-frontend';
+import { Element, Flex, UIElement } from 'svev-frontend';
 import { BaseStory } from './BaseStory';
 import { Styling } from './Styling';
 
 export abstract class StylingStory extends BaseStory {
-  public override createUI(): ChildNode {
+  protected createUI(): Element[] {
     const elements = this.createElements();
     const styling = new Styling();
 
@@ -18,7 +18,8 @@ export abstract class StylingStory extends BaseStory {
       .direction('column')
       .gap('8px')
       .padding('8px');
-    return layout.createUI();
+
+    return [layout];
   }
 
   protected abstract createElements(): UIElement[];

@@ -1,7 +1,7 @@
 import { onShortcut, Shortcut, shortcutToStringParts } from '../Shortcut';
 import { getSizeClass, Size } from './Enums';
 import { IInvokable } from './IInvokable';
-import { UIElement } from './UIElement';
+import { Element, UIElement } from './UIElement';
 
 // https://daisyui.com/components/kbd/
 
@@ -13,7 +13,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   #onInvoke?: VoidFunction;
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element[] {
     const element = document.createElement('span');
     element.style.display = 'flex';
     element.style.gap = '2px';
@@ -35,7 +35,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
       return dispose;
     });
 
-    return element;
+    return [element];
   }
 
   public setOnInvoke(fn: VoidFunction): this {

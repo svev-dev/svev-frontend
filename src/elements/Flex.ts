@@ -1,4 +1,5 @@
 import { Container } from './Container';
+import { Element } from './UIElement';
 
 export class Flex extends Container {
   public readonly direction = this.prop<'row' | 'column'>('row');
@@ -6,7 +7,7 @@ export class Flex extends Container {
   public readonly gap = this.prop<string>('');
   public readonly padding = this.prop<string>('');
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element {
     const element = document.createElement('div');
     element.style.display = 'flex';
 
@@ -17,7 +18,8 @@ export class Flex extends Container {
       element.style.gap = this.gap();
     });
 
-    this.renderList(element, this.children);
+    const dispose = this.fragment.render({ in: element });
+    this.addDisposable(dispose);
 
     return element;
   }

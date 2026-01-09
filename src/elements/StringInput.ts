@@ -1,5 +1,5 @@
 import { IInvokable } from './IInvokable';
-import { UIElement } from './UIElement';
+import { Element, UIElement } from './UIElement';
 
 // https://daisyui.com/components/input/
 
@@ -8,7 +8,7 @@ export class StringInput extends UIElement implements IInvokable {
   public readonly placeholder = this.prop('');
   #onInvoke?: VoidFunction;
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element {
     const input = document.createElement('input');
     input.id = this.id();
     input.type = 'text';

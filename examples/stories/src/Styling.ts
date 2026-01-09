@@ -9,6 +9,7 @@ import {
   SelectInput,
   Text,
   createSVGElement,
+  Element,
 } from 'svev-frontend';
 import BookmarkIcon from './icons/Bookmark.svg?raw';
 import ClipboardIcon from './icons/Clipboard.svg?raw';
@@ -16,11 +17,11 @@ import ClipboardIcon from './icons/Clipboard.svg?raw';
 export class Styling extends UIElement implements IPropertyRegister {
   readonly #elements: UIElement[] = [];
 
-  public createUI(): ChildNode {
+  protected createUI(): Element[] {
     const layout = this.createElement(() =>
       new Flex(this.#elements).direction('column').gap('10px')
     );
-    return layout.createUI();
+    return [layout];
   }
 
   public addHeader(name: string): void {

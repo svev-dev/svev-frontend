@@ -1,4 +1,4 @@
-import { Flex, UIElement, Button, Text } from 'svev-frontend';
+import { Flex, UIElement, Button, Text, Element } from 'svev-frontend';
 import { StopwatchModel } from './StopwatchModel';
 
 export class StopwatchView extends UIElement {
@@ -9,7 +9,7 @@ export class StopwatchView extends UIElement {
     this.#model = model;
   }
 
-  public createUI(): HTMLElement {
+  protected createUI(): Element[] {
     const duration = new Text();
     this.effect(() => {
       duration.text(StopwatchModel.format(this.#model.currentTime()));
@@ -45,6 +45,6 @@ export class StopwatchView extends UIElement {
     const layout = this.createElement(() => new Flex([duration, buttonFlex]))
       .direction('column')
       .alignItems('center');
-    return layout.createUI();
+    return [layout];
   }
 }

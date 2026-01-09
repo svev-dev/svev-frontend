@@ -4,7 +4,7 @@ import { Shortcut } from '../Shortcut';
 import { IInvokable } from './IInvokable';
 import { IPropertyRegister } from './IPropertyRegister';
 import { ShortcutElement } from './ShortcutElement';
-import { UIElement } from './UIElement';
+import { Element, UIElement } from './UIElement';
 
 // https://daisyui.com/components/button/
 
@@ -20,7 +20,7 @@ export class Button extends UIElement implements IInvokable {
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   #onInvoke?: VoidFunction;
 
-  public override createUI(): HTMLElement {
+  protected createUI(): Element {
     const button = document.createElement('button');
     this.effect(() => {
       const isEnabled = this.isEnabled();
@@ -58,11 +58,9 @@ export class Button extends UIElement implements IInvokable {
         .shortcut(shortcut)
         .size('sm')
         .setOnInvoke(this.invoke);
-      const shortcutNode = shortcutElement.createUI();
-      button.appendChild(shortcutNode);
+      const dispose = shortcutElement.render({ in: button });
       return (): void => {
-        shortcutNode.remove();
-        shortcutElement.dispose();
+        dispose();
       };
     });
     button.onclick = this.invoke;

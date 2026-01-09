@@ -1,4 +1,4 @@
-import { Flex, UIElement, Button, Text, createSVGElement } from 'svev-frontend';
+import { Flex, UIElement, Button, Text, createSVGElement, Element } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
 import CheckIcon from './icons/Check.svg?raw';
 
@@ -10,7 +10,7 @@ export class TodoItemView extends UIElement {
     this.#model = model;
   }
 
-  public createUI(): HTMLElement {
+  protected createUI(): Element[] {
     const label = new Text();
     this.effect(() => {
       label.text(this.#model.label());
@@ -25,6 +25,6 @@ export class TodoItemView extends UIElement {
     const layout = this.createElement(() => new Flex([completeButton, label]))
       .alignItems('center')
       .gap('8px');
-    return layout.createUI();
+    return [layout];
   }
 }
