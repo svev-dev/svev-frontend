@@ -28,15 +28,16 @@ export function createSelectTest(): UIElement {
     selectedSizeText.text(`Selected size: ${sizeSelectInput.value() ?? 'No size selected'}`);
   });
 
-  const layout = new Flex([
-    header,
-    carSelectInput,
-    selectedCarText,
-    distanceSelectInput,
-    selectedDistanceText,
-    sizeSelectInput,
-    selectedSizeText,
-  ])
+  const layout = new Flex()
+    .setChildren([
+      header,
+      carSelectInput,
+      selectedCarText,
+      distanceSelectInput,
+      selectedDistanceText,
+      sizeSelectInput,
+      selectedSizeText,
+    ])
     .direction('column')
     .gap('4px');
 

@@ -42,8 +42,15 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build example app
         working-directory: ./examples/basic
+        run: npm run build
+
+      - name: Build stories app
+        working-directory: ./examples/stories
         run: npm run build
 
       - name: Install Playwright Browsers

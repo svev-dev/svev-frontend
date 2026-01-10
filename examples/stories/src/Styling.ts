@@ -17,11 +17,11 @@ import ClipboardIcon from './icons/Clipboard.svg?raw';
 export class Styling extends UIElement implements IPropertyRegister {
   readonly #elements: UIElement[] = [];
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const layout = this.createElement(() =>
-      new Flex(this.#elements).direction('column').gap('10px')
+      new Flex().setChildren(this.#elements).direction('column').gap('10px')
     );
-    return [layout];
+    return layout;
   }
 
   public addHeader(name: string): void {
@@ -76,7 +76,11 @@ export class Styling extends UIElement implements IPropertyRegister {
       }
     });
     const layout = this.createElement(() =>
-      new Flex([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
+      new Flex()
+        .setChildren([text, activeCheckbox, select])
+        .direction('row')
+        .gap('8px')
+        .alignItems('center')
     );
     this.#elements.push(layout);
   }
@@ -106,7 +110,11 @@ export class Styling extends UIElement implements IPropertyRegister {
       }
     });
     const layout = this.createElement(() =>
-      new Flex([text, activeCheckbox, select]).direction('row').gap('8px').alignItems('center')
+      new Flex()
+        .setChildren([text, activeCheckbox, select])
+        .direction('row')
+        .gap('8px')
+        .alignItems('center')
     );
     this.#elements.push(layout);
   }

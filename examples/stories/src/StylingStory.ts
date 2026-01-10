@@ -3,7 +3,7 @@ import { BaseStory } from './BaseStory';
 import { Styling } from './Styling';
 
 export abstract class StylingStory extends BaseStory {
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const elements = this.createElements();
     const styling = new Styling();
 
@@ -14,12 +14,18 @@ export abstract class StylingStory extends BaseStory {
     const stylingElement = elements[0];
     stylingElement?.registerProperties(styling);
 
-    const layout = this.createElement(() => new Flex([...elements, styling]))
+    const layout = this.createElement(() =>
+      new Flex()
+        .setChildren([...elements, styling])
+        .direction('column')
+        .gap('8px')
+        .padding('8px')
+    )
       .direction('column')
       .gap('8px')
       .padding('8px');
 
-    return [layout];
+    return layout;
   }
 
   protected abstract createElements(): UIElement[];

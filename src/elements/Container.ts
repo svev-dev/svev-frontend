@@ -6,13 +6,9 @@ import { UIElement } from './UIElement';
 export abstract class Container extends UIElement {
   protected readonly fragment = new Fragment();
 
-  public constructor(children: readonly UIElement[]) {
-    super();
+  public setChildren(children: readonly UIElement[]): this {
     this.fragment.setChildren(children);
-  }
-
-  public setChildren(children: readonly UIElement[]): void {
-    this.fragment.setChildren(children);
+    return this;
   }
 
   public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): this {
