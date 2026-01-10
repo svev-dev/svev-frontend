@@ -22,9 +22,7 @@ export class TodoItemView extends UIElement {
       .variant('success')
       .setOnInvoke(this.#model.complete);
 
-    const layout = this.createElement(() => new Flex().setChildren([completeButton, label]))
-      .alignItems('center')
-      .gap('8px');
+    const layout = new Flex().setChildren([completeButton, label]).alignItems('center').gap('8px');
     return layout;
   }
 }

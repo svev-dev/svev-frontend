@@ -45,7 +45,8 @@ export class StopwatchView extends UIElement {
       .direction('row')
       .gap('8px');
 
-    const layout = this.createElement(() => new Flex().setChildren([duration, buttonFlex]))
+    const layout = new Flex()
+      .setChildren([duration, buttonFlex])
       .direction('column')
       .alignItems('center');
     return layout;

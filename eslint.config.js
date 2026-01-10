@@ -10,7 +10,6 @@ export default [
       '**/dist/**',
       '**/coverage/**',
       '*.log',
-      'src/UNUSED_CODE/**',
       '**/playwright-report/**',
       '**/test-results/**',
     ],

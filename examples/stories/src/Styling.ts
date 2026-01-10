@@ -18,9 +18,7 @@ export class Styling extends UIElement implements IPropertyRegister {
   readonly #elements: UIElement[] = [];
 
   protected createUI(): Element {
-    const layout = this.createElement(() =>
-      new Flex().setChildren(this.#elements).direction('column').gap('10px')
-    );
+    const layout = new Flex().setChildren(this.#elements).direction('column').gap('10px');
     return layout;
   }
 
@@ -63,7 +61,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     options: readonly T[]
   ): void {
     const initialValue = property();
-    const text = this.createElement(() => new Text().text(name));
+    const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<T>().setOptions(options).value(initialValue);
     this.effect(() => {
@@ -75,13 +73,11 @@ export class Styling extends UIElement implements IPropertyRegister {
         property(undefined);
       }
     });
-    const layout = this.createElement(() =>
-      new Flex()
-        .setChildren([text, activeCheckbox, select])
-        .direction('row')
-        .gap('8px')
-        .alignItems('center')
-    );
+    const layout = new Flex()
+      .setChildren([text, activeCheckbox, select])
+      .direction('row')
+      .gap('8px')
+      .alignItems('center');
     this.#elements.push(layout);
   }
 
@@ -97,7 +93,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     type IconKey = keyof typeof icons;
     const Keys = Object.keys(icons) as IconKey[];
     const initialValue = property();
-    const text = this.createElement(() => new Text().text(name));
+    const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<IconKey>().setOptions(Keys);
     this.effect(() => {
@@ -109,13 +105,11 @@ export class Styling extends UIElement implements IPropertyRegister {
         property(undefined);
       }
     });
-    const layout = this.createElement(() =>
-      new Flex()
-        .setChildren([text, activeCheckbox, select])
-        .direction('row')
-        .gap('8px')
-        .alignItems('center')
-    );
+    const layout = new Flex()
+      .setChildren([text, activeCheckbox, select])
+      .direction('row')
+      .gap('8px')
+      .alignItems('center');
     this.#elements.push(layout);
   }
 
