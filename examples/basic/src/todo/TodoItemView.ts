@@ -11,10 +11,7 @@ export class TodoItemView extends UIElement {
   }
 
   protected createUI(): Element {
-    const label = new Text();
-    this.effect(() => {
-      label.text(this.#model.label());
-    });
+    const label = new Text().text(() => this.#model.label());
 
     const completeButton = new Button()
       .icon(createSVGElement(CheckIcon))
