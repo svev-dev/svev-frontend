@@ -1,5 +1,6 @@
 import { describe, it, expect, expectTypeOf } from 'vitest';
 import { property } from './Property';
+import { effect, signal } from '../signals/signals';
 
 describe('Property', () => {
   describe(property.name, () => {
@@ -26,6 +27,51 @@ describe('Property', () => {
       const myProperty = property(123, self);
       myProperty(456);
       expect(myProperty()).toBe(456);
+    });
+
+    it('should return value based on delegate', () => {
+      const self = {};
+      const myProperty = property(123, self);
+      myProperty(() => 456);
+      expect(myProperty()).toBe(456);
+    });
+
+    it('should be able to store functions', () => {
+      const self = {};
+      const myFunction = (): void => {};
+      const myProperty = property(() => {}, self);
+      myProperty(() => myFunction);
+      expect(myProperty()).toBe(myFunction);
+    });
+
+    it('should react to signals in the delegate', () => {
+      const self = {};
+      const triggerSignal = signal(false);
+      const myProperty = property('', self);
+      myProperty(() => {
+        return triggerSignal() ? 'true' : 'false';
+      });
+      expect(myProperty()).toBe('false');
+      triggerSignal(true);
+      expect(myProperty()).toBe('true');
+    });
+
+    it('should trigger effect when signals in the delegate change', () => {
+      const self = {};
+      const triggerSignal = signal(false);
+      const myProperty = property('', self);
+      myProperty(() => {
+        return triggerSignal() ? 'true' : 'false';
+      });
+      const results: string[] = [];
+      const dispose = effect(() => {
+        results.push(myProperty());
+      });
+
+      expect(results).toEqual(['false']);
+      triggerSignal(true);
+      expect(results).toEqual(['false', 'true']);
+      dispose();
     });
   });
 });

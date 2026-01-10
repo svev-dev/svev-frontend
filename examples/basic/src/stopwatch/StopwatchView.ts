@@ -10,35 +10,27 @@ export class StopwatchView extends UIElement {
   }
 
   protected createUI(): Element {
-    const duration = new Text();
-    this.effect(() => {
-      duration.text(StopwatchModel.format(this.#model.currentTime()));
-    });
+    const duration = new Text().text(() => StopwatchModel.format(this.#model.currentTime()));
 
     const startButton = new Button()
       .label('Start')
       .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
-      .setOnInvoke(this.#model.start);
+      .setOnInvoke(this.#model.start)
+      .isEnabled(() => !this.#model.isRunning());
 
     const stopButton = new Button()
       .label('Stop')
       .variant('primary')
       .shortcut({ altOrOption: true, code: 'KeyS' })
-      .setOnInvoke(this.#model.stop);
+      .setOnInvoke(this.#model.stop)
+      .isEnabled(() => this.#model.isRunning());
 
     const resetButton = new Button()
       .label('Reset')
       .variant('secondary')
-      .setOnInvoke(this.#model.reset);
-
-    this.effect(() => {
-      const currentTime = this.#model.currentTime();
-      const isRunning = this.#model.isRunning();
-      startButton.isEnabled(!isRunning);
-      stopButton.isEnabled(isRunning);
-      resetButton.isEnabled(currentTime !== 0);
-    });
+      .setOnInvoke(this.#model.reset)
+      .isEnabled(() => this.#model.currentTime() !== 0);
 
     const buttonFlex = new Flex()
       .setChildren([startButton, stopButton, resetButton])

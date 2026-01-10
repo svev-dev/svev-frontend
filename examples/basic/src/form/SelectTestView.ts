@@ -12,27 +12,24 @@ export class SelectTestView extends Flex {
       .placeholder('Select a car')
       .setOptions(['Audi', 'BMW', 'Mercedes']);
 
-    const selectedCarText = new Text();
-    this.effect(() => {
-      selectedCarText.text(`Selected car: ${carSelectInput.value() ?? 'No car selected'}`);
-    });
+    const selectedCarText = new Text().text(
+      () => `Selected car: ${carSelectInput.value() ?? 'No car selected'}`
+    );
 
     const distanceSelectInput = new SelectInput<number>()
       .placeholder('Select a distance')
       .setOptions([1, 2, 3], (value) => `${value} km`)
       .value(2);
-    const selectedDistanceText = new Text();
-    this.effect(() => {
-      selectedDistanceText.text(`Selected distance: ${distanceSelectInput.requiredValue()}`);
-    });
+    const selectedDistanceText = new Text().text(
+      () => `Selected distance: ${distanceSelectInput.requiredValue()}`
+    );
 
     const sizeSelectInput = new SelectInput<string>()
       .placeholder('Select a size')
       .setOptions({ sm: 'Small', md: 'Medium', lg: 'Large' });
-    const selectedSizeText = new Text();
-    this.effect(() => {
-      selectedSizeText.text(`Selected size: ${sizeSelectInput.value() ?? 'No size selected'}`);
-    });
+    const selectedSizeText = new Text().text(
+      () => `Selected size: ${sizeSelectInput.value() ?? 'No size selected'}`
+    );
 
     this.setChildren([
       header,

@@ -27,21 +27,15 @@ export class TodoView extends Flex {
       .label('Add')
       .icon(createSVGElement(AddIcon))
       .variant('primary')
-      .setOnInvoke(addTodo);
-
-    this.effect(() => {
-      addButton.isEnabled(newTodoInput.value().trim() !== '');
-    });
+      .setOnInvoke(addTodo)
+      .isEnabled(() => newTodoInput.value().trim() !== '');
 
     const newTodoLayout = new Flex()
       .setChildren([newTodoInput, addButton])
       .direction('row')
       .gap('8px');
 
-    const todoCount = new Paragraph();
-    this.effect(() => {
-      todoCount.text(`Todo count: ${this.#model.todos().length}`);
-    });
+    const todoCount = new Paragraph().text(() => `Todo count: ${this.#model.todos().length}`);
 
     const todosFlex = new Flex()
       .direction('column')
