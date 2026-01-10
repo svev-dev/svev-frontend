@@ -1,3 +1,5 @@
+import { AutoDisposal } from '../AutoDisposal';
+import { DisposeCollection } from '../DisposeCollection';
 import { effect, ReadonlySignal, signal, untracked } from '../signals/signals';
 import { Dispose } from '../types';
 import { last, reverse, toArray } from '../utils/array';
@@ -13,13 +15,18 @@ export abstract class UIElement {
   public readonly isVisible = this.prop(true);
   public readonly isEnabled = this.prop(true);
 
-  #disposables: Dispose[] = [];
-  #renderDisposables: Dispose[] = [];
   #beingRendered = false;
   #isCreatingUI = false;
   #renderedElements: readonly [Element, Unrender][] = [];
+  readonly #disposeCollection = new DisposeCollection();
+  readonly #renderDisposeCollection = new DisposeCollection();
   readonly #dummyNode = document.createComment('dummy');
   readonly #triggerRender = signal(0);
+
+  public constructor() {
+    AutoDisposal.instance.register(this, this.#disposeCollection);
+    AutoDisposal.instance.register(this, this.#renderDisposeCollection);
+  }
 
   /**
    * The one that calls `createUI` owns the UIElement and is responsible for calling `dispose`.
@@ -50,16 +57,20 @@ export abstract class UIElement {
       // We don't want to listen to signals in createUI to rerender.
       // Instead, one must call `rerender` to rerender the UIElement.
       untracked(() => {
-        this.#isCreatingUI = true;
-        const elements = this.createUI();
-        this.#isCreatingUI = false;
+        let elements: Element | readonly Element[];
+        try {
+          this.#isCreatingUI = true;
+          elements = this.createUI();
+        } finally {
+          this.#isCreatingUI = false;
+        }
         elementsToRender(toArray(elements));
       });
     });
 
     const unrenderList = this.#renderList(elementsToRender, placement);
 
-    this.#renderDisposables.push(() => {
+    this.#renderDisposeCollection.add(() => {
       dispose();
       unrenderList();
       this.#beingRendered = false;
@@ -134,21 +145,18 @@ export abstract class UIElement {
    */
   protected addDisposable(dispose: Dispose): void {
     if (this.#isCreatingUI) {
-      this.#renderDisposables.push(dispose);
+      this.#renderDisposeCollection.add(dispose);
       return;
     }
-    this.#disposables.push(dispose);
+    this.#disposeCollection.add(dispose);
   }
 
   /**
    * Disposes all registered disposables and clears the set.
    */
-  protected dispose = (): void => {
+  public dispose = (): void => {
     this.#disposeRender();
-    for (const dispose of this.#disposables) {
-      dispose();
-    }
-    this.#disposables = [];
+    this.#disposeCollection.dispose();
   };
 
   /**
@@ -347,10 +355,7 @@ export abstract class UIElement {
   }
 
   #disposeRender(): void {
-    for (const dispose of this.#renderDisposables) {
-      dispose();
-    }
-    this.#renderDisposables = [];
+    this.#renderDisposeCollection.dispose();
   }
 }
 
