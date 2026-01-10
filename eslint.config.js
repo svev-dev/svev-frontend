@@ -49,7 +49,8 @@ export default [
             "Use native JavaScript private fields (#field) instead of the 'private' keyword.",
         },
         {
-          selector: "MethodDefinition[accessibility='private']",
+          selector:
+            "MethodDefinition[accessibility='private']:not(MethodDefinition[kind='constructor'])",
           message:
             "Use native JavaScript private methods (#method) instead of the 'private' keyword.",
         },
