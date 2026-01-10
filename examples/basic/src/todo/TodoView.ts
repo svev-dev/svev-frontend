@@ -7,7 +7,7 @@ export class TodoView extends Flex {
   readonly #model: TodoModel;
 
   public constructor(model: TodoModel) {
-    super([]);
+    super();
     this.#model = model;
     this.direction('column').gap('16px');
     this.initialize();
@@ -33,14 +33,17 @@ export class TodoView extends Flex {
       addButton.isEnabled(newTodoInput.value().trim() !== '');
     });
 
-    const newTodoLayout = new Flex([newTodoInput, addButton]).direction('row').gap('8px');
+    const newTodoLayout = new Flex()
+      .setChildren([newTodoInput, addButton])
+      .direction('row')
+      .gap('8px');
 
     const todoCount = new Paragraph();
     this.effect(() => {
       todoCount.text(`Todo count: ${this.#model.todos().length}`);
     });
 
-    const todosFlex = new Flex([])
+    const todosFlex = new Flex()
       .direction('column')
       .gap('4px')
       .mapChildren(this.#model.todos, (model) => new TodoItemView(model));

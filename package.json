@@ -30,7 +30,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit --project examples/basic/tsconfig.json && tsc --noEmit --project examples/stories/tsconfig.json"
   },
   "dependencies": {
     "@preact/signals": "^2.5.1"

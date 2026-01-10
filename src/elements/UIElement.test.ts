@@ -131,8 +131,8 @@ class TestUIElement extends UIElement {
     this.#nodeCreator = nodeCreator ?? ((): ChildNode => document.createElement('div'));
   }
 
-  protected createUI(): Element[] {
-    return [this.#nodeCreator()];
+  protected createUI(): Element {
+    return this.#nodeCreator();
   }
 
   public setOnDispose(fn: VoidFunction): void {

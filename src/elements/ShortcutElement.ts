@@ -13,7 +13,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
   public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
   #onInvoke?: VoidFunction;
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const element = document.createElement('span');
     element.style.display = 'flex';
     element.style.gap = '2px';
@@ -35,7 +35,7 @@ export class ShortcutElement extends UIElement implements IInvokable {
       return dispose;
     });
 
-    return [element];
+    return element;
   }
 
   public setOnInvoke(fn: VoidFunction): this {

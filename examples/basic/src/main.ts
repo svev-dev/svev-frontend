@@ -18,7 +18,8 @@ const todoView = new TodoView(todoModel);
 const selectTest = createSelectTest();
 
 // Layout for the Stopwatch and Todo app
-const layout = new Flex([stopwatchView, todoView, selectTest])
+const layout = new Flex()
+  .setChildren([stopwatchView, todoView, selectTest])
   .direction('column')
   .gap('25px')
   .alignItems('center');

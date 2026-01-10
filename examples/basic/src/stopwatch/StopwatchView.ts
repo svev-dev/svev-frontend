@@ -9,7 +9,7 @@ export class StopwatchView extends UIElement {
     this.#model = model;
   }
 
-  protected createUI(): Element[] {
+  protected createUI(): Element {
     const duration = new Text();
     this.effect(() => {
       duration.text(StopwatchModel.format(this.#model.currentTime()));
@@ -40,11 +40,14 @@ export class StopwatchView extends UIElement {
       resetButton.isEnabled(currentTime !== 0);
     });
 
-    const buttonFlex = new Flex([startButton, stopButton, resetButton]).direction('row').gap('8px');
+    const buttonFlex = new Flex()
+      .setChildren([startButton, stopButton, resetButton])
+      .direction('row')
+      .gap('8px');
 
-    const layout = this.createElement(() => new Flex([duration, buttonFlex]))
+    const layout = this.createElement(() => new Flex().setChildren([duration, buttonFlex]))
       .direction('column')
       .alignItems('center');
-    return [layout];
+    return layout;
   }
 }
