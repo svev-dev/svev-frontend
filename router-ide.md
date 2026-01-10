@@ -29,3 +29,11 @@ TODO:
 ```ts
 const router = new Router();
 ```
+
+1. Public/private "routes". The private routes requires authentication.
+2. API queries (success, failure, slow, cache).
+3. Navigating between URLs (inside the app).
+4. Toasts
+5. Popup modals (Yes/No)
+6. Tooltips
+7. Keyboard shortcuts

@@ -1,5 +1,5 @@
 import './style.css';
-import { Flex } from 'svev-frontend';
+import { Button, Flex } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -25,3 +25,8 @@ const layout = new Flex()
   .alignItems('center');
 
 layout.render({ in: app });
+
+// Test garbage collection
+{
+  new Button();
+}
