@@ -6,6 +6,8 @@ export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
 export { StringInput } from './elements/StringInput';
 export { SelectInput } from './elements/SelectInput';
+export { Tab } from './elements/Tab';
+export { Tabs } from './elements/Tabs';
 
 export type { IPropertyRegister } from './elements/IPropertyRegister';
 export type { Property } from './elements/Property';
