@@ -1,3 +1,4 @@
+import { escapeHTML } from '../utils/html';
 import { Element, UIElement } from './UIElement';
 
 export class Text extends UIElement {
@@ -9,8 +10,7 @@ export class Text extends UIElement {
 
     this.effect(() => {
       if (this.bold()) {
-        // TODO: security risk (XSS attack)
-        span.innerHTML = `<strong>${this.text()}</strong>`;
+        span.innerHTML = `<strong>${escapeHTML(this.text())}</strong>`;
       } else {
         span.textContent = this.text();
       }
