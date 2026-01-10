@@ -14,13 +14,8 @@ export abstract class StylingStory extends BaseStory {
     const stylingElement = elements[0];
     stylingElement?.registerProperties(styling);
 
-    const layout = this.createElement(() =>
-      new Flex()
-        .setChildren([...elements, styling])
-        .direction('column')
-        .gap('8px')
-        .padding('8px')
-    )
+    const layout = new Flex()
+      .setChildren([...elements, styling])
       .direction('column')
       .gap('8px')
       .padding('8px');

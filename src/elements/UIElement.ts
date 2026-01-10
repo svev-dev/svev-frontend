@@ -7,7 +7,6 @@ import { IPropertyRegister } from './IPropertyRegister';
 import { Property, property } from './Property';
 
 export type Element = UIElement | ChildNode;
-type Unrender = VoidFunction;
 
 export abstract class UIElement {
   public readonly id = this.prop(randomString(8));
@@ -128,12 +127,6 @@ export abstract class UIElement {
   protected effect(fn: VoidFunction): void {
     const dispose = effect(fn);
     this.addDisposable(dispose);
-  }
-
-  protected createElement<T extends UIElement>(creator: () => T): T {
-    const element: T = creator();
-    this.addDisposable(element.dispose);
-    return element;
   }
 
   /**
@@ -360,6 +353,8 @@ export abstract class UIElement {
     this.#renderDisposables = [];
   }
 }
+
+type Unrender = VoidFunction;
 
 /**
  * Options for positioning the element when rendering.
