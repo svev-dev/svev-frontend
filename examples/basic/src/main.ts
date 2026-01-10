@@ -4,7 +4,7 @@ import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
-import { createSelectTest } from './form/createSelectTest';
+import { SelectTestView } from './form/SelectTestView';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -15,7 +15,7 @@ const stopwatchView = new StopwatchView(stopwatchModel);
 // Todo app
 const todoModel = new TodoModel();
 const todoView = new TodoView(todoModel);
-const selectTest = createSelectTest();
+const selectTest = new SelectTestView();
 
 // Layout for the Stopwatch and Todo app
 const layout = new Flex()

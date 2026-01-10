@@ -58,6 +58,11 @@ export default [
           message:
             'Native private fields cannot be used in constructor parameters. Move the declaration to a class field.',
         },
+        {
+          selector:
+            "CallExpression[callee.name='effect']:not(VariableDeclarator > CallExpression[callee.name='effect']):not(AssignmentExpression > CallExpression[callee.name='effect'])",
+          message: 'effect() must be assigned to a variable. Use: const dispose = effect(...)',
+        },
       ],
       'no-var': 'error',
       'prefer-const': 'error',
