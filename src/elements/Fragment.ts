@@ -9,6 +9,11 @@ export class Fragment extends UIElement {
     this.rerender();
   }
 
+  public addChild(child: Element): void {
+    this.#children([...this.#children.peek(), child]); // Create new array to trigger signal
+    this.rerender();
+  }
+
   public getChildren(): readonly Element[] {
     return this.#children();
   }

@@ -11,6 +11,11 @@ export abstract class Container extends UIElement {
     return this;
   }
 
+  public addChild(children: UIElement): this {
+    this.fragment.addChild(children);
+    return this;
+  }
+
   public mapChildren<T>(items: ReadonlySignal<readonly T[]>, map: (item: T) => UIElement): this {
     const elements = this.#createAndUpdateUIElementList(items, map);
     this.effect(() => {
