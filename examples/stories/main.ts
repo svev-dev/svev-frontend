@@ -1,8 +1,8 @@
 import { Flex } from 'svev-frontend';
 import { ButtonStory } from './src/ButtonStory';
 import { BoolInputStory } from './src/BoolInputStory';
-import './style.css';
 import { TabsStory } from './src/TabsStory';
+import './style.css';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 

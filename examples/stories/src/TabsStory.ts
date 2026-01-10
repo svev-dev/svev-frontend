@@ -5,7 +5,7 @@ export class TabsStory extends StylingStory {
   protected createElements(): UIElement[] {
     const tabs = new Tabs();
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i <= 3; i++) {
       tabs
         .addTab()
         .label(`Tab ${i}`)
