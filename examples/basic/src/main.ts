@@ -6,8 +6,6 @@ import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { SelectTestView } from './form/SelectTestView';
 
-const app = document.querySelector<HTMLDivElement>('#app')!;
-
 // Stopwatch app
 const stopwatchModel = new StopwatchModel();
 const stopwatchView = new StopwatchView(stopwatchModel);
@@ -24,7 +22,16 @@ const layout = new Flex()
   .gap('25px')
   .alignItems('center');
 
-layout.render({ in: app });
+const app = new Flex().setChildren([layout]).setCss({
+  minHeight: '100vh',
+  minWidth: '100vw',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+});
+
+app.render({ in: document.body });
 
 // Test garbage collection
 {
