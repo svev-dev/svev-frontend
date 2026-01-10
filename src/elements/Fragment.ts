@@ -10,7 +10,7 @@ export class Fragment extends UIElement {
   }
 
   public addChild(child: Element): void {
-    this.#children([...this.#children(), child]); // Create new array to trigger signal
+    this.#children([...this.#children.peek(), child]); // Create new array to trigger signal
     this.rerender();
   }
 
