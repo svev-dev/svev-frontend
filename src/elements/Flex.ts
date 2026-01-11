@@ -16,6 +16,7 @@ export class Flex extends Container {
       element.style.alignItems = this.alignItems();
       element.style.padding = this.padding();
       element.style.gap = this.gap();
+      this.applyTo(element);
     });
 
     const dispose = this.fragment.render({ in: element });

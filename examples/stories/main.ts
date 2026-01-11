@@ -3,11 +3,18 @@ import { ButtonStory } from './src/ButtonStory';
 import { BoolInputStory } from './src/BoolInputStory';
 import './style.css';
 
-const app = document.querySelector<HTMLDivElement>('#app')!;
-
 const buttonStory = new ButtonStory();
 const boolInputStory = new BoolInputStory();
 
 const flex = new Flex().setChildren([buttonStory, boolInputStory]);
 
-flex.render({ in: app });
+const app = new Flex().setChildren([flex]).setCss({
+  minHeight: '100vh',
+  minWidth: '100vw',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+});
+
+app.render({ in: document.body });
