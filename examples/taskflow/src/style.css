@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source "../../../src";
+@source "../../../packages/core/src";
 @plugin "daisyui" {
   /* https://github.com/saadeghi/daisyui/issues/3882#issuecomment-3382480890 */
   exclude: properties;
