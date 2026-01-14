@@ -1,10 +1,11 @@
 import './style.css';
-import { Button, Flex } from 'svev-frontend';
+import { Flex } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { SelectTestView } from './form/SelectTestView';
+import { Button } from 'svev-daisyui';
 
 // Stopwatch app
 const stopwatchModel = new StopwatchModel();

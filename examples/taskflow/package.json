@@ -12,7 +12,8 @@
     "e2e-test": "playwright test"
   },
   "dependencies": {
-    "svev-frontend": "*"
+    "svev-frontend": "*",
+    "svev-daisyui": "*"
   },
   "devDependencies": {
     "@playwright/test": "*",

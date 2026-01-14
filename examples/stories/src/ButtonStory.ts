@@ -1,4 +1,5 @@
-import { Button, UIElement } from 'svev-frontend';
+import { UIElement } from 'svev-frontend';
+import { Button } from 'svev-daisyui';
 import { StylingStory } from './StylingStory';
 
 export class ButtonStory extends StylingStory {

@@ -11,7 +11,8 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "svev-frontend": "*"
+    "svev-frontend": "*",
+    "svev-daisyui": "*"
   },
   "devDependencies": {
     "@types/node": "*",
