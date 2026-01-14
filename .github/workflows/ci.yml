@@ -61,6 +61,10 @@ jobs:
         working-directory: ./examples/basic
         run: npx playwright test
 
+      - name: Run Playwright tests
+        working-directory: ./examples/taskflow
+        run: npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
