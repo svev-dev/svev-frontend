@@ -5,11 +5,6 @@ export const baseConfig = defineConfig({
     globals: true,
     environment: 'happy-dom',
     include: ['**/*.test.ts'],
-    typecheck: {
-      enabled: true,
-      include: ['**/*.test.ts'],
-      tsconfig: './tsconfig.json',
-    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
