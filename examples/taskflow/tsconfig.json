@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "svev-frontend": ["../../src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "e2e-tests/**/*.ts", "playwright.config.ts", "vite.config.ts"]
+}

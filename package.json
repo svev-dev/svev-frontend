@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "workspaces": [
     "examples/stories",
-    "examples/basic"
+    "examples/basic",
+    "examples/taskflow"
   ],
   "description": "",
   "keywords": [],
