@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 
-export default defineConfig({
+export const baseConfig = defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',

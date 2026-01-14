@@ -12,7 +12,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'svev-frontend': path.resolve(__dirname, '../../src/index.ts'),
+      'svev-frontend': path.resolve(__dirname, '../../packages/core/src/index.ts'),
     },
   },
   server: {
