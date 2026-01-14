@@ -40,8 +40,13 @@ npm run build
 
 ## Project Structure
 
-- `src/` - Source code
+This is a monorepo using npm workspaces:
+
+- `packages/core/` - Core library source code
 - `examples/` - Example applications using the library
+  - `basic/` - Basic example app
+  - `stories/` - Storybook-style component showcase
+  - `taskflow/` - TaskFlow example (Trello/Jira-like app)
 - Test files use `*.test.ts` extension and live alongside production files
 
 ## Linting & Formatting
@@ -59,18 +64,22 @@ For the best experience, install these extensions:
 
 ## Example Apps
 
-Example apps are configured to use the library source directly for hot-reloading during development. They use npm workspaces and Vite path aliases to import from `src/` directly.
+Example apps use npm workspaces to reference the core package as a local dependency. The core package exports TypeScript source files directly, enabling hot-reloading during development without requiring a build step.
 
 To run an example:
 
 ```bash
+# Basic example
 cd examples/basic
 npm run dev
-```
 
-To run "storybook":
-
-```bash
+# Stories (component showcase)
 cd examples/stories
 npm run dev
+
+# TaskFlow example
+cd examples/taskflow
+npm run dev
 ```
+
+All examples are configured to use the `svev-frontend` package from the workspace, which is automatically linked via npm workspaces.

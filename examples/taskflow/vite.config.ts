@@ -1,12 +1,3 @@
-import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
+import { createViteConfig } from '../../vite.base.config';
 
-export default defineConfig({
-  plugins: [tailwindcss()],
-  build: {
-    target: 'ES2022',
-  },
-  server: {
-    port: 3000,
-  },
-});
+export default createViteConfig(3002);
