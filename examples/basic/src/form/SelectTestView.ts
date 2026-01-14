@@ -1,4 +1,5 @@
-import { Flex, Text, SelectInput } from 'svev-frontend';
+import { Flex, Text } from 'svev-frontend';
+import { SelectInput } from 'svev-daisyui';
 
 export class SelectTestView extends Flex {
   public constructor() {

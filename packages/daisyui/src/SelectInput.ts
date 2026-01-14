@@ -1,8 +1,6 @@
-import { signal } from '../signals/signals';
-import { IS_DEV } from '../utils/isDev';
+import { IS_DEV } from './isDev';
 import { Size, Variant, getSizeClass, getVariantClass, Sizes, Variants } from './Enums';
-import { IPropertyRegister } from './IPropertyRegister';
-import { UIElement } from './UIElement';
+import { UIElement, IPropertyRegister, signal } from 'svev-frontend';
 
 // https://daisyui.com/components/select/
 

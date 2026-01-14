@@ -1,4 +1,5 @@
-import { BoolInput, UIElement } from 'svev-frontend';
+import { UIElement } from 'svev-frontend';
+import { BoolInput } from 'svev-daisyui';
 import { StylingStory } from './StylingStory';
 
 export class BoolInputStory extends StylingStory {

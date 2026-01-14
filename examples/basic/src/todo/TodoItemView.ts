@@ -1,4 +1,5 @@
-import { Flex, UIElement, Button, Text, createSVGElement, Element } from 'svev-frontend';
+import { Flex, UIElement, Text, createSVGElement, Element } from 'svev-frontend';
+import { Button } from 'svev-daisyui';
 import { TodoItemModel } from './TodoItemModel';
 import CheckIcon from './icons/Check.svg?raw';
 

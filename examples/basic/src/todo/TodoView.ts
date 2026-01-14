@@ -1,4 +1,5 @@
-import { Flex, Button, StringInput, Paragraph, createSVGElement } from 'svev-frontend';
+import { Flex, Paragraph, createSVGElement } from 'svev-frontend';
+import { Button, StringInput } from 'svev-daisyui';
 import { TodoModel } from './TodoModel';
 import { TodoItemView } from './TodoItemView';
 import AddIcon from './icons/Add.svg?raw';
