@@ -1,10 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "svev-frontend": ["../../packages/core/src/index.ts"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts"]
 }
