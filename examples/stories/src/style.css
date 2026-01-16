@@ -4,5 +4,5 @@
   /* https://github.com/saadeghi/daisyui/issues/3882#issuecomment-3382480890 */
   exclude: properties;
 
-  themes: dark --default;
+  themes: light --default;
 }

@@ -1,5 +1,5 @@
 {
-  "name": "stories-example",
+  "name": "taskflow",
   "version": "0.1.0",
   "type": "module",
   "scripts": {
@@ -8,13 +8,15 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest --run",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "e2e-test": "playwright test"
   },
   "dependencies": {
     "svev-frontend": "*",
     "svev-daisyui": "*"
   },
   "devDependencies": {
+    "@playwright/test": "*",
     "@types/node": "*",
     "typescript": "*",
     "vite": "*",

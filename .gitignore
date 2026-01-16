@@ -1,9 +1,27 @@
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
 coverage/
+
+# Logs
 *.log
-.DS_Store
+
+# Environment files
 .env
 .env.local
+
+# OS files
+.DS_Store
+
+# IDE/Editor
 .jj/
 tsconfig.vitest-temp.json
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/

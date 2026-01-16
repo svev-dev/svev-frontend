@@ -1,43 +1,31 @@
 {
-  "name": "svev-frontend",
+  "name": "svev-frontend-workspace",
   "version": "0.1.0",
+  "private": true,
   "workspaces": [
-    "examples/stories",
-    "examples/basic"
+    "packages/*",
+    "examples/*"
   ],
   "description": "",
   "keywords": [],
   "license": "ISC",
   "author": "",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
   "scripts": {
-    "build": "tsc",
-    "test": "vitest --run",
-    "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
+    "e2e-test": "npm run e2e-test --workspaces --if-present",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "typecheck": "tsc --noEmit && tsc --noEmit --project examples/basic/tsconfig.json && tsc --noEmit --project examples/stories/tsconfig.json"
-  },
-  "dependencies": {
-    "@preact/signals": "^2.5.1"
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
-    "@types/node": "^22.10.2",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
     "@vitest/coverage-v8": "^2.1.8",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -46,6 +34,10 @@
     "prettier": "^3.4.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.0.0",
-    "vitest": "^2.1.8"
+    "vite": "^5.4.21",
+    "vitest": "^2.1.8",
+    "@tailwindcss/vite": "^4.1.18",
+    "daisyui": "^5.5.14",
+    "tailwindcss": "^4.1.18"
   }
 }

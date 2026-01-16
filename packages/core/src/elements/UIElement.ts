@@ -22,6 +22,7 @@ export abstract class UIElement {
   readonly #renderDisposeCollection = new DisposeCollection();
   readonly #dummyNode = document.createComment('dummy');
   readonly #triggerRender = signal(0);
+  readonly #style = signal<Partial<CSSStyleDeclaration>>({});
 
   public constructor() {
     AutoDisposal.instance.register(this, this.#disposeCollection);
@@ -77,6 +78,35 @@ export abstract class UIElement {
     });
 
     return () => this.#disposeRender();
+  }
+
+  /**
+   * Sets the CSS styles, replacing all existing styles.
+   * @param styles Object with CSS property-value pairs
+   */
+  public setCss(styles: Partial<CSSStyleDeclaration>): this {
+    this.#style({ ...styles });
+    return this;
+  }
+
+  /**
+   * Adds or merges CSS styles with existing styles.
+   * @param styles Object with CSS property-value pairs to merge
+   */
+  public addCss(styles: Partial<CSSStyleDeclaration>): this {
+    const current = this.#style.peek();
+    this.#style({ ...current, ...styles });
+    return this;
+  }
+
+  /**
+   * Applies the current styles to an HTML element.
+   * This method directly assigns styles to the element's style property.
+   * @param element The HTML element to apply styles to
+   */
+  protected applyTo(element: HTMLElement): void {
+    const styles = this.#style();
+    Object.assign(element.style, styles);
   }
 
   /**

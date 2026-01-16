@@ -1,7 +1,6 @@
-import { onShortcut, Shortcut, shortcutToStringParts } from '../Shortcut';
+import { onShortcut, Shortcut, shortcutToStringParts } from 'svev-frontend';
 import { getSizeClass, Size } from './Enums';
-import { IInvokable } from './IInvokable';
-import { Element, UIElement } from './UIElement';
+import { Element, UIElement, IInvokable } from 'svev-frontend';
 
 // https://daisyui.com/components/kbd/
 

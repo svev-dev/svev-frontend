@@ -1,15 +1,10 @@
 import { defineConfig } from 'vitest/config';
 
-export default defineConfig({
+export const baseConfig = defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
     include: ['**/*.test.ts'],
-    typecheck: {
-      enabled: true,
-      include: ['**/*.test.ts'],
-      tsconfig: './tsconfig.json',
-    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

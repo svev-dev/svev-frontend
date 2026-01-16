@@ -26,5 +26,8 @@
     "**/.git": true,
     "**/.DS_Store": true
   },
-  "cSpell.words": ["unrender"]
+  "cSpell.words": [
+    "svev",
+    "taskflow"
+  ]
 }

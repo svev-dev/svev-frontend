@@ -1,3 +1,3 @@
 import { createViteConfig } from '../../vite.base.config';
 
-export default createViteConfig(3000);
+export default createViteConfig(3002);

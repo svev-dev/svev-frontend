@@ -40,26 +40,23 @@ jobs:
         run: npm run format
 
       - name: Test
-        run: npm test
+        run: npm run test
 
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Build example app
-        working-directory: ./examples/basic
-        run: npm run build
-
-      - name: Build stories app
-        working-directory: ./examples/stories
-        run: npm run build
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('./package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Install Playwright Browsers
-        working-directory: ./examples/basic
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
       - name: Run Playwright tests
-        working-directory: ./examples/basic
-        run: npx playwright test
+        run: npm run e2e-test
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

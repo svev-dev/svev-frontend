@@ -1,3 +1,3 @@
 import { createPlaywrightConfig } from '../../playwright.base.config';
 
-export default createPlaywrightConfig(3000);
+export default createPlaywrightConfig(3002);

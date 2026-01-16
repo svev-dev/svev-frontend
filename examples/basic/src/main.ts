@@ -1,12 +1,11 @@
 import './style.css';
-import { Button, Flex } from 'svev-frontend';
+import { Flex } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { SelectTestView } from './form/SelectTestView';
-
-const app = document.querySelector<HTMLDivElement>('#app')!;
+import { Button } from 'svev-daisyui';
 
 // Stopwatch app
 const stopwatchModel = new StopwatchModel();
@@ -24,7 +23,16 @@ const layout = new Flex()
   .gap('25px')
   .alignItems('center');
 
-layout.render({ in: app });
+const app = new Flex().setChildren([layout]).setCss({
+  minHeight: '100vh',
+  minWidth: '100vw',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+});
+
+app.render({ in: document.body });
 
 // Test garbage collection
 {
