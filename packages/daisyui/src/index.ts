@@ -1,5 +1,8 @@
 export { BoolInput } from './BoolInput';
 export { Button } from './Button';
+export { Card } from './Card';
+export { Menu } from './Menu';
+export { MenuItem } from './MenuItem';
 export { SelectInput } from './SelectInput';
 export { ShortcutElement } from './ShortcutElement';
 export { StringInput } from './StringInput';
