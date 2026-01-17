@@ -39,6 +39,7 @@ export abstract class Container extends UIElement {
       // Step 1: reuse or create UIElement
       for (const item of itemsToRender) {
         const cachedElement = elementCache.popFirst(item);
+        // TODO: verify the newly created element gets disposed (hint: use onUnrender).
         const element = cachedElement || map(item);
         elements.push([item, element]);
       }
