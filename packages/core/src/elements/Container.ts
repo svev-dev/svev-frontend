@@ -1,4 +1,5 @@
-import { ReadonlySignal, signal } from '../signals/signals';
+import type { ReadonlySignal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { MultiMap } from '../utils/MultiMap';
 import { Fragment } from './Fragment';
 import { UIElement } from './UIElement';

@@ -1,6 +1,8 @@
 import { IS_DEV } from './isDev';
-import { getSizeClass, getVariantClass, Size, Sizes, Variant, Variants } from './Enums';
-import { UIElement, Element, IPropertyRegister } from 'svev-frontend';
+import type { Size, Variant } from './Enums';
+import { getSizeClass, getVariantClass, Sizes, Variants } from './Enums';
+import type { Element, IPropertyRegister } from 'svev-frontend';
+import { UIElement } from 'svev-frontend';
 
 // https://daisyui.com/components/checkbox/
 // https://daisyui.com/components/toggle/

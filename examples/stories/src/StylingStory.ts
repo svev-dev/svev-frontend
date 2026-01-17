@@ -1,4 +1,5 @@
-import { Element, Flex, UIElement } from 'svev-frontend';
+import type { Element, UIElement } from 'svev-frontend';
+import { Flex } from 'svev-frontend';
 import { BaseStory } from './BaseStory';
 import { Styling } from './Styling';
 

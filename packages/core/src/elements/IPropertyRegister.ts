@@ -1,5 +1,5 @@
-import { Shortcut } from '../Shortcut';
-import { Property } from './Property';
+import type { Shortcut } from '../Shortcut';
+import type { Property } from './Property';
 
 export interface IPropertyRegister {
   addHeader(name: string): void;

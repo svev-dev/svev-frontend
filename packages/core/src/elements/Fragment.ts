@@ -1,5 +1,6 @@
 import { signal } from '../signals/signals';
-import { Element, UIElement } from './UIElement';
+import type { Element } from './UIElement';
+import { UIElement } from './UIElement';
 
 export class Fragment extends UIElement {
   readonly #children = signal<readonly Element[]>([]);

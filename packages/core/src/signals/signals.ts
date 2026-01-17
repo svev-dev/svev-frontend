@@ -5,7 +5,7 @@ import {
   batch as preactBatch,
   untracked as preactUntracked,
 } from '@preact/signals';
-import { Dispose } from '../types';
+import type { Dispose } from '../types';
 import { IS_DEV } from '../utils/isDev';
 
 export type ReadonlySignal<T> = {

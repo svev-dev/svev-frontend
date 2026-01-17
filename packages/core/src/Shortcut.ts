@@ -1,4 +1,4 @@
-import { Dispose } from './types';
+import type { Dispose } from './types';
 import { isMac } from './utils/isMac';
 
 export type Shortcut = {

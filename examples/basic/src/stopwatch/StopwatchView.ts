@@ -1,4 +1,5 @@
-import { Flex, UIElement, Text, Element } from 'svev-frontend';
+import type { Element } from 'svev-frontend';
+import { Flex, UIElement, Text } from 'svev-frontend';
 import { Button } from 'svev-daisyui';
 import { StopwatchModel } from './StopwatchModel';
 

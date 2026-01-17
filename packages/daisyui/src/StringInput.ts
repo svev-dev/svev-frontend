@@ -1,4 +1,5 @@
-import { Element, UIElement, IInvokable } from 'svev-frontend';
+import type { Element, IInvokable } from 'svev-frontend';
+import { UIElement } from 'svev-frontend';
 
 // https://daisyui.com/components/input/
 

@@ -1,12 +1,14 @@
 import { AutoDisposal } from '../AutoDisposal';
 import { DisposeCollection } from '../DisposeCollection';
-import { effect, ReadonlySignal, signal, untracked } from '../signals/signals';
-import { Dispose } from '../types';
+import type { ReadonlySignal } from '../signals/signals';
+import { effect, signal, untracked } from '../signals/signals';
+import type { Dispose } from '../types';
 import { last, reverse, toArray } from '../utils/array';
 import { IS_DEV } from '../utils/isDev';
 import { randomString } from '../utils/Random';
-import { IPropertyRegister } from './IPropertyRegister';
-import { Property, property } from './Property';
+import type { IPropertyRegister } from './IPropertyRegister';
+import type { Property } from './Property';
+import { property } from './Property';
 
 export type Element = UIElement | ChildNode;
 

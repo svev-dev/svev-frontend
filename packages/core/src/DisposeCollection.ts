@@ -1,4 +1,4 @@
-import { Dispose } from './types';
+import type { Dispose } from './types';
 
 export class DisposeCollection {
   #disposables: Dispose[] = [];

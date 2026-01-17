@@ -1,4 +1,5 @@
-import { ReadonlySignal, signal } from '../signals/signals';
+import type { ReadonlySignal } from '../signals/signals';
+import { signal } from '../signals/signals';
 import { IS_DEV } from '../utils/isDev';
 
 export type Delegate<T> = () => T;

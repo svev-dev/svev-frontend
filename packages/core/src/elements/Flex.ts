@@ -1,5 +1,5 @@
 import { Container } from './Container';
-import { Element } from './UIElement';
+import type { Element } from './UIElement';
 
 export class Flex extends Container {
   public readonly direction = this.prop<'row' | 'column'>('row');

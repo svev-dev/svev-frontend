@@ -1,13 +1,5 @@
-import {
-  Flex,
-  UIElement,
-  IPropertyRegister,
-  Property,
-  Shortcut,
-  Text,
-  createSVGElement,
-  Element,
-} from 'svev-frontend';
+import type { IPropertyRegister, Property, Shortcut, Element } from 'svev-frontend';
+import { Flex, UIElement, Text, createSVGElement } from 'svev-frontend';
 import { BoolInput, StringInput, SelectInput } from 'svev-daisyui';
 import BookmarkIcon from './icons/Bookmark.svg?raw';
 import ClipboardIcon from './icons/Clipboard.svg?raw';

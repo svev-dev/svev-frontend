@@ -1,4 +1,5 @@
-import { ReadonlySignal, signal } from 'svev-frontend';
+import type { ReadonlySignal } from 'svev-frontend';
+import { signal } from 'svev-frontend';
 
 export class StopwatchModel {
   #startTime: number | null = null;
