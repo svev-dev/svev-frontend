@@ -10,6 +10,11 @@ import { Property, property } from './Property';
 
 export type Element = UIElement | ChildNode;
 
+/**
+ * This is the base class for all UI elements.
+ * It takes care of rendering the UIElement and disposing of it.
+ * In addition, it provides common properties like `id`, `isVisible`, `isEnabled` and styling.
+ */
 export abstract class UIElement {
   public readonly id = this.prop(randomString(8));
   public readonly isVisible = this.prop(true);
@@ -30,14 +35,22 @@ export abstract class UIElement {
   }
 
   /**
-   * The one that calls `createUI` owns the UIElement and is responsible for calling `dispose`.
+   * This is a virtual method that must be implemented by the subclass.
+   * `createUI` is called when the UIElement is rendered, and can return a single element or a list of elements.
+   * Supported elements are `UIElement` and `ChildNode` (DOM nodes).
+   * All calls to `this.addDisposable` called inside `createUI` will be disposed in these scenarios:
+   * 1. The return function from `render` (unrender) is called.
+   * 2. `UIElement.rerender` is called.
+   * 3. The UIElement is disposed.
    */
   protected abstract createUI(): Element | readonly Element[];
 
   /**
-   * Renders the UIElement inside the parent node.
-   * @param placement Options for positioning the element when rendering. If not provided, the element will be appended to the end of the parent node.
-   * @returns A disposable function that can be called to remove the UIElement from the DOM, and dispose the UIElement.
+   * Renders the UIElement in the DOM, and will render until the return function is called, or the UIElement is disposed.
+   * @param placement Option for where the element should render.
+   * @returns A unrender function, which will cause the UIElement to be removed from the DOM, and dispose effects created inside `createUI`.
+   *
+   * @throws If the UIElement is already being rendered.
    */
   public render(placement: ElementPlacement): Unrender {
     if (this.#beingRendered) {
@@ -148,7 +161,6 @@ export abstract class UIElement {
    * This is called when the UIElement must be rerendered.
    * A use-case is that the top-level HTML element is changing.
    * Calling this only has effect if the UIElement is being rendered.
-   * This will dispose all disposables and call createUI.
    */
   protected rerender(): void {
     if (!this.#beingRendered) {
@@ -171,7 +183,8 @@ export abstract class UIElement {
   }
 
   /**
-   * Adds a disposable function that will be called when dispose() is called.
+   * Adds a disposable function. If `addDisposable` is called inside `createUI`, the disposable will be disposed when the UIElement is unrendered, rerendered or disposed.
+   * Otherwise, the disposable will only be disposed when the UIElement is disposed.
    */
   protected addDisposable(dispose: Dispose): void {
     if (this.#isCreatingUI) {
@@ -182,7 +195,8 @@ export abstract class UIElement {
   }
 
   /**
-   * Disposes all registered disposables and clears the set.
+   * Disposes all registered disposables.
+   * It is no longer safe to render the UIElement after it has been disposed.
    */
   public dispose = (): void => {
     this.#disposeRender();
@@ -190,8 +204,18 @@ export abstract class UIElement {
   };
 
   /**
-   * Helper method to create a property without explicitly passing `this`.
-   * Usage: `public label = this.prop('');`
+   * Creates a property (slightly modified signal) tied to this UIElement. We tie the property to the UIElement to make calls to it chainable and more ergonomic.
+   * @example
+   * ```ts
+   * class MyElement extends UIElement {
+   *   public readonly label = this.prop('');
+   *   public readonly description = this.prop<string | undefined>(undefined);
+   * }
+   *
+   * const myElement = new MyElement()
+   *   .label('Hello, world!')
+   *   .description('This is a description');
+   * ```
    */
   protected prop<T>(value: T): Property<T, this> {
     return property(value, this);
