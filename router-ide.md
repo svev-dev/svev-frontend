@@ -6,11 +6,14 @@
 
 Nested routing:
 
-```
+```ts
 const mainRouter = new Router(...)
 const userRouter = new Router(...)
 
 mainRouter.add('/users', userRouter);
+
+userRouter
+  .add('/me', )
 ```
 
 Route navigation:

@@ -26,5 +26,6 @@
     "**/.git": true,
     "**/.DS_Store": true
   },
-  "cSpell.words": ["svev", "taskflow", "unrender"]
+  "cSpell.words": ["svev", "taskflow", "unrender"],
+  "vitest.filesWatcherInclude": "*{apps,packages}/**/*.test.ts"
 }

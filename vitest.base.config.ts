@@ -10,5 +10,11 @@ export const baseConfig = defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: ['node_modules/', 'dist/', '**/*.test.ts', '**/*.config.ts'],
     },
+    // Disable cache to prevent stale code issues
+    cache: false,
+    // Force re-run tests when files change
+    watchExclude: [],
   },
+  // Clear Vite cache
+  clearScreen: true,
 });
