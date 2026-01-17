@@ -1,4 +1,3 @@
-import { Flex } from 'svev-frontend';
 import { ButtonStory } from './src/ButtonStory';
 import { BoolInputStory } from './src/BoolInputStory';
 import { TabsStory } from './src/TabsStory';

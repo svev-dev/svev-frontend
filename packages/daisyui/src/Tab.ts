@@ -1,8 +1,8 @@
-import { signal } from '../signals/signals';
-import { IS_DEV } from '../utils/isDev';
+import { signal } from '../../core/src/signals/signals';
+import { IS_DEV } from '../../core/src/utils/isDev';
 import { Size, Variant } from './Enums';
-import { IPropertyRegister } from './IPropertyRegister';
-import { Element, UIElement } from './UIElement';
+import { IPropertyRegister } from '../../core/src/elements/IPropertyRegister';
+import { Element, UIElement } from '../../core/src/elements/UIElement';
 
 // https://daisyui.com/components/tab/
 // https://daisyui.com/components/radio/

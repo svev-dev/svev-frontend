@@ -26,8 +26,5 @@
     "**/.git": true,
     "**/.DS_Store": true
   },
-  "cSpell.words": [
-    "svev",
-    "taskflow"
-  ]
+  "cSpell.words": ["svev", "taskflow"]
 }
