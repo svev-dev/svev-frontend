@@ -1,5 +1,6 @@
-import { Paragraph, Tabs, UIElement } from 'svev-frontend';
+import { Paragraph, UIElement } from 'svev-frontend';
 import { StylingStory } from './StylingStory';
+import { Tabs } from 'svev-daisyui';
 
 export class TabsStory extends StylingStory {
   protected createElements(): UIElement[] {
