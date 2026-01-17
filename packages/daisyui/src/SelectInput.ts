@@ -88,8 +88,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
     return value;
   }
 
-  public setOptions(optionsArray: readonly Value[]): this;
-  public setOptions(optionsArray: readonly Value[], map: (value: Value) => Label): this;
+  public setOptions(optionsArray: readonly Value[], map?: (value: Value) => Label): this;
   public setOptions(optionsMap: Record<Value, Label>): this;
   public setOptions(
     options: readonly Value[] | Record<Value, Label>,
