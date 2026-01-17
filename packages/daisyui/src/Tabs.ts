@@ -1,8 +1,8 @@
 import { IS_DEV } from '../../core/src/utils/isDev';
 import { Container } from '../../core/src/elements/Container';
-import { IPropertyRegister } from '../../core/src/elements/IPropertyRegister';
+import type { IPropertyRegister } from '../../core/src/elements/IPropertyRegister';
 import { Tab } from './Tab';
-import { Element } from '../../core/src/elements/UIElement';
+import type { Element } from '../../core/src/elements/UIElement';
 
 // https://daisyui.com/components/tabs/
 

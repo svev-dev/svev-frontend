@@ -1,5 +1,6 @@
 import { escapeHTML } from '../utils/html';
-import { Element, UIElement } from './UIElement';
+import type { Element } from './UIElement';
+import { UIElement } from './UIElement';
 
 export class Text extends UIElement {
   public readonly text = this.prop('');

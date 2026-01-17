@@ -1,4 +1,5 @@
-import { Paragraph, UIElement } from 'svev-frontend';
+import type { UIElement } from 'svev-frontend';
+import { Paragraph } from 'svev-frontend';
 import { StylingStory } from './StylingStory';
 import { Tabs } from 'svev-daisyui';
 

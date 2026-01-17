@@ -1,6 +1,8 @@
 import { IS_DEV } from './isDev';
-import { Direction, Directions, getDirectionClass, getSizeClass, Size, Sizes } from './Enums';
-import { Container, Element, IPropertyRegister } from 'svev-frontend';
+import type { Direction, Size } from './Enums';
+import { Directions, getDirectionClass, getSizeClass, Sizes } from './Enums';
+import type { Element, IPropertyRegister } from 'svev-frontend';
+import { Container } from 'svev-frontend';
 
 // https://daisyui.com/components/menu/
 
