@@ -5,15 +5,15 @@ export interface IPropertyRegister {
   addHeader(name: string): void;
   addBool(name: string, property: Property<boolean, unknown>): void;
   addString(name: string, property: Property<string, unknown>): void;
-  addOptions(
+  addOptions<T extends string | number>(
     name: string,
-    property: Property<string | number, unknown>,
-    options: readonly string[] | readonly number[]
+    property: Property<T, unknown>,
+    options: readonly T[]
   ): void;
-  addOptionalOptions(
+  addOptionalOptions<T extends string | number>(
     name: string,
-    property: Property<string | number | undefined, unknown>,
-    options: readonly string[] | readonly number[]
+    property: Property<T | undefined, unknown>,
+    options: readonly T[]
   ): void;
   addOptionalIcon(name: string, property: Property<SVGElement | undefined, unknown>): void;
   addOptionalShortcut(name: string, property: Property<Shortcut | undefined, unknown>): void;
