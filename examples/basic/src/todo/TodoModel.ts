@@ -1,4 +1,5 @@
-import { ReadonlySignal, signal } from 'svev-frontend';
+import type { ReadonlySignal } from 'svev-frontend';
+import { signal } from 'svev-frontend';
 import { TodoItemModel } from './TodoItemModel';
 
 export class TodoModel {

@@ -1,4 +1,5 @@
-import { Signal, signal } from 'svev-frontend';
+import type { Signal } from 'svev-frontend';
+import { signal } from 'svev-frontend';
 
 export class TodoItemModel {
   public label: Signal<string>;

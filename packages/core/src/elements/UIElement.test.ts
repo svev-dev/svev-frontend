@@ -1,5 +1,7 @@
-import { describe, it, expect, vi, Mock, beforeEach } from 'vitest';
-import { Element, UIElement } from './UIElement';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import type { Element } from './UIElement';
+import { UIElement } from './UIElement';
 
 describe(UIElement, () => {
   it('should have a unique id', () => {
