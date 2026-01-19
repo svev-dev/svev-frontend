@@ -1,7 +1,7 @@
 ---
 description: 'Guidelines for converting DaisyUI components to UIElement in svev-daisyui'
 globs: **/daisyui/**/*.ts
-alwaysApply: false
+alwaysApply: true
 ---
 
 # UIElement creation

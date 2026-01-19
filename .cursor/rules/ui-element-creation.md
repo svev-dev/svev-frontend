@@ -425,3 +425,30 @@ this.effect(() => {
   return [title, text];
 });
 ```
+
+## Testing
+
+**Rendering is Synchronous**: When you call `element.render(placement)`, the rendering happens immediately and synchronously. There is no need to wait or use `setTimeout` in tests. You can assert on the DOM immediately after calling `render()`:
+
+```ts
+// ✅ CORRECT - rendering is immediate
+it('should render content', () => {
+  const element = new MyElement().label('Test');
+  const container = document.createElement('div');
+  element.render({ in: container });
+
+  expect(container.textContent).toBe('Test');
+});
+
+// ❌ WRONG - no need to wait
+it('should render content', async () => {
+  const element = new MyElement().label('Test');
+  const container = document.createElement('div');
+  element.render({ in: container });
+
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  expect(container.textContent).toBe('Test');
+});
+```
+
+When navigation or state changes trigger re-renders (via `rerender()`), those updates also happen synchronously within the same execution context. Effects run synchronously when signals change, so you can assert immediately after triggering the change.
