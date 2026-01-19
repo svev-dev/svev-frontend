@@ -86,6 +86,7 @@ export default [
       '@typescript-eslint/prefer-readonly': 'error',
       '@typescript-eslint/strict-boolean-expressions': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'error',
       radix: 'error',
       yoda: 'error',
     },
