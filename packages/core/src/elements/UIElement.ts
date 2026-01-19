@@ -22,9 +22,11 @@ export abstract class UIElement {
   public readonly isVisible = this.prop(true);
   public readonly isEnabled = this.prop(true);
 
+  #isDisposed = false;
   #beingRendered = false;
   #isCreatingUI = false;
   #renderedElements: readonly [Element, Unrender][] = [];
+  #onUnrender: VoidFunction[] = [];
   readonly #disposeCollection = new DisposeCollection();
   readonly #renderDisposeCollection = new DisposeCollection();
   readonly #dummyNode = document.createComment('dummy');
@@ -58,6 +60,9 @@ export abstract class UIElement {
     if (this.#beingRendered) {
       throw new Error(IS_DEV ? 'UIElement is being rendered already' : '');
     }
+    if (this.#isDisposed) {
+      throw new Error(IS_DEV ? 'UIElement is disposed. Cannot render.' : '');
+    }
     this.#beingRendered = true;
 
     const elementsToRender = signal<readonly Element[]>([]);
@@ -90,9 +95,16 @@ export abstract class UIElement {
       dispose();
       unrenderList();
       this.#beingRendered = false;
+      this.#onUnrender.forEach((fn) => fn());
+      this.#onUnrender = [];
     });
 
-    return () => this.#disposeRender();
+    return () => this.#renderDisposeCollection.dispose();
+  }
+
+  public onUnrender(fn: VoidFunction): this {
+    this.#onUnrender.push(fn);
+    return this;
   }
 
   /**
@@ -185,6 +197,36 @@ export abstract class UIElement {
   }
 
   /**
+   * Watches one or more signals and calls `rerender()` when any of them change.
+   * This is a convenience method for the common pattern of watching signals and rerendering on change.
+   * The first run is automatically skipped to avoid rerendering during the initial render.
+   *
+   * @example
+   * ```ts
+   * protected createUI(): Element {
+   *   this.watchAndRerender(this.#childSignal, this.#countSignal);
+   *   // ... rest of createUI
+   * }
+   * ```
+   *
+   * @param signals One or more signals to watch for changes
+   */
+  protected watchAndRerender(...signals: ReadonlySignal<unknown>[]): void {
+    let firstRun = true;
+    this.effect(() => {
+      // Access all signals to create dependencies
+      for (const signal of signals) {
+        signal();
+      }
+      if (firstRun) {
+        firstRun = false;
+        return;
+      }
+      this.rerender();
+    });
+  }
+
+  /**
    * Adds a disposable function. If `addDisposable` is called inside `createUI`, the disposable will be disposed when the UIElement is unrendered, rerendered or disposed.
    * Otherwise, the disposable will only be disposed when the UIElement is disposed.
    */
@@ -201,8 +243,15 @@ export abstract class UIElement {
    * It is no longer safe to render the UIElement after it has been disposed.
    */
   public dispose = (): void => {
-    this.#disposeRender();
+    if (this.#beingRendered) {
+      throw new Error(
+        IS_DEV
+          ? 'UIElement is being rendered. Dispose forbidden. Please call `unrender` first.'
+          : ''
+      );
+    }
     this.#disposeCollection.dispose();
+    this.#isDisposed = true;
   };
 
   /**
@@ -408,10 +457,6 @@ export abstract class UIElement {
     } else {
       referenceElement.after(nodeToInsert);
     }
-  }
-
-  #disposeRender(): void {
-    this.#renderDisposeCollection.dispose();
   }
 }
 
