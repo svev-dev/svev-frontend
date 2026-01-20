@@ -6,8 +6,7 @@ import { TestNavigator } from '../navigator/TestNavigator';
 import type { ReadonlySignal } from '../signals/signals';
 import type { RouteMatchParams } from './RouteMatcher';
 import type { Slot } from './Slot';
-import { Text } from '../elements/Text';
-import { Flex } from '../elements/Flex';
+import { Fragment } from '../elements/Fragment';
 import { UIElement } from '../elements/UIElement';
 
 describe(Router, () => {
@@ -28,7 +27,7 @@ describe(Router, () => {
 
   describe('basic routing', () => {
     it('should render route handler on navigation', () => {
-      const handler = vi.fn(() => new Text().text('Home'));
+      const handler = vi.fn(() => new TestElement('Home'));
       router.add('/', handler);
       unrender = router.render({ in: container });
 
@@ -37,11 +36,7 @@ describe(Router, () => {
     });
 
     it('should update rendered content on navigation', () => {
-      const homeHandler = vi.fn(() => new Text().text('Home'));
-      const usersHandler = vi.fn(() => new Text().text('Users'));
-
-      router.add('/', homeHandler);
-      router.add('/users', usersHandler);
+      router.add('/', () => new TestElement('Home')).add('/users', () => new TestElement('Users'));
       unrender = router.render({ in: container });
 
       expect(container.textContent).toBe('Home');
@@ -50,7 +45,7 @@ describe(Router, () => {
     });
 
     it('should pass route match to handler', () => {
-      const handler = vi.fn(() => new Text().text(''));
+      const handler = vi.fn(() => new TestElement(''));
       router.add('/users/:userId', handler);
       unrender = router.render({ in: container });
 
@@ -58,22 +53,28 @@ describe(Router, () => {
       const paramsSignal = getParamsSignal(handler);
       expect(paramsSignal()).toEqual({ userId: '123' });
     });
+
+    it('should render elements directly to DOM without wrapping them', () => {
+      router.add('/', () => new TestElement('Direct'));
+      unrender = router.render({ in: container });
+
+      // The router should render the element directly without any wrapper
+      // Container should have exactly one child (the text node created by TestElement)
+      expect(container.childNodes.length).toBe(1);
+      const renderedChild = container.firstChild;
+      expect(renderedChild).toBeInstanceOf(Text);
+      expect(renderedChild?.textContent).toBe('Direct');
+    });
   });
 
   describe('route matching priority', () => {
     it('should match first matching route', () => {
-      const handler1 = vi.fn(() => new Text().text('1'));
-      const handler2 = vi.fn(() => new Text().text('2'));
-      const handler3 = vi.fn(() => new Text().text('3'));
-      const handler4 = vi.fn(() => new Text().text('4'));
-      const handler5 = vi.fn(() => new Text().text('5'));
-
       router
-        .add('/', handler1)
-        .add('/user/foo/:userId', handler2)
-        .add('/user/*', handler3)
-        .add('/users/foo', handler4)
-        .add('*', handler5);
+        .add('/', () => new TestElement('1'))
+        .add('/user/foo/:userId', () => new TestElement('2'))
+        .add('/user/*', () => new TestElement('3'))
+        .add('/users/foo', () => new TestElement('4'))
+        .add('*', () => new TestElement('5'));
       unrender = router.render({ in: container });
 
       const expected = [
@@ -93,8 +94,8 @@ describe(Router, () => {
 
   describe('subrouter', () => {
     it('should match nested routes with subrouters', () => {
-      const profileHandler = vi.fn(() => new Text().text('Profile'));
-      const settingsHandler = vi.fn(() => new Text().text('Settings'));
+      const profileHandler = vi.fn(() => new TestElement('Profile'));
+      const settingsHandler = vi.fn(() => new TestElement('Settings'));
 
       const userRouter = new Router(navigator)
         .add('/profile', profileHandler)
@@ -113,7 +114,7 @@ describe(Router, () => {
     });
 
     it('should handle nested routes with parameters', () => {
-      const imageHandler = vi.fn(() => new Text().text('Image'));
+      const imageHandler = vi.fn(() => new TestElement('Image'));
 
       const imageRouter = new Router(navigator).add('/images/:imageId', imageHandler);
       const userRouter = new Router(navigator).add('/:postId/*', imageRouter);
@@ -132,7 +133,7 @@ describe(Router, () => {
     });
 
     it('should handle nested routes with wildcards', () => {
-      const catchAllHandler = vi.fn(() => new Text().text('Catch All'));
+      const catchAllHandler = vi.fn(() => new TestElement('Catch All'));
 
       const userRouter = new Router(navigator).add('*', catchAllHandler);
       router.add('/users/*', userRouter);
@@ -144,7 +145,7 @@ describe(Router, () => {
     });
 
     it('should handle deeply nested routes', () => {
-      const deepHandler = vi.fn(() => new Text().text('Deep'));
+      const deepHandler = vi.fn(() => new TestElement('Deep'));
       const level3Router = new Router(navigator).add('/deep', deepHandler);
       const level2Router = new Router(navigator).add('/level3/*', level3Router);
       const level1Router = new Router(navigator).add('/level2/*', level2Router);
@@ -159,32 +160,32 @@ describe(Router, () => {
 
   describe('layouts', () => {
     it('should render layout with slot', () => {
-      const layoutHandler = vi.fn<LayoutHandler>((slot) =>
-        new Flex().setChildren([new Text().text('Header'), slot, new Text().text('Footer')])
-      );
-      const routeHandler = vi.fn(() => new Text().text('Content'));
+      const layoutHandler = vi.fn<LayoutHandler>((slot) => {
+        return new Fragment().setChildren([
+          new TestElement('Header'),
+          slot,
+          new TestElement('Footer'),
+        ]);
+      });
 
       const routerWithLayout = new Router(navigator, layoutHandler);
-      routerWithLayout.add('/', routeHandler);
+      routerWithLayout.add('/', () => new TestElement('Content'));
       unrender = routerWithLayout.render({ in: container });
 
       expect(layoutHandler).toHaveBeenCalledOnce();
-      expect(routeHandler).toHaveBeenCalled();
       expect(container.textContent).toContain('Header');
       expect(container.textContent).toContain('Content');
       expect(container.textContent).toContain('Footer');
     });
 
     it('should not recreate layout when navigating between routes', () => {
-      const layoutHandler = vi.fn<LayoutHandler>((slot) =>
-        new Flex().setChildren([new Text().text('Layout'), slot])
-      );
-      const homeHandler = vi.fn(() => new Text().text('Home'));
-      const usersHandler = vi.fn(() => new Text().text('Users'));
+      const layoutHandler = vi.fn<LayoutHandler>((slot) => {
+        return new Fragment().setChildren([new TestElement('Layout'), slot]);
+      });
 
-      const routerWithLayout = new Router(navigator, layoutHandler);
-      routerWithLayout.add('/', homeHandler);
-      routerWithLayout.add('/users', usersHandler);
+      const routerWithLayout = new Router(navigator, layoutHandler)
+        .add('/', () => new TestElement('Home'))
+        .add('/users', () => new TestElement('Users'));
       unrender = routerWithLayout.render({ in: container });
 
       // Get the initial layout element
@@ -211,12 +212,11 @@ describe(Router, () => {
       const layoutHandler = vi.fn<LayoutHandler>((slot, params) => {
         capturedSlot = slot;
         capturedParams = params;
-        return new Flex().setChildren([slot]);
+        return new Fragment().setChildren([slot]);
       });
-      const routeHandler = vi.fn(() => new Text().text('Content'));
 
       const routerWithLayout = new Router(navigator, layoutHandler);
-      routerWithLayout.add('/users/:userId', routeHandler);
+      routerWithLayout.add('/users/:userId', () => new TestElement('Content'));
       unrender = routerWithLayout.render({ in: container });
 
       navigator.navigate('/users/123');
@@ -228,12 +228,12 @@ describe(Router, () => {
     });
 
     it('should handle layout with no matching route', () => {
-      const layoutHandler = vi.fn<LayoutHandler>((slot) =>
-        new Flex().setChildren([new Text().text('Layout'), slot])
-      );
+      const layoutHandler = vi.fn<LayoutHandler>((slot) => {
+        return new Fragment().setChildren([new TestElement('Layout'), slot]);
+      });
 
       const routerWithLayout = new Router(navigator, layoutHandler);
-      routerWithLayout.add('/existing', () => new Text().text('Existing'));
+      routerWithLayout.add('/existing', () => new TestElement('Existing'));
       unrender = routerWithLayout.render({ in: container });
 
       // Navigate to non-existent route
@@ -250,12 +250,11 @@ describe(Router, () => {
 
       const layoutHandler = vi.fn<LayoutHandler>((_slot, params) => {
         capturedParams = params;
-        return new Flex().setChildren([new Text().text('Layout')]);
+        return new Fragment().setChildren([new TestElement('Layout')]);
       });
-      const routeHandler = vi.fn(() => new Text().text('Content'));
 
       const routerWithLayout = new Router(navigator, layoutHandler);
-      routerWithLayout.add('/users/:userId', routeHandler);
+      routerWithLayout.add('/users/:userId', () => new TestElement('Content'));
       unrender = routerWithLayout.render({ in: container });
 
       navigator.navigate('/users/123');
@@ -271,8 +270,7 @@ describe(Router, () => {
 
   describe('cleanup', () => {
     it('should cleanup on dispose', () => {
-      const handler = vi.fn(() => new Text().text('Home'));
-      router.add('/', handler);
+      router.add('/', () => new TestElement('Home'));
       unrender = router.render({ in: container });
 
       expect(container.textContent).toContain('Home');
@@ -283,7 +281,7 @@ describe(Router, () => {
     });
 
     it('should stop listening to navigation after dispose', () => {
-      const handler = vi.fn(() => new Text().text('Home'));
+      const handler = vi.fn(() => new TestElement('Home'));
       router.add('/users', handler);
       unrender = router.render({ in: container });
       unrender();
@@ -293,11 +291,10 @@ describe(Router, () => {
     });
 
     it('should dispose element when navigating to a different route', () => {
-      const element1 = new DisposableTestElement('Element1').id('Element1');
-      const element2 = new DisposableTestElement('Element2').id('Element2');
+      const element1 = new TestElement('Element1').id('Element1');
+      const element2 = new TestElement('Element2').id('Element2');
 
-      router.add('/page1', () => element1);
-      router.add('/page2', () => element2);
+      router.add('/page1', () => element1).add('/page2', () => element2);
       unrender = router.render({ in: container });
 
       // Navigate to page1
@@ -314,10 +311,10 @@ describe(Router, () => {
     });
 
     it('should not dispose element when navigating to the same route config', () => {
-      let element: DisposableTestElement | undefined;
+      let element: TestElement | undefined;
 
       const handler = vi.fn(() => {
-        element = new DisposableTestElement('User');
+        element = new TestElement('User');
         return element;
       });
 
@@ -339,7 +336,7 @@ describe(Router, () => {
     });
 
     it('should dispose element when navigating to a route with no match', () => {
-      const element = new DisposableTestElement('Content');
+      const element = new TestElement('Content');
 
       router.add('/existing', () => element);
       unrender = router.render({ in: container });
@@ -355,9 +352,9 @@ describe(Router, () => {
     });
 
     it('should dispose element when navigating from route to subrouter', () => {
-      const element = new DisposableTestElement('Regular');
+      const element = new TestElement('Regular');
 
-      const subrouter = new Router(navigator).add('/nested', () => new Text().text('Subrouter'));
+      const subrouter = new Router(navigator).add('/nested', () => new TestElement('Subrouter'));
       router.add('/regular', () => element).add('/sub/*', subrouter);
       unrender = router.render({ in: container });
 
@@ -374,22 +371,20 @@ describe(Router, () => {
   });
 });
 
-class DisposableTestElement extends UIElement {
+class TestElement extends UIElement {
   public isDisposed = false;
-  readonly #label: string;
+  readonly #text: string;
 
-  public constructor(label: string) {
+  public constructor(text: string) {
     super();
-    this.#label = label;
+    this.#text = text;
     this.addDisposable(() => {
       this.isDisposed = true;
     });
   }
 
-  protected createUI(): Element {
-    const element = document.createElement('div');
-    element.textContent = this.#label;
-    return element;
+  protected createUI(): ChildNode {
+    return document.createTextNode(this.#text);
   }
 }
 
