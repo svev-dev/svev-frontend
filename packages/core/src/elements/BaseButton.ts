@@ -1,6 +1,6 @@
-import { IS_DEV } from '../../../daisyui/src/isDev';
 import type { Element, Shortcut, IPropertyRegister, IInvokable } from 'svev-frontend';
 import { UIElement } from 'svev-frontend';
+import { IS_DEV } from '../utils/isDev';
 
 export abstract class BaseButton extends UIElement implements IInvokable {
   public readonly label = this.prop('');

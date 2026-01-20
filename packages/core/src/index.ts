@@ -1,4 +1,5 @@
 export { UIElement } from './elements/UIElement';
+export { BaseButton } from './elements/BaseButton';
 export { Flex } from './elements/Flex';
 export { Text } from './elements/Text';
 export { Paragraph } from './elements/Paragraph';
