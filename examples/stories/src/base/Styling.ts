@@ -1,8 +1,8 @@
 import type { IPropertyRegister, Property, Shortcut, Element } from 'svev-frontend';
 import { Flex, UIElement, Text, createSVGElement } from 'svev-frontend';
 import { BoolInput, StringInput, SelectInput } from 'svev-daisyui';
-import BookmarkIcon from './icons/Bookmark.svg?raw';
-import ClipboardIcon from './icons/Clipboard.svg?raw';
+import BookmarkIcon from '../icons/Bookmark.svg?raw';
+import ClipboardIcon from '../icons/Clipboard.svg?raw';
 
 export class Styling extends UIElement implements IPropertyRegister {
   readonly #elements: UIElement[] = [];

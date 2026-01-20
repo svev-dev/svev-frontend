@@ -1,6 +1,6 @@
 import type { UIElement } from 'svev-frontend';
 import { BoolInput } from 'svev-daisyui';
-import { StylingStory } from './StylingStory';
+import { StylingStory } from '../base/StylingStory';
 
 export class BoolInputStory extends StylingStory {
   protected createElements(): UIElement[] {
