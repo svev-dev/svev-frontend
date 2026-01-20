@@ -65,9 +65,6 @@ export class Button extends BaseButton {
       register.addHeader(Button.name);
       register.addOptions('Size', this.size, Sizes);
       register.addOptionalOptions('Variant', this.variant, Variants);
-      register.addString('Label', this.label);
-      register.addOptionalIcon('Icon', this.icon);
-      register.addOptionalShortcut('Shortcut', this.shortcut);
     }
   }
 }
