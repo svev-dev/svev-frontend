@@ -1,8 +1,7 @@
-import { IS_DEV } from './isDev';
+import { IS_DEV, Container } from 'svev-frontend';
 import type { Size } from './Enums';
 import { getSizeClass, Sizes } from './Enums';
 import type { Element, IPropertyRegister } from 'svev-frontend';
-import { Container } from 'svev-frontend';
 
 // https://daisyui.com/components/card/
 

@@ -1,9 +1,6 @@
-import { signal } from '../../core/src/signals/signals';
-import { IS_DEV } from '../../core/src/utils/isDev';
+import { signal, IS_DEV, UIElement } from 'svev-frontend';
 import type { Size, Variant } from './Enums';
-import type { IPropertyRegister } from '../../core/src/elements/IPropertyRegister';
-import type { Element } from '../../core/src/elements/UIElement';
-import { UIElement } from '../../core/src/elements/UIElement';
+import type { IPropertyRegister, Element } from 'svev-frontend';
 
 // https://daisyui.com/components/tab/
 // https://daisyui.com/components/radio/

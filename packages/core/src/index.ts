@@ -14,6 +14,7 @@ export type { Element } from './elements/UIElement';
 
 export { onShortcut, shortcutToStringParts } from './Shortcut';
 
+export { IS_DEV } from './utils/isDev';
 export { createSVGElement } from './utils/svg';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';
