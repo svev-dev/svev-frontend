@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
+import importPlugin from 'eslint-plugin-import';
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
   },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
+  importPlugin.flatConfigs.recommended,
   {
     languageOptions: {
       parserOptions: {
@@ -28,6 +30,14 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+      },
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
       },
     },
     rules: {
@@ -87,8 +97,21 @@ export default [
       '@typescript-eslint/strict-boolean-expressions': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
+      'import/no-relative-packages': 'error',
       radix: 'error',
       yoda: 'error',
+    },
+  },
+  // Allow relative imports from workspace root for config files
+  {
+    files: [
+      '**/vite.config.ts',
+      '**/vitest.config.ts',
+      '**/playwright.config.ts',
+      '**/*.base.config.ts',
+    ],
+    rules: {
+      'import/no-relative-packages': 'off',
     },
   },
   prettierConfig,

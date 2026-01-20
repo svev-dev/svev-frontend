@@ -1,7 +1,6 @@
-import { IS_DEV } from './isDev';
+import { IS_DEV, signal, UIElement } from 'svev-frontend';
 import type { Menu } from './Menu';
 import type { Element, IPropertyRegister } from 'svev-frontend';
-import { signal, UIElement } from 'svev-frontend';
 
 // https://daisyui.com/components/menu/
 

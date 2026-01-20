@@ -1,8 +1,6 @@
-import { IS_DEV } from '../../core/src/utils/isDev';
-import { Container } from '../../core/src/elements/Container';
-import type { IPropertyRegister } from '../../core/src/elements/IPropertyRegister';
+import { IS_DEV, Container } from 'svev-frontend';
+import type { IPropertyRegister, Element } from 'svev-frontend';
 import { Tab } from './Tab';
-import type { Element } from '../../core/src/elements/UIElement';
 
 // https://daisyui.com/components/tabs/
 

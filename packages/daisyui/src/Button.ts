@@ -1,9 +1,8 @@
-import { IS_DEV } from './isDev';
+import { IS_DEV, BaseButton } from 'svev-frontend';
 import type { Size, Variant } from './Enums';
 import { getSizeClass, getVariantClass, Sizes, Variants } from './Enums';
 import { ShortcutElement } from './ShortcutElement';
 import { type IPropertyRegister } from 'svev-frontend';
-import { BaseButton } from 'svev-frontend';
 
 // https://daisyui.com/components/button/
 
