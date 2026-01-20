@@ -2,8 +2,8 @@ import { IS_DEV } from './isDev';
 import type { Size, Variant } from './Enums';
 import { getSizeClass, getVariantClass, Sizes, Variants } from './Enums';
 import { ShortcutElement } from './ShortcutElement';
-import type { Element, Shortcut, IPropertyRegister, IInvokable } from 'svev-frontend';
-import { UIElement } from 'svev-frontend';
+import type { IPropertyRegister } from 'svev-frontend';
+import { BaseButton } from '../../core/src/elements/BaseButton';
 
 // https://daisyui.com/components/button/
 
@@ -11,16 +11,11 @@ import { UIElement } from 'svev-frontend';
 // btn-neutral btn-primary btn-secondary btn-accent btn-info btn-success btn-warning btn-error
 // btn-xs btn-sm btn-lg btn-xl
 
-export class Button extends UIElement implements IInvokable {
-  public readonly label = this.prop('');
-  public readonly icon = this.prop<SVGElement | undefined>(undefined);
+export class Button extends BaseButton {
   public readonly size = this.prop<Size>('md');
   public readonly variant = this.prop<Variant | undefined>(undefined);
-  public readonly shortcut = this.prop<Shortcut | undefined>(undefined);
-  #onInvoke?: VoidFunction;
 
-  protected createUI(): Element {
-    const button = document.createElement('button');
+  protected initializeButton(button: HTMLButtonElement): void {
     this.effect(() => {
       const isEnabled = this.isEnabled();
       const label = this.label();
@@ -62,24 +57,12 @@ export class Button extends UIElement implements IInvokable {
         dispose();
       };
     });
-    button.onclick = this.invoke;
-
-    return button;
   }
-
-  public setOnInvoke = (fn: VoidFunction): this => {
-    this.#onInvoke = fn;
-    return this;
-  };
-
-  public invoke = (): void => {
-    this.#onInvoke?.();
-  };
 
   public override registerProperties(register: IPropertyRegister): void {
     if (IS_DEV) {
       super.registerProperties(register);
-      register.addHeader('Button');
+      register.addHeader(Button.name);
       register.addOptions('Size', this.size, Sizes);
       register.addOptionalOptions('Variant', this.variant, Variants);
       register.addString('Label', this.label);
