@@ -1,4 +1,3 @@
-//import type { Element, Shortcut, IPropertyRegister, } from 'svev-frontend';
 import { UIElement } from './UIElement';
 import { IS_DEV } from '../utils/isDev';
 import type { Shortcut } from '../Shortcut';
