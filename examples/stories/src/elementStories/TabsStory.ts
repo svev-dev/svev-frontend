@@ -1,6 +1,6 @@
 import type { UIElement } from 'svev-frontend';
 import { Paragraph } from 'svev-frontend';
-import { StylingStory } from './StylingStory';
+import { StylingStory } from '../base/StylingStory';
 import { Tabs } from 'svev-daisyui';
 
 export class TabsStory extends StylingStory {

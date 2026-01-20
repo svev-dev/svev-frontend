@@ -1,8 +1,8 @@
 import { Flex } from 'svev-frontend';
-import { ButtonStory } from './ButtonStory';
-import { BoolInputStory } from './BoolInputStory';
+import { ButtonStory } from './elementStories/ButtonStory';
+import { BoolInputStory } from './elementStories/BoolInputStory';
 import './style.css';
-import { TabsStory } from './TabsStory';
+import { TabsStory } from './elementStories/TabsStory';
 
 const buttonStory = new ButtonStory();
 const boolInputStory = new BoolInputStory();
