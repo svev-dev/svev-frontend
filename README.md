@@ -83,3 +83,25 @@ npm run dev
 ```
 
 All examples are configured to use the `svev-frontend` package from the workspace, which is automatically linked via npm workspaces.
+
+## Install Node and Npm
+
+Look in the package.json to see what version of node and npm you will need for this framework.
+Here is some tips of how you can update them.
+
+```bash
+#Check version of npm
+npm -v
+
+#Update npm to latest version
+npm install -g npm@latest
+
+#List versions of node
+nvm list
+
+#Install a specific version of node
+nvm install 24.0.0
+
+#set the specific version of node to used in this framework
+nvm use 24.0.0
+```
