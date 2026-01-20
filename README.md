@@ -102,6 +102,6 @@ nvm list
 #Install a specific version of node
 nvm install 24.0.0
 
-#set the specific version of node to used in this framework
+#Set the specific version of node to used in this framework
 nvm use 24.0.0
 ```
