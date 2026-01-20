@@ -1,6 +1,9 @@
-import type { Element, Shortcut, IPropertyRegister, IInvokable } from 'svev-frontend';
-import { UIElement } from 'svev-frontend';
+//import type { Element, Shortcut, IPropertyRegister, } from 'svev-frontend';
+import { UIElement } from './UIElement';
 import { IS_DEV } from '../utils/isDev';
+import type { Shortcut } from '../Shortcut';
+import type { IInvokable } from './IInvokable';
+import type { IPropertyRegister } from './IPropertyRegister';
 
 export abstract class BaseButton extends UIElement implements IInvokable {
   public readonly label = this.prop('');
