@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 export const baseConfig = defineConfig({
   plugins: [tailwindcss()],
   build: {
-    target: 'ES2022',
+    target: 'ES2023',
   },
 });
 
