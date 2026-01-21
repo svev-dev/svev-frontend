@@ -7,6 +7,7 @@ export class Paragraph extends UIElement {
   protected createUI(): Element {
     const element = document.createElement('p');
     this.effect(() => {
+      this.applyClassesTo(element);
       element.textContent = this.text();
     });
     return element;

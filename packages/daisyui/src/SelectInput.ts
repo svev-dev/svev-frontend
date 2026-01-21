@@ -34,7 +34,7 @@ export class SelectInput<Value extends string | number> extends UIElement {
       }
       classNames.push(getSizeClass(className, this.size()));
       classNames.push(getVariantClass(className, this.variant()));
-      select.className = classNames.join(' ');
+      this.applyClassesTo(select, classNames);
 
       select.innerHTML = '';
       const placeholder = this.placeholder();

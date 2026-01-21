@@ -38,7 +38,7 @@ export class BoolInput extends UIElement {
       const classNames = [className];
       classNames.push(getSizeClass(className, this.size()));
       classNames.push(getVariantClass(className, this.variant()));
-      input.className = classNames.join(' ');
+      this.applyClassesTo(input, classNames);
 
       text.textContent = this.label();
 

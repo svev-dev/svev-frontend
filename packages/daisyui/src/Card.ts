@@ -27,7 +27,6 @@ export class Card extends Container {
 
   protected createUI(): Element {
     const card = document.createElement('div');
-    card.className = 'card';
 
     const cardBody = document.createElement('div');
     cardBody.className = 'card-body';
@@ -70,7 +69,7 @@ export class Card extends Container {
         }
       }
 
-      card.className = classNames.join(' ');
+      this.applyClassesTo(card, classNames);
 
       // Handle image
       const imageSrc = this.imageSrc();

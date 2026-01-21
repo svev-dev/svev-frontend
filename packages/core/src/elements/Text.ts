@@ -10,6 +10,7 @@ export class Text extends UIElement {
     const span = document.createElement('span');
 
     this.effect(() => {
+      this.applyClassesTo(span);
       if (this.bold()) {
         span.innerHTML = `<strong>${escapeHTML(this.text())}</strong>`;
       } else {
