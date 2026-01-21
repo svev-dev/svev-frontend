@@ -109,6 +109,12 @@ describe('RouteMatcher', () => {
       });
     });
 
+    it('should match wildcard (but not prefix)', () => {
+      const matcher = new RouteMatcher('/users/*');
+      const match = matcher.match('/users123');
+      expect(match).toBeNull();
+    });
+
     it('should match wildcard with multiple segments', () => {
       const matcher = new RouteMatcher('/users/*');
       const match = matcher.match('/users/123/posts/456');

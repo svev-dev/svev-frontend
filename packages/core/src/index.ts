@@ -14,7 +14,22 @@ export type { Element } from './elements/UIElement';
 
 export { onShortcut, shortcutToStringParts } from './Shortcut';
 
+export { IS_DEV } from './utils/isDev';
 export { createSVGElement } from './utils/svg';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';
 export type { Signal, ReadonlySignal } from './signals/signals';
+
+// Routing
+
+export { Router } from './router/Router';
+export type { RouteHandler, LayoutHandler } from './router/Router';
+
+export { Slot } from './router/Slot';
+
+export { BrowserNavigator } from './navigator/BrowserNavigator';
+export { TestNavigator } from './navigator/TestNavigator';
+export type { INavigator } from './navigator/INavigator';
+
+export type { RouteMatch } from './router/RouteMatcher';
+export { RouteMatcher } from './router/RouteMatcher';
