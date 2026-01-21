@@ -5,7 +5,17 @@ import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { SelectTestView } from './form/SelectTestView';
-import { Button, Card, Menu, MenuItem, Modal } from 'svev-daisyui';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardBody,
+  CardImage,
+  CardTitle,
+  Menu,
+  MenuItem,
+  Modal,
+} from 'svev-daisyui';
 
 // Stopwatch app
 const stopwatchModel = new StopwatchModel();
@@ -17,46 +27,88 @@ const todoView = new TodoView(todoModel);
 const selectTest = new SelectTestView();
 
 // Card examples
-const basicCard = new Card()
-  .title('Basic Card')
-  .description('This is a simple card with a title, description, and action buttons.')
-  .setChildren([new Button().label('Action').variant('primary'), new Button().label('Cancel')]);
+const basicCard = new Card().addClass('w-96 bg-base-100 shadow-md');
+{
+  const title = new CardTitle().text('Basic Card');
+  const actions = new CardActions().setChildren([
+    new Button().label('Action').variant('primary'),
+    new Button().label('Cancel'),
+  ]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text('This is a simple card with a title, description, and action buttons.'),
+    actions,
+  ]);
+  basicCard.setChildren([body]);
+}
 
-const cardWithImage = new Card()
-  .title('Card with Image')
-  .description('This card includes an image. You can use any image URL.')
-  .imageSrc('https://picsum.photos/400/200')
-  .imageAlt('Random image')
-  .isSide(true)
-  .setChildren([new Button().label('View Details').variant('primary')]);
+const cardWithImage = new Card().isSide(true);
+{
+  const image = new CardImage().src('https://picsum.photos/400/200').alt('Random image');
+  const title = new CardTitle().text('Card with Image');
+  const actions = new CardActions().setChildren([
+    new Button().label('View Details').variant('primary'),
+  ]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text('This card includes an image. You can use any image URL.'),
+    actions,
+  ]);
+  cardWithImage.setChildren([image, body]);
+}
 
-const largeCard = new Card()
-  .title('Large Card')
-  .description('This is a large-sized card (card-lg). Perfect for showcasing important content.')
-  .size('lg')
-  .setChildren([
+const largeCard = new Card().size('lg');
+{
+  const title = new CardTitle().text('Large Card');
+  const actions = new CardActions().setChildren([
     new Button().label('Primary Action').variant('primary'),
     new Button().label('Secondary'),
   ]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text(
+      'This is a large-sized card (card-lg). Perfect for showcasing important content.'
+    ),
+    actions,
+  ]);
+  largeCard.setChildren([body]);
+}
 
-const compactCard = new Card()
-  .title('Compact Card')
-  .description('A compact card with reduced padding.')
-  .isCompact(true)
-  .setChildren([new Button().label('Compact Action').size('sm')]);
+const compactCard = new Card().isCompact(true);
+{
+  const title = new CardTitle().text('Compact Card');
+  const actions = new CardActions().setChildren([new Button().label('Compact Action').size('sm')]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text('A compact card with reduced padding.'),
+    actions,
+  ]);
+  compactCard.setChildren([body]);
+}
 
-const borderedCard = new Card()
-  .title('Bordered Card')
-  .description('This card has a border. The default is bordered.')
-  .isBordered(true)
-  .setChildren([new Button().label('Action')]);
+const borderedCard = new Card().isBordered(true);
+{
+  const title = new CardTitle().text('Bordered Card');
+  const actions = new CardActions().setChildren([new Button().label('Action')]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text('This card has a border. The default is bordered.'),
+    actions,
+  ]);
+  borderedCard.setChildren([body]);
+}
 
-const dashedCard = new Card()
-  .title('Dashed Border Card')
-  .description('This card has a dashed border instead of solid.')
-  .isBordered(true)
-  .isDashed(true)
-  .setChildren([new Button().label('Action')]);
+const dashedCard = new Card().isBordered(true).isDashed(true);
+{
+  const title = new CardTitle().text('Dashed Border Card');
+  const actions = new CardActions().setChildren([new Button().label('Action')]);
+  const body = new CardBody().setChildren([
+    title,
+    new Text().text('This card has a dashed border instead of solid.'),
+    actions,
+  ]);
+  dashedCard.setChildren([body]);
+}
 
 // Menu examples
 const basicMenu = new Menu().setChildren([
