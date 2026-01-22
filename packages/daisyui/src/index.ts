@@ -1,3 +1,4 @@
+export { Avatar } from './Avatar';
 export { BoolInput } from './BoolInput';
 export { Button } from './Button';
 export { Card } from './Card';
