@@ -1,11 +1,11 @@
 import './style.css';
-import { Flex, createSVGElement } from 'svev-frontend';
+import { Flex, Text, createSVGElement } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
 import { TodoView } from './todo/TodoView';
 import { SelectTestView } from './form/SelectTestView';
-import { Button, Card, Menu, MenuItem } from 'svev-daisyui';
+import { Button, Card, Menu, MenuItem, Modal } from 'svev-daisyui';
 
 // Stopwatch app
 const stopwatchModel = new StopwatchModel();
@@ -232,9 +232,35 @@ const cardExamples = new Flex()
     maxWidth: '1200px',
   });
 
+// Modal example
+const modal = new Modal()
+  .title('Modal title')
+  .closeOnBackdrop(false)
+  .closeOnEscape(true)
+  .setChildren([
+    new Text().text('This is the body'),
+    new Flex()
+      .setChildren([
+        new Button()
+          .label('Got it!')
+          .variant('primary')
+          .setOnInvoke(() => modal.close()),
+        new Button().label('Close').setOnInvoke(() => modal.close()),
+      ])
+      .direction('row')
+      .setCss({ justifyContent: 'flex-end', paddingTop: '5px' }),
+  ]);
+
+modal.render({ in: document.body });
+
+const button = new Button()
+  .label('Show Popup Message')
+  .variant('primary')
+  .setOnInvoke(() => modal.open());
+
 // Layout for the Stopwatch and Todo app
 const layout = new Flex()
-  .setChildren([stopwatchView, todoView, selectTest, cardExamples, menuExamples])
+  .setChildren([stopwatchView, todoView, button, selectTest, cardExamples, menuExamples])
   .direction('column')
   .gap('25px')
   .alignItems('center');
