@@ -2,6 +2,7 @@ import { IS_DEV, Container } from 'svev-frontend';
 import type { Element, IPropertyRegister } from 'svev-frontend';
 
 // https://daisyui.com/components/modal/
+// https://react.daisyui.com/?path=/story/actions-modal--default
 
 // https://tailwindcss.com/docs/detecting-classes-in-source-files
 // modal modal-box modal-action modal-backdrop modal-toggle modal-open
@@ -14,7 +15,7 @@ const Placements: ModalPlacement[] = ['top', 'middle', 'bottom'];
 export class Modal extends Container {
   public readonly isOpen = this.prop(false);
   public readonly title = this.prop<string | undefined>(undefined);
-  public readonly placement = this.prop<ModalPlacement>('middle');
+  public readonly placement = this.prop<ModalPlacement | undefined>(undefined);
   public readonly horizontalPlacement = this.prop<ModalHorizontalPlacement | undefined>(undefined);
   public readonly closeOnBackdrop = this.prop(true);
   public readonly closeOnEscape = this.prop(true);
@@ -121,8 +122,8 @@ export class Modal extends Container {
       super.registerProperties(register);
       register.addHeader(Modal.name);
       register.addBool('IsOpen', this.isOpen);
-      // register.addString('Title', this.title);
-      register.addOptions('Placement', this.placement, Placements);
+      register.addOptionalString('Title', this.title);
+      register.addOptionalOptions('Placement', this.placement, Placements);
       register.addBool('CloseOnBackdrop', this.closeOnBackdrop);
       register.addBool('CloseOnEscape', this.closeOnEscape);
     }

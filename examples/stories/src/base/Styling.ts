@@ -33,6 +33,28 @@ export class Styling extends UIElement implements IPropertyRegister {
     this.#elements.push(stringInput);
   }
 
+  public addOptionalString(name: string, property: Property<string | undefined, unknown>): void {
+    const initialValue = property();
+    const text = new Text().text(name);
+    const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
+    const stringInput = new StringInput().value(property() ?? '').placeholder(name);
+    this.effect(() => {
+      const isEnabled = activeCheckbox.isChecked();
+      stringInput.isEnabled(isEnabled);
+      if (isEnabled) {
+        property(stringInput.value());
+      } else {
+        property(undefined);
+      }
+    });
+    const layout = new Flex()
+      .setChildren([text, activeCheckbox, stringInput])
+      .direction('row')
+      .gap('8px')
+      .alignItems('center');
+    this.#elements.push(layout);
+  }
+
   public addOptions<T extends string | number>(
     name: string,
     property: Property<T, unknown>,
