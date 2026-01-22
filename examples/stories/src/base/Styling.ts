@@ -37,7 +37,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     const initialValue = property();
     const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
-    const stringInput = new StringInput().value(property() ?? '').placeholder(name);
+    const stringInput = new StringInput().value(initialValue ?? '').placeholder(name);
     this.effect(() => {
       const isEnabled = activeCheckbox.isChecked();
       stringInput.isEnabled(isEnabled);
