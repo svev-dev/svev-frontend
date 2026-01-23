@@ -260,7 +260,7 @@ const modalButton = new Button()
 
 // Layout for the Stopwatch and Todo app
 const layout = new Flex()
-  .setChildren([stopwatchView, todoView, button, selectTest, cardExamples, menuExamples])
+  .setChildren([stopwatchView, todoView, modalButton, selectTest, cardExamples, menuExamples])
   .direction('column')
   .gap('25px')
   .alignItems('center');

@@ -17,6 +17,12 @@ export type Size = (typeof Sizes)[number];
 export const Directions = ['vertical', 'horizontal'] as const;
 export type Direction = (typeof Directions)[number];
 
+export const VerticalPlacements = ['top', 'middle', 'bottom'] as const;
+export type VerticalPlacement = (typeof VerticalPlacements)[number];
+
+export const HorizontalPlacements = ['start', 'end'] as const;
+export type HorizontalPlacement = (typeof HorizontalPlacements)[number];
+
 export function getVariantClass(className: string, variant?: Variant): string {
   if (!variant) return '';
   return `${className}-${variant}`;

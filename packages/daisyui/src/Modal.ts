@@ -1,22 +1,23 @@
 import { IS_DEV, Container } from 'svev-frontend';
 import type { Element, IPropertyRegister } from 'svev-frontend';
+import {
+  type HorizontalPlacement,
+  HorizontalPlacements,
+  type VerticalPlacement,
+  VerticalPlacements,
+} from './Enums';
 
-// https://daisyui.com/components/modal/
 // https://react.daisyui.com/?path=/story/actions-modal--default
 
 // https://tailwindcss.com/docs/detecting-classes-in-source-files
 // modal modal-box modal-action modal-backdrop modal-toggle modal-open
 // modal-top modal-middle modal-bottom modal-start modal-end
 
-export type ModalPlacement = 'top' | 'middle' | 'bottom';
-export type ModalHorizontalPlacement = 'start' | 'end' | undefined;
-const Placements: ModalPlacement[] = ['top', 'middle', 'bottom'];
-
 export class Modal extends Container {
   public readonly isOpen = this.prop(false);
   public readonly title = this.prop<string | undefined>(undefined);
-  public readonly placement = this.prop<ModalPlacement | undefined>(undefined);
-  public readonly horizontalPlacement = this.prop<ModalHorizontalPlacement | undefined>(undefined);
+  public readonly verticalPlacement = this.prop<VerticalPlacement | undefined>(undefined);
+  public readonly horizontalPlacement = this.prop<HorizontalPlacement | undefined>(undefined);
   public readonly closeOnBackdrop = this.prop(true);
   public readonly closeOnEscape = this.prop(true);
 
@@ -103,7 +104,7 @@ export class Modal extends Container {
 
   #className(): string {
     const classNames = ['modal'];
-    const placement = this.placement();
+    const placement = this.verticalPlacement();
     if (placement !== 'middle') {
       classNames.push(`modal-${placement}`);
     }
@@ -111,9 +112,9 @@ export class Modal extends Container {
     if (horizontalPlacement) {
       classNames.push(`modal-${horizontalPlacement}`);
     }
-    if (this.isOpen()) {
-      classNames.push('modal-open');
-    }
+    // if (this.isOpen()) {
+    //   classNames.push('modal-open');
+    // }
     return classNames.join(' ');
   }
 
@@ -123,7 +124,12 @@ export class Modal extends Container {
       register.addHeader(Modal.name);
       register.addBool('IsOpen', this.isOpen);
       register.addOptionalString('Title', this.title);
-      register.addOptionalOptions('Placement', this.placement, Placements);
+      register.addOptionalOptions('VerticalPlacement', this.verticalPlacement, VerticalPlacements);
+      register.addOptionalOptions(
+        'HorizontalPlacement',
+        this.horizontalPlacement,
+        HorizontalPlacements
+      );
       register.addBool('CloseOnBackdrop', this.closeOnBackdrop);
       register.addBool('CloseOnEscape', this.closeOnEscape);
     }
