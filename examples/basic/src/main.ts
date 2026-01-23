@@ -253,7 +253,7 @@ const modal = new Modal()
 
 modal.render({ in: document.body });
 
-const button = new Button()
+const modalButton = new Button()
   .label('Show Popup Message')
   .variant('primary')
   .setOnInvoke(() => modal.open());
