@@ -19,17 +19,13 @@ export class Styling extends UIElement implements IPropertyRegister {
 
   public addBool(name: string, property: Property<boolean, unknown>): void {
     const checkbox = new BoolInput().label(name).isChecked(property());
-    this.effect(() => {
-      property(checkbox.isChecked());
-    });
+    property(() => checkbox.isChecked());
     this.#elements.push(checkbox);
   }
 
   public addString(name: string, property: Property<string, unknown>): void {
     const stringInput = new StringInput().value(property()).placeholder(name);
-    this.effect(() => {
-      property(stringInput.value());
-    });
+    property(() => stringInput.value());
     this.#elements.push(stringInput);
   }
 
@@ -38,15 +34,9 @@ export class Styling extends UIElement implements IPropertyRegister {
     const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const stringInput = new StringInput().value(initialValue ?? '').placeholder(name);
-    this.effect(() => {
-      const isEnabled = activeCheckbox.isChecked();
-      stringInput.isEnabled(isEnabled);
-      if (isEnabled) {
-        property(stringInput.value());
-      } else {
-        property(undefined);
-      }
-    });
+    stringInput.isEnabled(() => activeCheckbox.isChecked());
+    property(() => (activeCheckbox.isEnabled() ? stringInput.value() : undefined));
+
     const layout = new Flex()
       .setChildren([text, activeCheckbox, stringInput])
       .direction('row')
@@ -61,9 +51,7 @@ export class Styling extends UIElement implements IPropertyRegister {
     options: readonly T[]
   ): void {
     const select = new SelectInput<T>().placeholder(name).value(property()).setOptions(options);
-    this.effect(() => {
-      property(select.requiredValue());
-    });
+    property(() => select.requiredValue());
     this.#elements.push(select);
   }
 
@@ -76,15 +64,9 @@ export class Styling extends UIElement implements IPropertyRegister {
     const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<T>().setOptions(options).value(initialValue);
-    this.effect(() => {
-      const isEnabled = activeCheckbox.isChecked();
-      select.isEnabled(isEnabled);
-      if (isEnabled) {
-        property(select.requiredValue());
-      } else {
-        property(undefined);
-      }
-    });
+    select.isEnabled(() => activeCheckbox.isChecked());
+    property(() => (select.isEnabled() ? select.requiredValue() : undefined));
+
     const layout = new Flex()
       .setChildren([text, activeCheckbox, select])
       .direction('row')
@@ -108,15 +90,9 @@ export class Styling extends UIElement implements IPropertyRegister {
     const text = new Text().text(name);
     const activeCheckbox = new BoolInput().isChecked(initialValue !== undefined);
     const select = new SelectInput<IconKey>().setOptions(Keys);
-    this.effect(() => {
-      const isEnabled = activeCheckbox.isChecked();
-      select.isEnabled(isEnabled);
-      if (isEnabled) {
-        property(icons[select.requiredValue()]);
-      } else {
-        property(undefined);
-      }
-    });
+    select.isEnabled(() => activeCheckbox.isChecked());
+    property(() => (select.isEnabled() ? icons[select.requiredValue()] : undefined));
+
     const layout = new Flex()
       .setChildren([text, activeCheckbox, select])
       .direction('row')
