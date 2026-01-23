@@ -41,6 +41,41 @@ const isDisabled = !this.isEnabled();
 // To disable: element.isEnabled(false)
 ```
 
+**CRITICAL**: Avoid mutually exclusive properties. When you have multiple states that are mutually exclusive (only one should be true at a time), use a single property with a union type instead of multiple boolean properties:
+
+- ❌ **Don't** create separate boolean properties for mutually exclusive states
+- ✅ **Do** use a single property with a union type (e.g., `'online' | 'offline' | undefined`)
+
+Example of what NOT to do:
+
+```ts
+// ❌ WRONG - two independent properties that can conflict
+public readonly isOnline = this.prop<boolean | undefined>(undefined);
+public readonly isOffline = this.prop<boolean | undefined>(undefined);
+
+// Problem: Both can be true at the same time, making the result unclear
+if (this.isOnline()) {
+  classNames.push('avatar-online');
+} else if (this.isOffline()) {
+  classNames.push('avatar-offline');
+}
+```
+
+Example of what TO do:
+
+```ts
+// ✅ CORRECT - single property representing all states
+public readonly status = this.prop<'online' | 'offline' | undefined>(undefined);
+
+// Clear and unambiguous: only one state at a time
+const status = this.status();
+if (status === 'online') {
+  classNames.push('avatar-online');
+} else if (status === 'offline') {
+  classNames.push('avatar-offline');
+}
+```
+
 ## Component Structure
 
 ### 1. Class Declaration
