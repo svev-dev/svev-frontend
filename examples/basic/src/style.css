@@ -8,6 +8,8 @@
 }
 
 .app {
+  padding-top: 50px;
+  padding-bottom: 200px;
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
