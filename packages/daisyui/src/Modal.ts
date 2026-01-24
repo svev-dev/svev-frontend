@@ -7,7 +7,7 @@ import {
   VerticalPlacements,
 } from './Enums';
 
-// https://react.daisyui.com/?path=/story/actions-modal--default
+//https://daisyui.com/components/modal/
 
 // https://tailwindcss.com/docs/detecting-classes-in-source-files
 // modal modal-box modal-action modal-backdrop modal-toggle modal-open
@@ -35,20 +35,10 @@ export class Modal extends Container {
 
   protected createUI(): Element {
     const dialog = document.createElement('dialog');
-
-    // Modal classes
-    this.effect(() => {
-      dialog.className = this.#className();
-    });
-
-    // Create modal box
-    const modalBox = document.createElement('div');
-    modalBox.className = 'modal-box';
-    dialog.appendChild(modalBox);
-
-    // Create header
-    const header = document.createElement('h3');
-    header.className = 'text-lg font-bold';
+    const modalBox = createModalBox(dialog);
+    const header = createHeader(modalBox);
+    const content = createContent(modalBox);
+    const backdrop = createBackdrop(dialog);
 
     this.effect(() => {
       const title = this.title();
@@ -59,35 +49,22 @@ export class Modal extends Container {
         header.style.display = 'none';
       }
     });
-    modalBox.appendChild(header);
 
-    // Create content container
-    const content = document.createElement('div');
-    content.className = 'py-4';
-    modalBox.appendChild(content);
-
-    // Render children inside content
-    const dispose = this.fragment.render({ in: content });
-    this.addDisposable(dispose);
-
-    // Create backdrop form for closing on outside click
-    // Create this any why?
-    const backdropForm = document.createElement('form');
-    backdropForm.method = 'dialog';
-    backdropForm.className = 'modal-backdrop';
-    dialog.appendChild(backdropForm);
+    // Modal classes
+    this.effect(() => {
+      dialog.className = this.#className();
+    });
 
     // Handle click outside
     this.effect(() => {
       if (this.closeOnBackdrop()) {
-        backdropForm.addEventListener('click', this.close);
+        backdrop.addEventListener('click', this.close);
         return (): void => {
-          backdropForm.removeEventListener('click', this.close);
+          backdrop.removeEventListener('click', this.close);
         };
       }
       return undefined;
     });
-
     // Handle close on escape
     this.effect(() => {
       if (this.closeOnEscape()) {
@@ -98,7 +75,6 @@ export class Modal extends Container {
       }
       return undefined;
     });
-
     // Handle opening and closing
     this.effect(() => {
       const isOpen = this.isOpen();
@@ -108,7 +84,8 @@ export class Modal extends Container {
         dialog.close();
       }
     });
-
+    // Render children inside content
+    this.addDisposable(this.fragment.render({ in: content }));
     return dialog;
   }
 
@@ -144,4 +121,29 @@ export class Modal extends Container {
       register.addBool('CloseOnEscape', this.closeOnEscape);
     }
   }
+}
+
+function createHeader(parent: HTMLDivElement): HTMLHeadingElement {
+  const result = document.createElement('h3');
+  result.className = 'text-lg font-bold';
+  return parent.appendChild(result);
+}
+
+function createContent(parent: HTMLDivElement): HTMLHeadingElement {
+  const result = document.createElement('div');
+  result.className = 'py-4';
+  return parent.appendChild(result);
+}
+
+function createBackdrop(parent: HTMLDialogElement): HTMLFormElement {
+  const result = document.createElement('form');
+  result.method = 'dialog';
+  result.className = 'modal-backdrop';
+  return parent.appendChild(result);
+}
+
+function createModalBox(parent: HTMLDialogElement): HTMLDivElement {
+  const result = document.createElement('div');
+  result.className = 'modal-box';
+  return parent.appendChild(result);
 }
