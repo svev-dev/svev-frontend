@@ -23,6 +23,12 @@ export type VerticalPlacement = (typeof VerticalPlacements)[number];
 export const HorizontalPlacements = ['start', 'end'] as const;
 export type HorizontalPlacement = (typeof HorizontalPlacements)[number];
 
+export const Alignments = ['start', 'center', 'end'] as const;
+export type Alignment = (typeof Alignments)[number];
+
+export const Sides = ['top', 'bottom', 'left', 'right'] as const;
+export type Side = (typeof Sides)[number];
+
 export function getVariantClass(className: string, variant?: Variant): string {
   if (!variant) return '';
   return `${className}-${variant}`;
@@ -36,4 +42,14 @@ export function getSizeClass(className: string, size: Size): string {
 export function getDirectionClass(className: string, direction: Direction): string {
   if (direction === 'vertical') return '';
   return `${className}-${direction}`;
+}
+
+export function getAlignmentClass(className: string, alignment?: Alignment): string {
+  if (!alignment) return '';
+  return `${className}-${alignment}`;
+}
+
+export function getSideClass(className: string, side?: Side): string {
+  if (!side) return '';
+  return `${className}-${side}`;
 }

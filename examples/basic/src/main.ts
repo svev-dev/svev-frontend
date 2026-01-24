@@ -12,6 +12,8 @@ import {
   CardBody,
   CardImage,
   CardTitle,
+  Dropdown,
+  DropdownContent,
   Menu,
   MenuItem,
   Modal,
@@ -207,6 +209,126 @@ const menuWithFocused = new Menu().setChildren([
   new MenuItem().label('Contact').href('/contact'),
 ]);
 
+// Dropdown examples
+const basicDropdown = new Dropdown().trigger(new Button().label('Click')).setChildren([
+  new DropdownContent().addChild(
+    new Menu()
+      .size('sm')
+      .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+      .setChildren([
+        new MenuItem().label('Item 1').href('/item1'),
+        new MenuItem().label('Item 2').href('/item2'),
+        new MenuItem().label('Item 3').href('/item3'),
+      ])
+  ),
+]);
+
+const dropdownWithHover = new Dropdown()
+  .trigger(new Button().label('Hover me').variant('primary'))
+  .toggleOnHover(true)
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Homepage').href('/homepage'),
+          new MenuItem().label('Portfolio').href('/portfolio'),
+          new MenuItem().label('About').href('/about'),
+        ])
+    ),
+  ]);
+
+const dropdownStart = new Dropdown()
+  .trigger(new Button().label('Start'))
+  .horizontalPlacement('start')
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Item 1').href('/item1'),
+          new MenuItem().label('Item 2').href('/item2'),
+        ])
+    ),
+  ]);
+
+const dropdownEnd = new Dropdown()
+  .trigger(new Button().label('End'))
+  .horizontalPlacement('end')
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Item 1').href('/item1'),
+          new MenuItem().label('Item 2').href('/item2'),
+        ])
+    ),
+  ]);
+
+const dropdownTop = new Dropdown()
+  .trigger(new Button().label('Top'))
+  .verticalPlacement('top')
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Item 1').href('/item1'),
+          new MenuItem().label('Item 2').href('/item2'),
+        ])
+    ),
+  ]);
+
+const dropdownLeft = new Dropdown()
+  .trigger(new Button().label('Left'))
+  .verticalPlacement('left')
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Item 1').href('/item1'),
+          new MenuItem().label('Item 2').href('/item2'),
+        ])
+    ),
+  ]);
+
+const dropdownRight = new Dropdown()
+  .trigger(new Button().label('Right'))
+  .verticalPlacement('right')
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('sm')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Item 1').href('/item1'),
+          new MenuItem().label('Item 2').href('/item2'),
+        ])
+    ),
+  ]);
+
+const dropdownWithLargeMenu = new Dropdown()
+  .trigger(new Button().label('Large Menu').variant('secondary'))
+  .setChildren([
+    new DropdownContent().addChild(
+      new Menu()
+        .size('lg')
+        .addClass('bg-base-100 rounded-box z-1 w-52 p-2 shadow')
+        .setChildren([
+          new MenuItem().label('Large Item 1').href('/item1'),
+          new MenuItem().label('Large Item 2').href('/item2'),
+          new MenuItem().label('Large Item 3').href('/item3'),
+        ])
+    ),
+  ]);
+
 // Menu examples container
 const menuExamples = new Flex()
   .setChildren([
@@ -258,9 +380,33 @@ const modalButton = new Button()
   .variant('primary')
   .setOnInvoke(() => modal.open());
 
+// Dropdown examples container
+const dropdownExamples = new Flex()
+  .setChildren([
+    basicDropdown,
+    dropdownWithHover,
+    dropdownStart,
+    dropdownEnd,
+    dropdownTop,
+    dropdownLeft,
+    dropdownRight,
+    dropdownWithLargeMenu,
+  ])
+  .direction('row')
+  .gap('20px')
+  .addClass('group-examples');
+
 // Layout for the Stopwatch and Todo app
 const layout = new Flex()
-  .setChildren([stopwatchView, todoView, modalButton, selectTest, cardExamples, menuExamples])
+  .setChildren([
+    stopwatchView,
+    todoView,
+    modalButton,
+    selectTest,
+    cardExamples,
+    menuExamples,
+    dropdownExamples,
+  ])
   .direction('column')
   .gap('25px')
   .alignItems('center');
