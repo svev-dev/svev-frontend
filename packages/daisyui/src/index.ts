@@ -2,7 +2,7 @@ export { Avatar } from './Avatar';
 export { Badge } from './Badge';
 export { BoolInput } from './BoolInput';
 export { Button } from './Button';
-export { Card } from './Card';
+export { Card, CardImage, CardBody, CardTitle, CardActions } from './Card';
 export { Menu } from './Menu';
 export { MenuItem } from './MenuItem';
 export { Modal } from './Modal';

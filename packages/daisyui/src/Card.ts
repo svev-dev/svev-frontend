@@ -1,4 +1,4 @@
-import { IS_DEV, Container } from 'svev-frontend';
+import { IS_DEV, Container, UIElement } from 'svev-frontend';
 import type { Size } from './Enums';
 import { getSizeClass, Sizes } from './Enums';
 import type { Element, IPropertyRegister } from 'svev-frontend';
@@ -14,10 +14,6 @@ import type { Element, IPropertyRegister } from 'svev-frontend';
 // card-dash
 
 export class Card extends Container {
-  public readonly title = this.prop<string | undefined>(undefined);
-  public readonly description = this.prop<string | undefined>(undefined);
-  public readonly imageSrc = this.prop<string | undefined>(undefined);
-  public readonly imageAlt = this.prop<string>('');
   public readonly size = this.prop<Size>('md');
   public readonly isSide = this.prop(false);
   public readonly isImageFull = this.prop(false);
@@ -27,22 +23,6 @@ export class Card extends Container {
 
   protected createUI(): Element {
     const card = document.createElement('div');
-
-    const cardBody = document.createElement('div');
-    cardBody.className = 'card-body';
-
-    // Create actions container for children
-    const actionsContainer = document.createElement('div');
-    actionsContainer.className = 'card-actions';
-    cardBody.appendChild(actionsContainer);
-
-    // Append cardBody to card before effect runs, so insertBefore works correctly
-    card.appendChild(cardBody);
-
-    let figure: HTMLElement | undefined;
-    let image: HTMLImageElement | undefined;
-    let titleElement: HTMLElement | undefined;
-    let descriptionElement: HTMLElement | undefined;
 
     this.effect(() => {
       // Update card classes
@@ -70,62 +50,10 @@ export class Card extends Container {
       }
 
       this.applyClassesTo(card, classNames);
-
-      // Handle image
-      const imageSrc = this.imageSrc();
-      if (imageSrc !== undefined) {
-        if (figure === undefined) {
-          figure = document.createElement('figure');
-          image = document.createElement('img');
-          figure.appendChild(image);
-          card.insertBefore(figure, cardBody);
-        }
-        if (image !== undefined) {
-          image.src = imageSrc;
-          image.alt = this.imageAlt();
-        }
-      } else {
-        if (figure !== undefined) {
-          figure.remove();
-          figure = undefined;
-          image = undefined;
-        }
-      }
-
-      // Handle title
-      const title = this.title();
-      if (title !== undefined && title !== '') {
-        if (titleElement === undefined) {
-          titleElement = document.createElement('h2');
-          titleElement.className = 'card-title';
-          cardBody.insertBefore(titleElement, actionsContainer);
-        }
-        titleElement.textContent = title;
-      } else {
-        if (titleElement !== undefined) {
-          titleElement.remove();
-          titleElement = undefined;
-        }
-      }
-
-      // Handle description
-      const description = this.description();
-      if (description !== undefined && description !== '') {
-        if (descriptionElement === undefined) {
-          descriptionElement = document.createElement('p');
-          cardBody.insertBefore(descriptionElement, actionsContainer);
-        }
-        descriptionElement.textContent = description;
-      } else {
-        if (descriptionElement !== undefined) {
-          descriptionElement.remove();
-          descriptionElement = undefined;
-        }
-      }
     });
 
     // Render fragment children into actions container (like Flex does)
-    const dispose = this.fragment.render({ in: actionsContainer });
+    const dispose = this.fragment.render({ in: card });
     this.addDisposable(dispose);
 
     return card;
@@ -136,17 +64,79 @@ export class Card extends Container {
       super.registerProperties(register);
       register.addHeader('Card');
       register.addOptions('Size', this.size, Sizes);
-      // Note: Optional strings - using addString with type assertion
-      // The property register doesn't have addOptionalString, so we use addString
-      // register.addString('Title', this.title);
-      // register.addString('Description', this.description);
-      // register.addString('Image Src', this.imageSrc);
-      register.addString('Image Alt', this.imageAlt);
       register.addBool('Is side', this.isSide);
       register.addBool('Is image full', this.isImageFull);
       register.addBool('Is compact', this.isCompact);
       register.addBool('Is bordered', this.isBordered);
       register.addBool('Is dashed', this.isDashed);
     }
+  }
+}
+
+export class CardImage extends UIElement {
+  public readonly src = this.prop<string | undefined>(undefined);
+  public readonly alt = this.prop<string>('');
+
+  protected createUI(): Element {
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    figure.appendChild(image);
+
+    this.effect(() => {
+      this.applyClassesTo(figure);
+
+      const src = this.src();
+      if (src !== undefined) {
+        image.src = src;
+      }
+      image.alt = this.alt();
+    });
+
+    return figure;
+  }
+}
+
+export class CardBody extends Container {
+  protected createUI(): Element {
+    const body = document.createElement('div');
+
+    this.effect(() => {
+      this.applyClassesTo(body, ['card-body']);
+    });
+
+    const dispose = this.fragment.render({ in: body });
+    this.addDisposable(dispose);
+
+    return body;
+  }
+}
+
+export class CardTitle extends UIElement {
+  public readonly text = this.prop<string>('');
+
+  protected createUI(): Element {
+    const h2 = document.createElement('h2');
+
+    this.effect(() => {
+      this.applyClassesTo(h2, ['card-title']);
+      h2.textContent = this.text();
+    });
+
+    return h2;
+  }
+}
+
+export class CardActions extends Container {
+  protected createUI(): Element {
+    const actions = document.createElement('div');
+
+    this.effect(() => {
+      this.applyClassesTo(actions, ['card-actions']);
+    });
+
+    const dispose = this.fragment.render({ in: actions });
+    this.addDisposable(dispose);
+
+    return actions;
   }
 }

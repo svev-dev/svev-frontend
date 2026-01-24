@@ -108,9 +108,9 @@ export abstract class UIElement {
     return this;
   }
 
-  public addClass(className: string): this {
+  public addClass(...classNames: string[]): this {
     const current = this.#classList.peek();
-    this.#classList([...current, className]);
+    this.#classList([...current, ...classNames]);
     return this;
   }
 
@@ -136,7 +136,7 @@ export abstract class UIElement {
       });
     }
     const classList = this.#classList();
-    element.className = [...classList, ...classes].filter(Boolean).join(' ');
+    element.className = [...classes, ...classList].filter(Boolean).join(' ');
   }
 
   /**
