@@ -25,13 +25,13 @@ export class Modal extends Container {
     super();
   }
 
-  public open(): void {
+  public open = (): void => {
     this.isOpen(true);
-  }
+  };
 
-  public close(): void {
+  public close = (): void => {
     this.isOpen(false);
-  }
+  };
 
   protected createUI(): Element {
     const dialog = document.createElement('dialog');
@@ -41,21 +41,6 @@ export class Modal extends Container {
       dialog.className = this.#className();
     });
 
-    // Handle opening and closing
-    this.effect(() => {
-      const isOpen = this.isOpen();
-      if (isOpen && !dialog.open) {
-        dialog.showModal();
-      } else if (!isOpen && dialog.open) {
-        dialog.close();
-      }
-    });
-    // Handle escape key (TODO: dispose it?)
-    dialog.addEventListener('cancel', () => {
-      if (this.closeOnEscape()) {
-        this.close();
-      }
-    });
     // Create modal box
     const modalBox = document.createElement('div');
     modalBox.className = 'modal-box';
@@ -87,18 +72,44 @@ export class Modal extends Container {
     dialog.appendChild(modalBox);
 
     // Create backdrop form for closing on outside click
-    if (this.closeOnBackdrop()) {
-      const backdropForm = document.createElement('form');
-      backdropForm.method = 'dialog';
-      backdropForm.className = 'modal-backdrop';
+    // Create this any why?
+    const backdropForm = document.createElement('form');
+    backdropForm.method = 'dialog';
+    backdropForm.className = 'modal-backdrop';
+    dialog.appendChild(backdropForm);
 
-      backdropForm.addEventListener('click', () => {
-        if (this.closeOnBackdrop()) {
-          this.close();
-        }
-      });
-      dialog.appendChild(backdropForm);
-    }
+    // Handle click outside
+    this.effect(() => {
+      if (this.closeOnBackdrop()) {
+        backdropForm.addEventListener('click', this.close);
+        return (): void => {
+          backdropForm.removeEventListener('click', this.close);
+        };
+      }
+      return undefined;
+    });
+
+    // Handle opening and closing
+    this.effect(() => {
+      const isOpen = this.isOpen();
+      if (isOpen && !dialog.open) {
+        dialog.showModal();
+      } else if (!isOpen && dialog.open) {
+        dialog.close();
+      }
+    });
+
+    // Handle close on escape
+    this.effect(() => {
+      if (this.closeOnEscape()) {
+        dialog.addEventListener('cancel', this.close);
+        return (): void => {
+          dialog.removeEventListener('cancel', this.close);
+        };
+      }
+      return undefined;
+    });
+
     return dialog;
   }
 
