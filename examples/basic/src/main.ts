@@ -1,5 +1,5 @@
 import './style.css';
-import { Flex, Text, createSVGElement } from 'svev-frontend';
+import { Flex, Paragraph, Text, createSVGElement } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -15,6 +15,8 @@ import {
   Menu,
   MenuItem,
   Modal,
+  ModalBody,
+  ModalActions,
 } from 'svev-daisyui';
 
 // Stopwatch app
@@ -233,22 +235,17 @@ const cardExamples = new Flex()
 
 // Modal example
 const modal = new Modal()
-  .title('Modal title')
   .closeOnBackdrop(false)
   .closeOnEscape(true)
   .setChildren([
-    new Text().text('This is a text inside the modal body. '),
-    new Text().text('This is another text inside the modal body.'),
-    new Flex()
-      .setChildren([
-        new Button()
-          .label('Got it!')
-          .variant('primary')
-          .setOnInvoke(() => modal.close()),
+    new ModalBody().setChildren([
+      new Paragraph().text('This is the header. '),
+      new Text().text('This is the rest of the body.'),
+      new ModalActions().setChildren([
+        new Button().label('Got it!').variant('primary'),
         new Button().label('Close').setOnInvoke(() => modal.close()),
-      ])
-      .direction('row')
-      .addClass('modal-footer'),
+      ]),
+    ]),
   ]);
 
 modal.render({ in: document.body });

@@ -15,7 +15,6 @@ import {
 
 export class Modal extends Container {
   public readonly isOpen = this.prop(false);
-  public readonly title = this.prop<string | undefined>(undefined);
   public readonly verticalPlacement = this.prop<VerticalPlacement | undefined>(undefined);
   public readonly horizontalPlacement = this.prop<HorizontalPlacement | undefined>(undefined);
   public readonly closeOnBackdrop = this.prop(true);
@@ -26,33 +25,23 @@ export class Modal extends Container {
   }
 
   public open = (): void => {
-    this.isOpen(true);
+    if (!this.isOpen()) {
+      this.isOpen(true);
+    }
   };
 
   public close = (): void => {
-    this.isOpen(false);
+    if (this.isOpen()) {
+      this.isOpen(false);
+    }
   };
 
   protected createUI(): Element {
-    const dialog = document.createElement('dialog');
-    const modalBox = createModalBox(dialog);
-    const header = createHeader(modalBox);
-    const content = createContent(modalBox);
-    const backdrop = createBackdrop(dialog);
+    const result = document.createElement('dialog');
+    const backdrop = createBackdrop(result);
 
     this.effect(() => {
-      const title = this.title();
-      if (title !== undefined) {
-        header.textContent = title;
-        header.style.display = '';
-      } else {
-        header.style.display = 'none';
-      }
-    });
-
-    // Modal classes
-    this.effect(() => {
-      this.applyClassesTo(dialog, this.#getClassNames());
+      this.applyClassesTo(result, this.#getClassNames());
     });
 
     // Handle click outside
@@ -68,9 +57,9 @@ export class Modal extends Container {
     // Handle close on escape
     this.effect(() => {
       if (this.closeOnEscape()) {
-        dialog.addEventListener('cancel', this.close);
+        result.addEventListener('cancel', this.close);
         return (): void => {
-          dialog.removeEventListener('cancel', this.close);
+          result.removeEventListener('cancel', this.close);
         };
       }
       return undefined;
@@ -78,15 +67,22 @@ export class Modal extends Container {
     // Handle opening and closing
     this.effect(() => {
       const isOpen = this.isOpen();
-      if (isOpen && !dialog.open) {
-        dialog.showModal();
-      } else if (!isOpen && dialog.open) {
-        dialog.close();
+      if (isOpen && !result.open) {
+        result.showModal();
+      } else if (!isOpen && result.open) {
+        result.close();
       }
     });
+    // Listen to close event
+    this.effect(() => {
+      result.addEventListener('close', this.close);
+      return (): void => {
+        result.removeEventListener('close', this.close);
+      };
+    });
     // Render children inside content
-    this.addDisposable(this.fragment.render({ in: content }));
-    return dialog;
+    this.addDisposable(this.fragment.render({ in: result }));
+    return result;
   }
 
   #getClassNames(): readonly string[] {
@@ -107,7 +103,6 @@ export class Modal extends Container {
       super.registerProperties(register);
       register.addHeader(Modal.name);
       register.addBool('IsOpen', this.isOpen);
-      register.addOptionalString('Title', this.title);
       register.addOptionalOptions('VerticalPlacement', this.verticalPlacement, VerticalPlacements);
       register.addOptionalOptions(
         'HorizontalPlacement',
@@ -120,27 +115,52 @@ export class Modal extends Container {
   }
 }
 
-function createHeader(parent: HTMLDivElement): HTMLHeadingElement {
-  const result = document.createElement('h3');
-  result.className = 'text-lg font-bold';
+export class ModalBody extends Container {
+  public constructor() {
+    super();
+  }
+
+  protected createUI(): Element {
+    const body = document.createElement('div');
+    this.effect(() => {
+      this.applyClassesTo(body, ['modal-box']);
+    });
+
+    const dispose = this.fragment.render({ in: body });
+    this.addDisposable(dispose);
+    return body;
+  }
+}
+
+export class ModalActions extends Container {
+  public constructor() {
+    super();
+  }
+  protected createUI(): Element {
+    const result = createModalAction();
+    const form = createForm(result);
+
+    // Render children inside content
+    this.addDisposable(this.fragment.render({ in: form }));
+    return result;
+  }
+}
+
+function createForm(parent: HTMLDivElement): HTMLFormElement {
+  const result = document.createElement('form');
+  result.method = 'dialog';
   return parent.appendChild(result);
 }
 
-function createContent(parent: HTMLDivElement): HTMLHeadingElement {
+function createModalAction(): HTMLDivElement {
   const result = document.createElement('div');
-  result.className = 'py-4';
-  return parent.appendChild(result);
+  result.className = 'modal-action';
+  return result;
 }
 
 function createBackdrop(parent: HTMLDialogElement): HTMLFormElement {
   const result = document.createElement('form');
   result.method = 'dialog';
   result.className = 'modal-backdrop';
-  return parent.appendChild(result);
-}
-
-function createModalBox(parent: HTMLDialogElement): HTMLDivElement {
-  const result = document.createElement('div');
-  result.className = 'modal-box';
   return parent.appendChild(result);
 }
