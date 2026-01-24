@@ -1,23 +1,27 @@
 import type { Column } from '../Enums';
 import { Columns } from '../Enums';
+import type { IColumnModel } from './IColumnModel';
 import type { OnCardMove } from './ColumnModel';
-import { ColumnModel } from './ColumnModel';
 
-export class KanbanModel {
-  readonly #columns: Record<Column, ColumnModel>;
+export type ColumnFactory = (column: Column, onCardMove: OnCardMove) => IColumnModel;
 
-  public constructor() {
-    this.#columns = Object.fromEntries(
-      Columns.map((column) => {
+export class BoardModel {
+  readonly #columns: Record<Column, IColumnModel>;
+
+  public constructor(columnFactory: ColumnFactory) {
+    this.#columns = Columns.reduce(
+      (acc, column) => {
         const onCardMove: OnCardMove = (cardId, index) => {
           this.moveCard(cardId, column, index);
         };
-        return [column, new ColumnModel(onCardMove)];
-      })
-    ) as Record<Column, ColumnModel>;
+        acc[column] = columnFactory(column, onCardMove);
+        return acc;
+      },
+      {} as Record<Column, IColumnModel>
+    );
   }
 
-  public getColumn(column: Column): ColumnModel {
+  public getColumn(column: Column): IColumnModel {
     return this.#columns[column];
   }
 
@@ -44,7 +48,7 @@ export class KanbanModel {
     if (!card) {
       throw new Error(`Card with id ${cardId} not found in column ${fromColumn}`);
     }
-    fromColumnModel.removeCard(cardId);
+    fromColumnModel.removeCard(card);
     toColumnModel.addCard(card, toColumnIndex);
   }
 }

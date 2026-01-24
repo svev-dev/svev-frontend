@@ -1,10 +1,11 @@
 import type { ReadonlySignal } from 'svev-frontend';
 import { signal, computed } from 'svev-frontend';
-import type { KanbanCardModel } from './CardModel';
+import type { ICardModel } from './ICardModel';
+import type { IColumnModel } from './IColumnModel';
 
 export type OnCardMove = (cardId: string, index: number) => void;
-export class ColumnModel {
-  readonly #cards = signal<KanbanCardModel[]>([]);
+export class ColumnModel implements IColumnModel {
+  readonly #cards = signal<ICardModel[]>([]);
   readonly #count = computed(() => this.#cards().length);
   readonly #onCardMove: OnCardMove;
 
@@ -13,7 +14,7 @@ export class ColumnModel {
     this.#onCardMove = onCardMove;
   }
 
-  public get cards(): ReadonlySignal<KanbanCardModel[]> {
+  public get cards(): ReadonlySignal<ICardModel[]> {
     return this.#cards;
   }
 
@@ -21,20 +22,19 @@ export class ColumnModel {
     return this.#count;
   }
 
-  public getCard(id: string): KanbanCardModel | undefined {
+  public getCard(id: string): ICardModel | undefined {
     return this.#cards.peek().find((c) => c.id === id);
   }
 
-  public addCard(card: KanbanCardModel, index?: number): void {
+  public addCard(card: ICardModel, index?: number): void {
     const cards = this.#cards.peek();
     index = index ?? cards.length;
     this.#cards(cards.toSpliced(index, 0, card));
   }
 
-  // TODO: change from id to card
-  public removeCard(id: string): void {
+  public removeCard(card: ICardModel): void {
     const cards = this.#cards.peek();
-    this.#cards(cards.filter((c) => c.id !== id));
+    this.#cards(cards.filter((c) => c.id !== card.id));
   }
 
   public moveCard(cardId: string, index: number): void {

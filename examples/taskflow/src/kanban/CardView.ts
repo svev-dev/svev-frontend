@@ -1,16 +1,16 @@
 import type { Element } from 'svev-frontend';
 import { UIElement } from 'svev-frontend';
-import type { KanbanCardModel } from './CardModel';
 import type { Variant } from 'svev-daisyui';
 import { Badge, Card, CardActions, CardBody, CardTitle } from 'svev-daisyui';
 import type { Priority } from '../Enums';
 import { UserAvatarView } from '../users/UserAvatarView';
 import { uppercaseFirstLetter } from '../utils';
+import type { ICardModel } from './ICardModel';
 
-export class KanbanCardView extends UIElement {
-  readonly #model: KanbanCardModel;
+export class CardView extends UIElement {
+  readonly #model: ICardModel;
 
-  public constructor(model: KanbanCardModel) {
+  public constructor(model: ICardModel) {
     super();
     this.#model = model;
   }

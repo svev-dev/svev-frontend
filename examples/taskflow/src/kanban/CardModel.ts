@@ -2,8 +2,9 @@ import type { Priority } from '../Enums';
 import type { User } from '../users/User';
 import type { ReadonlySignal, Signal } from 'svev-frontend';
 import { randomString, signal } from 'svev-frontend';
+import type { ICardModel } from './ICardModel';
 
-export class KanbanCardModel {
+export class CardModel implements ICardModel {
   public readonly id: string;
 
   readonly #title: Signal<string>;

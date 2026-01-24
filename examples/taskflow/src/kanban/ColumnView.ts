@@ -2,15 +2,15 @@ import type { Element } from 'svev-frontend';
 import { Flex, Text, UIElement } from 'svev-frontend';
 import { Badge } from 'svev-daisyui';
 import type { Column } from '../Enums';
-import type { ColumnModel } from './ColumnModel';
-import { KanbanCardView } from './CardView';
+import type { IColumnModel } from './IColumnModel';
+import { CardView } from './CardView';
 import { camelCaseToWords } from '../utils';
 
 export class ColumnView extends UIElement {
-  readonly #model: ColumnModel;
+  readonly #model: IColumnModel;
   readonly #column: Column;
 
-  public constructor(model: ColumnModel, column: Column) {
+  public constructor(model: IColumnModel, column: Column) {
     super();
     this.#model = model;
     this.#column = column;
@@ -49,7 +49,7 @@ export class ColumnView extends UIElement {
     const cardsContainer = new Flex()
       .direction('column')
       .gap('12px')
-      .mapChildren(this.#model.cards, (card) => new KanbanCardView(card));
+      .mapChildren(this.#model.cards, (card) => new CardView(card));
 
     // Render cards container into wrapper
     const cardsUnrender = cardsContainer.render({ in: cardsWrapper });
