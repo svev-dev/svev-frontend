@@ -17,6 +17,10 @@ import {
   Menu,
   MenuItem,
   Modal,
+  Navbar,
+  NavbarStart,
+  NavbarCenter,
+  NavbarEnd,
 } from 'svev-daisyui';
 
 // Stopwatch app
@@ -329,6 +333,99 @@ const dropdownWithLargeMenu = new Dropdown()
     ),
   ]);
 
+// Navbar examples
+const menuIcon = createSVGElement(
+  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" /></svg>'
+);
+const hamburgerIcon = createSVGElement(
+  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>'
+);
+const searchIcon = createSVGElement(
+  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>'
+);
+const dropdownHamburgerIcon = createSVGElement(
+  '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>'
+);
+
+const basicNavbar = new Navbar()
+  .addClass('bg-base-100 shadow-sm')
+  .addChild(new Button().label('svev').addClass('btn-ghost text-xl'));
+
+const navbarWithIcon = new Navbar()
+  .addClass('bg-base-100 shadow-sm')
+  .setChildren([
+    new NavbarStart().addChild(new Button().label('daisyUI').addClass('btn-ghost text-xl')),
+    new NavbarEnd().addChild(
+      new Button().icon(menuIcon).addClass('btn-square btn-ghost').size('sm')
+    ),
+  ]);
+
+const navbarWithStartCenterEnd = new Navbar()
+  .addClass('bg-base-100 shadow-sm')
+  .setChildren([
+    new NavbarStart().addChild(
+      new Button().icon(hamburgerIcon).addClass('btn-square btn-ghost').size('sm')
+    ),
+    new NavbarCenter().addChild(new Button().label('daisyUI').addClass('btn-ghost text-xl')),
+    new NavbarEnd().addChild(
+      new Button().icon(searchIcon).addClass('btn-square btn-ghost').size('sm')
+    ),
+  ]);
+
+const navbarWithMenu = new Navbar()
+  .addClass('bg-base-100 shadow-sm')
+  .setChildren([
+    new NavbarStart().addChild(new Button().label('daisyUI').addClass('btn-ghost text-xl')),
+    new NavbarEnd().addChild(
+      new Menu()
+        .direction('horizontal')
+        .setChildren([
+          new MenuItem().label('Link').href('/link'),
+          new MenuItem().label('Parent').href('/parent'),
+        ])
+    ),
+  ]);
+
+const navbarWithButtons = new Navbar().addClass('bg-base-100 shadow-sm').setChildren([
+  new NavbarStart().addChild(new Button().label('Home').addClass('btn-ghost').size('sm')),
+  new NavbarCenter().addChild(new Button().label('Logo').addClass('btn-ghost text-xl')),
+  new NavbarEnd().addChild(
+    new Flex()
+      .setChildren([
+        new Button().label('Login').variant('primary').size('sm'),
+        new Button().label('Sign Up').variant('secondary').size('sm'),
+      ])
+      .direction('row')
+      .gap('8px')
+  ),
+]);
+
+const navbarWithColors = new Navbar()
+  .addClass('bg-primary text-primary-content')
+  .addChild(
+    new NavbarStart().addChild(new Button().label('daisyUI').addClass('btn-ghost text-xl'))
+  );
+
+const navbarWithDropdown = new Navbar().addClass('bg-base-100 shadow-sm').setChildren([
+  new NavbarStart().addChild(
+    new Dropdown()
+      .trigger(new Button().icon(dropdownHamburgerIcon).addClass('btn-ghost btn-circle').size('sm'))
+      .setChildren([
+        new DropdownContent().addChild(
+          new Menu()
+            .size('sm')
+            .addClass('bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow')
+            .setChildren([
+              new MenuItem().label('Homepage').href('/homepage'),
+              new MenuItem().label('Portfolio').href('/portfolio'),
+              new MenuItem().label('About').href('/about'),
+            ])
+        ),
+      ])
+  ),
+  new NavbarCenter().addChild(new Button().label('daisyUI').addClass('btn-ghost text-xl')),
+]);
+
 // Menu examples container
 const menuExamples = new Flex()
   .setChildren([
@@ -396,6 +493,21 @@ const dropdownExamples = new Flex()
   .gap('20px')
   .addClass('group-examples');
 
+// Navbar examples container
+const navbarExamples = new Flex()
+  .setChildren([
+    basicNavbar,
+    navbarWithIcon,
+    navbarWithStartCenterEnd,
+    navbarWithMenu,
+    navbarWithButtons,
+    navbarWithColors,
+    navbarWithDropdown,
+  ])
+  .direction('column')
+  .gap('20px')
+  .addClass('group-examples');
+
 // Layout for the Stopwatch and Todo app
 const layout = new Flex()
   .setChildren([
@@ -406,6 +518,7 @@ const layout = new Flex()
     cardExamples,
     menuExamples,
     dropdownExamples,
+    navbarExamples,
   ])
   .direction('column')
   .gap('25px')
