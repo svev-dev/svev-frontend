@@ -80,8 +80,8 @@ export class Modal extends Container {
         result.removeEventListener('close', this.close);
       };
     });
-    // Render children inside content
-    this.addDisposable(this.fragment.render({ in: result }));
+    const dispose = this.fragment.render({ in: result });
+    this.addDisposable(dispose);
     return result;
   }
 
@@ -140,8 +140,8 @@ export class ModalActions extends Container {
     const result = createModalAction();
     const form = createForm(result);
 
-    // Render children inside content
-    this.addDisposable(this.fragment.render({ in: form }));
+    const dispose = this.fragment.render({ in: form });
+    this.addDisposable(dispose);
     return result;
   }
 }
