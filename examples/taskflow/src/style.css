@@ -1,5 +1,10 @@
 @import 'tailwindcss';
-@source "../../../node_modules/svev-daisyui";
+/* Only scan the DaisyUI components actually used in this project */
+@source "../../../node_modules/svev-daisyui/src/Enums.ts";
+@source "../../../node_modules/svev-daisyui/src/Avatar.ts";
+@source "../../../node_modules/svev-daisyui/src/Badge.ts";
+@source "../../../node_modules/svev-daisyui/src/Card.ts";
+@source "./**/*.ts";
 @plugin "daisyui" {
   /* https://github.com/saadeghi/daisyui/issues/3882#issuecomment-3382480890 */
   exclude: properties;
@@ -12,4 +17,5 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100vh;
 }
