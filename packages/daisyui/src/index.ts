@@ -5,6 +5,7 @@ export { Button } from './Button';
 export { Card } from './Card';
 export { Menu } from './Menu';
 export { MenuItem } from './MenuItem';
+export { Modal } from './Modal';
 export { SelectInput } from './SelectInput';
 export { ShortcutElement } from './ShortcutElement';
 export { StringInput } from './StringInput';
