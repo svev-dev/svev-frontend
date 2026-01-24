@@ -238,7 +238,8 @@ const modal = new Modal()
   .closeOnBackdrop(false)
   .closeOnEscape(true)
   .setChildren([
-    new Text().text('This is the body'),
+    new Text().text('This is a text inside the modal body. '),
+    new Text().text('This is another text inside the modal body.'),
     new Flex()
       .setChildren([
         new Button()

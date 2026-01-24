@@ -44,6 +44,7 @@ export class Modal extends Container {
     // Create modal box
     const modalBox = document.createElement('div');
     modalBox.className = 'modal-box';
+    dialog.appendChild(modalBox);
 
     // Create header
     const header = document.createElement('h3');
@@ -63,13 +64,11 @@ export class Modal extends Container {
     // Create content container
     const content = document.createElement('div');
     content.className = 'py-4';
+    modalBox.appendChild(content);
 
     // Render children inside content
     const dispose = this.fragment.render({ in: content });
     this.addDisposable(dispose);
-    modalBox.appendChild(content);
-
-    dialog.appendChild(modalBox);
 
     // Create backdrop form for closing on outside click
     // Create this any why?
@@ -89,16 +88,6 @@ export class Modal extends Container {
       return undefined;
     });
 
-    // Handle opening and closing
-    this.effect(() => {
-      const isOpen = this.isOpen();
-      if (isOpen && !dialog.open) {
-        dialog.showModal();
-      } else if (!isOpen && dialog.open) {
-        dialog.close();
-      }
-    });
-
     // Handle close on escape
     this.effect(() => {
       if (this.closeOnEscape()) {
@@ -108,6 +97,16 @@ export class Modal extends Container {
         };
       }
       return undefined;
+    });
+
+    // Handle opening and closing
+    this.effect(() => {
+      const isOpen = this.isOpen();
+      if (isOpen && !dialog.open) {
+        dialog.showModal();
+      } else if (!isOpen && dialog.open) {
+        dialog.close();
+      }
     });
 
     return dialog;
