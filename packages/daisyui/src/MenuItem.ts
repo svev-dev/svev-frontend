@@ -45,10 +45,6 @@ export class MenuItem extends UIElement {
           titleHeading.remove();
           titleHeading = undefined;
         }
-        // Remove menu-title class when switching from title to regular item
-        if (li.className === 'menu-title') {
-          li.className = '';
-        }
         anchor = this.#getOrCreateAnchor(li, anchor);
         this.#updateRegularItem(li, anchor);
       }
@@ -117,12 +113,12 @@ export class MenuItem extends UIElement {
 
     if (!submenu) {
       // For titles without submenu, add menu-title class to the li element
-      li.className = 'menu-title';
+      this.applyClassesTo(li, ['menu-title']);
       li.textContent = label;
     } else {
       // For titles with submenu, the h2 element will have the menu-title class
       // The li should not have the class or textContent (text goes in h2)
-      li.className = '';
+      this.applyClassesTo(li);
       li.textContent = '';
     }
   }
@@ -175,7 +171,7 @@ export class MenuItem extends UIElement {
     }
 
     anchor.className = anchorClasses.join(' ');
-    li.className = classNames.join(' ');
+    this.applyClassesTo(li, classNames);
   }
 
   /**

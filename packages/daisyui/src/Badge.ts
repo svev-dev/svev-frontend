@@ -36,7 +36,7 @@ export class Badge extends UIElement {
         classNames.push('badge-ghost');
       }
 
-      badge.className = classNames.join(' ');
+      this.applyClassesTo(badge, classNames);
     });
 
     return badge;

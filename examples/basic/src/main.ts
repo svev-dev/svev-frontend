@@ -158,79 +158,26 @@ const menuWithFocused = new Menu().setChildren([
 // Menu examples container
 const menuExamples = new Flex()
   .setChildren([
-    new Flex().setChildren([basicMenu]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([menuWithStates]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([horizontalMenu]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '300px',
-    }),
-    new Flex().setChildren([largeMenu]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([smallMenu]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([menuWithSubmenu]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([menuWithIcons]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([menuWithTitleParent]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
-    new Flex().setChildren([menuWithFocused]).setCss({
-      padding: '20px',
-      backgroundColor: 'var(--fallback-bc, oklch(var(--b2)))',
-      borderRadius: '8px',
-      minWidth: '200px',
-    }),
+    new Flex().setChildren([basicMenu]),
+    new Flex().setChildren([menuWithStates]),
+    new Flex().setChildren([horizontalMenu]),
+    new Flex().setChildren([largeMenu]),
+    new Flex().setChildren([smallMenu]),
+    new Flex().setChildren([menuWithSubmenu]),
+    new Flex().setChildren([menuWithIcons]),
+    new Flex().setChildren([menuWithTitleParent]),
+    new Flex().setChildren([menuWithFocused]),
   ])
   .direction('row')
   .gap('20px')
-  .setCss({
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxWidth: '1200px',
-  });
+  .addClass('group-examples');
 
 // Card examples container
 const cardExamples = new Flex()
   .setChildren([basicCard, cardWithImage, largeCard, compactCard, borderedCard, dashedCard])
   .direction('row')
   .gap('20px')
-  .setCss({
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    maxWidth: '1200px',
-  });
+  .addClass('group-examples');
 
 // Modal example
 const modal = new Modal()
@@ -249,7 +196,7 @@ const modal = new Modal()
         new Button().label('Close').setOnInvoke(() => modal.close()),
       ])
       .direction('row')
-      .setCss({ justifyContent: 'flex-end', paddingTop: '5px' }),
+      .addClass('modal-footer'),
   ]);
 
 modal.render({ in: document.body });
@@ -266,14 +213,7 @@ const layout = new Flex()
   .gap('25px')
   .alignItems('center');
 
-const app = new Flex().setChildren([layout]).setCss({
-  minHeight: '100vh',
-  minWidth: '100vw',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-});
+const app = new Flex().setChildren([layout]).addClass('app');
 
 app.render({ in: document.body });
 

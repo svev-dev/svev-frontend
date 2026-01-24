@@ -35,7 +35,7 @@ export class Button extends BaseButton {
       classNames.push(getSizeClass(className, this.size()));
 
       classNames.push(getVariantClass(className, this.variant()));
-      button.className = classNames.join(' ');
+      this.applyClassesTo(button, classNames);
     });
 
     // Shortcut

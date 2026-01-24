@@ -12,11 +12,11 @@ export class Flex extends Container {
     element.style.display = 'flex';
 
     this.effect(() => {
+      this.applyClassesTo(element);
       element.style.flexDirection = this.direction();
       element.style.alignItems = this.alignItems();
       element.style.padding = this.padding();
       element.style.gap = this.gap();
-      this.applyTo(element);
     });
 
     const dispose = this.fragment.render({ in: element });

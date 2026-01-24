@@ -16,6 +16,7 @@ export { onShortcut, shortcutToStringParts } from './Shortcut';
 
 export { IS_DEV } from './utils/isDev';
 export { createSVGElement } from './utils/svg';
+export { randomInt, randomString, randomElement } from './utils/Random';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';
 export type { Signal, ReadonlySignal } from './signals/signals';

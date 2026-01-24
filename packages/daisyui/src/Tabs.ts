@@ -41,7 +41,7 @@ export class Tabs extends Container {
       // TODO: add more options
       const className = 'tabs tabs-box';
       const classNames = [className];
-      element.className = classNames.join(' ');
+      this.applyClassesTo(element, classNames);
 
       // Update tabs based on selectedIndex
       let selectedIndex = 0;

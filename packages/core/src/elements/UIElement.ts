@@ -27,11 +27,12 @@ export abstract class UIElement {
   #isCreatingUI = false;
   #renderedElements: readonly [Element, Unrender][] = [];
   #onUnrender: VoidFunction[] = [];
+  #lastApplyClassesToElement: HTMLElement | undefined;
   readonly #disposeCollection = new DisposeCollection();
   readonly #renderDisposeCollection = new DisposeCollection();
   readonly #dummyNode = document.createComment('dummy');
   readonly #triggerRender = signal(0);
-  readonly #style = signal<Partial<CSSStyleDeclaration>>({});
+  readonly #classList = signal<string[]>([]);
 
   public constructor() {
     AutoDisposal.instance.register(this, this.#disposeCollection);
@@ -107,33 +108,40 @@ export abstract class UIElement {
     return this;
   }
 
-  /**
-   * Sets the CSS styles, replacing all existing styles.
-   * @param styles Object with CSS property-value pairs
-   */
-  public setCss(styles: Partial<CSSStyleDeclaration>): this {
-    this.#style({ ...styles });
+  public addClass(className: string): this {
+    const current = this.#classList.peek();
+    this.#classList([...current, className]);
     return this;
   }
 
-  /**
-   * Adds or merges CSS styles with existing styles.
-   * @param styles Object with CSS property-value pairs to merge
-   */
-  public addCss(styles: Partial<CSSStyleDeclaration>): this {
-    const current = this.#style.peek();
-    this.#style({ ...current, ...styles });
+  public removeClass(className: string): this {
+    const current = this.#classList.peek();
+    this.#classList(current.filter((c) => c !== className));
     return this;
   }
 
-  /**
-   * Applies the current styles to an HTML element.
-   * This method directly assigns styles to the element's style property.
-   * @param element The HTML element to apply styles to
-   */
-  protected applyTo(element: HTMLElement): void {
-    const styles = this.#style();
-    Object.assign(element.style, styles);
+  protected applyClassesTo(element: HTMLElement, classes: readonly string[] = []): void {
+    if (IS_DEV) {
+      if (!this.#isCreatingUI) {
+        throw new Error(
+          'applyClassesTo is called outside of `createUI`. Something is wrong as it is not the intended usage.'
+        );
+      }
+      if (
+        this.#lastApplyClassesToElement !== undefined &&
+        this.#lastApplyClassesToElement !== element
+      ) {
+        throw new Error(
+          'applyClassesTo is called on multiple elements in the same `createUI` call. Something is wrong, and the expected usage is to only call it on the top-level element.'
+        );
+      }
+      this.#lastApplyClassesToElement = element;
+      this.#renderDisposeCollection.add(() => {
+        this.#lastApplyClassesToElement = undefined;
+      });
+    }
+    const classList = this.#classList();
+    element.className = [...classList, ...classes].filter(Boolean).join(' ');
   }
 
   /**
