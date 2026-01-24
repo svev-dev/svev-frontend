@@ -122,11 +122,6 @@ export abstract class UIElement {
 
   protected applyClassesTo(element: HTMLElement, classes: readonly string[] = []): void {
     if (IS_DEV) {
-      if (!this.#isCreatingUI) {
-        throw new Error(
-          'applyClassesTo is called outside of `createUI`. Something is wrong as it is not the intended usage.'
-        );
-      }
       if (
         this.#lastApplyClassesToElement !== undefined &&
         this.#lastApplyClassesToElement !== element
