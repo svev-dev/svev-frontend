@@ -38,7 +38,7 @@ export class Modal extends Container {
 
     // Modal classes
     this.effect(() => {
-      dialog.className = this.#className();
+      this.applyClassesTo(dialog, this.#getClassNames());
     });
 
     // Create modal box
@@ -112,7 +112,7 @@ export class Modal extends Container {
     return dialog;
   }
 
-  #className(): string {
+  #getClassNames(): readonly string[] {
     const classNames = ['modal'];
     const placement = this.verticalPlacement();
     if (placement !== 'middle') {
@@ -122,10 +122,7 @@ export class Modal extends Container {
     if (horizontalPlacement) {
       classNames.push(`modal-${horizontalPlacement}`);
     }
-    // if (this.isOpen()) {
-    //   classNames.push('modal-open');
-    // }
-    return classNames.join(' ');
+    return classNames;
   }
 
   public override registerProperties(register: IPropertyRegister): void {

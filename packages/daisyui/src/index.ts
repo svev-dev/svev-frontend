@@ -11,3 +11,5 @@ export { ShortcutElement } from './ShortcutElement';
 export { StringInput } from './StringInput';
 export { Tab } from './Tab';
 export { Tabs } from './Tabs';
+
+export type { Variant, Direction, Size } from './Enums';

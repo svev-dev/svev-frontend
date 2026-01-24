@@ -41,9 +41,7 @@ export class Tab extends UIElement {
       input.id = this.id();
 
       // TODO: add more options
-      const className = 'tab';
-      const classNames = [className];
-      input.className = classNames.join(' ');
+      this.applyClassesTo(input, ['tab']);
       input.disabled = !this.isEnabled();
 
       // Set checked (not sure if this works correctly with effect)

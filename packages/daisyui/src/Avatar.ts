@@ -43,7 +43,7 @@ export class Avatar extends UIElement {
         classNames.push('avatar-placeholder');
       }
 
-      avatar.className = classNames.join(' ');
+      this.applyClassesTo(avatar, classNames);
 
       // Set size classes on inner container
       const sizeClassMap: Record<Size, string> = {

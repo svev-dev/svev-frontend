@@ -33,7 +33,7 @@ export class Menu extends Container {
       // Add direction class (only for root menus)
       classNames.push(getDirectionClass('menu', this.direction()));
 
-      ul.className = classNames.join(' ');
+      this.applyClassesTo(ul, classNames);
     });
 
     const dispose = this.fragment.render({ in: ul });
