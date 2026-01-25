@@ -38,6 +38,8 @@ export class Modal extends Container {
 
   protected createUI(): Element {
     const result = document.createElement('dialog');
+    result.id = this.id();
+
     const backdrop = createBackdrop(result);
 
     this.effect(() => {

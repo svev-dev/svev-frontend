@@ -1,5 +1,5 @@
 import './style.css';
-import { Flex, Paragraph, Text, createSVGElement } from 'svev-frontend';
+import { Divider, Flex, Header, Paragraph, Text, createSVGElement } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -459,8 +459,9 @@ const modal1 = new Modal()
   .closeOnEscape(true)
   .addChild(
     new ModalBody().setChildren([
-      new Paragraph().text('This is the header. '),
-      new Text().text('This is the rest of the body.'),
+      new Header().text('This is the header. '),
+      new Divider(),
+      new Paragraph().text('This is the rest of the body.'),
       new ModalActions().setChildren([
         new Button().label('Stay Open').variant('primary'),
         new Button().label('Close').setOnInvoke(() => modal1.close()),
@@ -473,8 +474,9 @@ const modal2 = new Modal()
   .closeOnEscape(true)
   .addChild(
     new ModalBody().setChildren([
-      new Paragraph().text('This is the header. '),
-      new Text().text('This is the rest of the body.'),
+      new Header().text('This is the header. '),
+      new Divider(),
+      new Paragraph().text('This is the rest of the body.'),
       new ModalFooter().setChildren([
         new Button().label('Stay Open').variant('primary'),
         new Button().label('Close').setOnInvoke(() => modal2.close()),
