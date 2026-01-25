@@ -454,22 +454,19 @@ const cardExamples = new Flex()
   .addClass('group-examples');
 
 // Modal example
-const modal = new Modal()
-  .closeOnBackdrop(true)
-  .closeOnEscape(true)
-  .setChildren([
-    new ModalHeader().text('This is the header. '),
-    new ModalBody().setChildren([
-      new Divider(),
-      new Paragraph().text('This is the body.'),
-      new Paragraph().text('This is also the body.'),
-      new Divider(),
-    ]),
-    new ModalFooter().setChildren([
-      new Button().label('Stay Open').variant('primary'),
-      new Button().label('Close').setOnInvoke(() => modal.close()),
-    ]),
-  ]);
+const modal = new Modal().setChildren([
+  new ModalHeader().text('This is the header'),
+  new ModalBody().setChildren([
+    new Divider(),
+    new Paragraph().text('This is the body'),
+    new Paragraph().text('This is also the body'),
+    new Divider(),
+  ]),
+  new ModalFooter().setChildren([
+    new Button().label('Stay Open').variant('primary'),
+    new Button().label('Close').setOnInvoke(() => modal.close()),
+  ]),
+]);
 modal.render({ in: document.body });
 
 const modalButton = new Button()
