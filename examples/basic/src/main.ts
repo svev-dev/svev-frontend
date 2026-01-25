@@ -1,5 +1,5 @@
 import './style.css';
-import { Flex, Text, createSVGElement } from 'svev-frontend';
+import { Divider, Flex, Paragraph, Text, createSVGElement } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -16,11 +16,14 @@ import {
   DropdownContent,
   Menu,
   MenuItem,
-  Modal,
   Navbar,
   NavbarStart,
   NavbarCenter,
   NavbarEnd,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'svev-daisyui';
 
 // Stopwatch app
@@ -451,29 +454,24 @@ const cardExamples = new Flex()
   .addClass('group-examples');
 
 // Modal example
-const modal = new Modal()
-  .title('Modal title')
-  .closeOnBackdrop(false)
-  .closeOnEscape(true)
-  .setChildren([
-    new Text().text('This is a text inside the modal body. '),
-    new Text().text('This is another text inside the modal body.'),
-    new Flex()
-      .setChildren([
-        new Button()
-          .label('Got it!')
-          .variant('primary')
-          .setOnInvoke(() => modal.close()),
-        new Button().label('Close').setOnInvoke(() => modal.close()),
-      ])
-      .direction('row')
-      .addClass('modal-footer'),
-  ]);
+const modal = new Modal().setChildren([
+  new ModalHeader().text('This is the header'),
+  new ModalBody().setChildren([
+    new Divider(),
+    new Paragraph().text('This is the body'),
+    new Paragraph().text('This is also the body'),
+    new Divider(),
+  ]),
+  new ModalFooter().setChildren([
+    new Button().label('Stay Open').variant('primary'),
+    new Button().label('Close Modal').setOnInvoke(() => modal.close()),
+  ]),
+]);
 
 modal.render({ in: document.body });
 
 const modalButton = new Button()
-  .label('Show Popup Message')
+  .label('Show Modal')
   .variant('primary')
   .setOnInvoke(() => modal.open());
 

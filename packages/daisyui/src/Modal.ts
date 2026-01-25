@@ -1,4 +1,4 @@
-import { IS_DEV, Container } from 'svev-frontend';
+import { IS_DEV, Container, Flex, UIElement } from 'svev-frontend';
 import type { Element, IPropertyRegister } from 'svev-frontend';
 import {
   type HorizontalPlacement,
@@ -15,7 +15,6 @@ import {
 
 export class Modal extends Container {
   public readonly isOpen = this.prop(false);
-  public readonly title = this.prop<string | undefined>(undefined);
   public readonly verticalPlacement = this.prop<VerticalPlacement | undefined>(undefined);
   public readonly horizontalPlacement = this.prop<HorizontalPlacement | undefined>(undefined);
   public readonly closeOnBackdrop = this.prop(true);
@@ -34,25 +33,14 @@ export class Modal extends Container {
   };
 
   protected createUI(): Element {
-    const dialog = document.createElement('dialog');
-    const modalBox = createModalBox(dialog);
-    const header = createHeader(modalBox);
-    const content = createContent(modalBox);
-    const backdrop = createBackdrop(dialog);
+    const result = document.createElement('dialog');
+    result.id = this.id();
+
+    const modalBox = createModalBox(result);
+    const backdrop = createBackdrop(result);
 
     this.effect(() => {
-      const title = this.title();
-      if (title !== undefined) {
-        header.textContent = title;
-        header.style.display = '';
-      } else {
-        header.style.display = 'none';
-      }
-    });
-
-    // Modal classes
-    this.effect(() => {
-      this.applyClassesTo(dialog, this.#getClassNames());
+      this.applyClassesTo(result, this.#getClassNames());
     });
 
     // Handle click outside
@@ -68,31 +56,38 @@ export class Modal extends Container {
     // Handle close on escape
     this.effect(() => {
       if (this.closeOnEscape()) {
-        dialog.addEventListener('cancel', this.close);
+        result.addEventListener('cancel', this.close);
         return (): void => {
-          dialog.removeEventListener('cancel', this.close);
+          result.removeEventListener('cancel', this.close);
         };
       }
       return undefined;
     });
+    // Handle close event, to be sure isOpen is updated
+    this.effect(() => {
+      result.addEventListener('close', this.close);
+      return (): void => {
+        result.removeEventListener('close', this.close);
+      };
+    });
     // Handle opening and closing
     this.effect(() => {
       const isOpen = this.isOpen();
-      if (isOpen && !dialog.open) {
-        dialog.showModal();
-      } else if (!isOpen && dialog.open) {
-        dialog.close();
+      if (isOpen && !result.open) {
+        result.showModal();
+      } else if (!isOpen && result.open) {
+        result.close();
       }
     });
-    // Render children inside content
-    this.addDisposable(this.fragment.render({ in: content }));
-    return dialog;
+    const dispose = this.fragment.render({ in: modalBox });
+    this.addDisposable(dispose);
+    return result;
   }
 
   #getClassNames(): readonly string[] {
     const classNames = ['modal'];
     const placement = this.verticalPlacement();
-    if (placement !== 'middle') {
+    if (placement) {
       classNames.push(`modal-${placement}`);
     }
     const horizontalPlacement = this.horizontalPlacement();
@@ -107,7 +102,6 @@ export class Modal extends Container {
       super.registerProperties(register);
       register.addHeader(Modal.name);
       register.addBool('IsOpen', this.isOpen);
-      register.addOptionalString('Title', this.title);
       register.addOptionalOptions('VerticalPlacement', this.verticalPlacement, VerticalPlacements);
       register.addOptionalOptions(
         'HorizontalPlacement',
@@ -120,27 +114,57 @@ export class Modal extends Container {
   }
 }
 
-function createHeader(parent: HTMLDivElement): HTMLHeadingElement {
-  const result = document.createElement('h3');
-  result.className = 'text-lg font-bold';
+export class ModalHeader extends UIElement {
+  public readonly text = this.prop('');
+
+  public constructor() {
+    super();
+  }
+
+  protected createUI(): Element {
+    const element = document.createElement('h3');
+    this.effect(() => {
+      this.applyClassesTo(element, ['text-lg', 'font-bold']);
+      element.textContent = this.text();
+    });
+    return element;
+  }
+}
+
+export class ModalBody extends Flex {
+  public constructor() {
+    super();
+    this.direction('column').gap('10px');
+  }
+}
+
+export class ModalFooter extends Container {
+  public constructor() {
+    super();
+  }
+  protected createUI(): Element {
+    const result = createModalAction();
+    const dispose = this.fragment.render({ in: result });
+    this.addDisposable(dispose);
+    return result;
+  }
+}
+
+function createModalBox(parent: HTMLDialogElement): HTMLDivElement {
+  const result = document.createElement('div');
+  result.className = 'modal-box';
   return parent.appendChild(result);
 }
 
-function createContent(parent: HTMLDivElement): HTMLHeadingElement {
+function createModalAction(): HTMLDivElement {
   const result = document.createElement('div');
-  result.className = 'py-4';
-  return parent.appendChild(result);
+  result.className = 'modal-action';
+  return result;
 }
 
 function createBackdrop(parent: HTMLDialogElement): HTMLFormElement {
   const result = document.createElement('form');
   result.method = 'dialog';
   result.className = 'modal-backdrop';
-  return parent.appendChild(result);
-}
-
-function createModalBox(parent: HTMLDialogElement): HTMLDivElement {
-  const result = document.createElement('div');
-  result.className = 'modal-box';
   return parent.appendChild(result);
 }
