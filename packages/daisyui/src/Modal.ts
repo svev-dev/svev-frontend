@@ -25,15 +25,11 @@ export class Modal extends Container {
   }
 
   public open = (): void => {
-    if (!this.isOpen()) {
-      this.isOpen(true);
-    }
+    this.isOpen(true);
   };
 
   public close = (): void => {
-    if (this.isOpen()) {
-      this.isOpen(false);
-    }
+    this.isOpen(false);
   };
 
   protected createUI(): Element {
@@ -138,8 +134,7 @@ export class ModalHeader extends UIElement {
 export class ModalBody extends Flex {
   public constructor() {
     super();
-    this.direction('column');
-    this.gap('10px');
+    this.direction('column').gap('10px');
   }
 }
 
