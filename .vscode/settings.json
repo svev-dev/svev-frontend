@@ -26,6 +26,6 @@
     "**/.git": true,
     "**/.DS_Store": true
   },
-  "cSpell.words": ["subrouter", "subrouters", "svev", "taskflow", "unrender"],
+  "cSpell.words": ["daisyui", "subrouter", "subrouters", "svev", "taskflow", "unrender"],
   "vitest.filesWatcherInclude": "*{apps,packages}/**/*.ts"
 }
