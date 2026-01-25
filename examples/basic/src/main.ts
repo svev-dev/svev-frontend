@@ -1,5 +1,5 @@
 import './style.css';
-import { Divider, Flex, Header, Paragraph, Text, createSVGElement } from 'svev-frontend';
+import { Divider, Flex, Paragraph, Text, createSVGElement } from 'svev-frontend';
 import { StopwatchModel } from './stopwatch/StopwatchModel';
 import { StopwatchView } from './stopwatch/StopwatchView';
 import { TodoModel } from './todo/TodoModel';
@@ -16,13 +16,13 @@ import {
   DropdownContent,
   Menu,
   MenuItem,
-  Modal,
-  ModalBody,
-  ModalActions,
   Navbar,
   NavbarStart,
   NavbarCenter,
   NavbarEnd,
+  Modal,
+  ModalHeader,
+  ModalBody,
   ModalFooter,
 } from 'svev-daisyui';
 
@@ -454,43 +454,28 @@ const cardExamples = new Flex()
   .addClass('group-examples');
 
 // Modal example
-const modal1 = new Modal()
+const modal = new Modal()
   .closeOnBackdrop(true)
   .closeOnEscape(true)
-  .addChild(
+  .setChildren([
+    new ModalHeader().text('This is the header. '),
     new ModalBody().setChildren([
-      new Header().text('This is the header. '),
       new Divider(),
-      new Paragraph().text('This is the rest of the body.'),
-      new ModalActions().setChildren([
-        new Button().label('Stay Open').variant('primary'),
-        new Button().label('Close').setOnInvoke(() => modal1.close()),
-      ]),
-    ])
-  );
-
-const modal2 = new Modal()
-  .closeOnBackdrop(true)
-  .closeOnEscape(true)
-  .addChild(
-    new ModalBody().setChildren([
-      new Header().text('This is the header. '),
+      new Paragraph().text('This is the body.'),
+      new Paragraph().text('This is also the body.'),
       new Divider(),
-      new Paragraph().text('This is the rest of the body.'),
-      new ModalFooter().setChildren([
-        new Button().label('Stay Open').variant('primary'),
-        new Button().label('Close').setOnInvoke(() => modal2.close()),
-      ]),
-    ])
-  );
-
-modal1.render({ in: document.body });
-modal2.render({ in: document.body });
+    ]),
+    new ModalFooter().setChildren([
+      new Button().label('Stay Open').variant('primary'),
+      new Button().label('Close').setOnInvoke(() => modal.close()),
+    ]),
+  ]);
+modal.render({ in: document.body });
 
 const modalButton = new Button()
   .label('Show Popup Message')
   .variant('primary')
-  .setOnInvoke(() => modal2.open());
+  .setOnInvoke(() => modal.open());
 
 // Dropdown examples container
 const dropdownExamples = new Flex()

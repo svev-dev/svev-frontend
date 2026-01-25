@@ -8,9 +8,7 @@ export class Divider extends UIElement {
 
   protected createUI(): Element {
     const element = document.createElement('hr');
-    this.applyClassesTo(element, ['solid']);
-    element.style.margin = '8px 0';
-    element.style.borderWidth = '1px';
+    element.style.width = '100%';
     return element;
   }
 }

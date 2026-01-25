@@ -3,7 +3,6 @@ export { Container } from './elements/Container';
 export { Divider } from './elements/Divider';
 export { Flex } from './elements/Flex';
 export { Fragment } from './elements/Fragment';
-export { Header } from './elements/Header';
 export { Paragraph } from './elements/Paragraph';
 export { Text } from './elements/Text';
 export { UIElement } from './elements/UIElement';

@@ -1,4 +1,4 @@
-import { IS_DEV, Container, Flex } from 'svev-frontend';
+import { IS_DEV, Container, Flex, UIElement } from 'svev-frontend';
 import type { Element, IPropertyRegister } from 'svev-frontend';
 import {
   type HorizontalPlacement,
@@ -40,6 +40,7 @@ export class Modal extends Container {
     const result = document.createElement('dialog');
     result.id = this.id();
 
+    const modalBox = createModalBox(result);
     const backdrop = createBackdrop(result);
 
     this.effect(() => {
@@ -82,7 +83,7 @@ export class Modal extends Container {
         result.close();
       }
     });
-    const dispose = this.fragment.render({ in: result });
+    const dispose = this.fragment.render({ in: modalBox });
     this.addDisposable(dispose);
     return result;
   }
@@ -90,7 +91,7 @@ export class Modal extends Container {
   #getClassNames(): readonly string[] {
     const classNames = ['modal'];
     const placement = this.verticalPlacement();
-    if (placement !== 'middle') {
+    if (placement) {
       classNames.push(`modal-${placement}`);
     }
     const horizontalPlacement = this.horizontalPlacement();
@@ -117,48 +118,42 @@ export class Modal extends Container {
   }
 }
 
-export class ModalBody extends Container {
-  public constructor() {
-    super();
-  }
+export class ModalHeader extends UIElement {
+  public readonly text = this.prop('');
 
   protected createUI(): Element {
-    const body = document.createElement('div');
+    const element = document.createElement('h3');
     this.effect(() => {
-      this.applyClassesTo(body, ['modal-box']);
+      this.applyClassesTo(element, ['text-lg', 'font-bold']);
+      element.textContent = this.text();
     });
-
-    const dispose = this.fragment.render({ in: body });
-    this.addDisposable(dispose);
-    return body;
+    return element;
   }
 }
 
-export class ModalActions extends Container {
+export class ModalBody extends Flex {
+  public constructor() {
+    super();
+    this.direction('column');
+    this.gap('10px');
+  }
+}
+
+export class ModalFooter extends Container {
   public constructor() {
     super();
   }
   protected createUI(): Element {
     const result = createModalAction();
-    const form = createForm(result);
-
-    const dispose = this.fragment.render({ in: form });
+    const dispose = this.fragment.render({ in: result });
     this.addDisposable(dispose);
     return result;
   }
 }
 
-export class ModalFooter extends Flex {
-  public constructor() {
-    super();
-    this.direction('row');
-    this.addClass('modal-footer');
-  }
-}
-
-function createForm(parent: HTMLDivElement): HTMLFormElement {
-  const result = document.createElement('form');
-  result.method = 'dialog';
+function createModalBox(parent: HTMLDialogElement): HTMLDivElement {
+  const result = document.createElement('div');
+  result.className = 'modal-box';
   return parent.appendChild(result);
 }
 
