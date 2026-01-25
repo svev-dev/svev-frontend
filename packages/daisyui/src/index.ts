@@ -6,7 +6,7 @@ export { Card, CardImage, CardBody, CardTitle, CardActions } from './Card';
 export { Dropdown, DropdownContent } from './Dropdown';
 export { Menu } from './Menu';
 export { MenuItem } from './MenuItem';
-export { Modal, ModalBody, ModalActions } from './Modal';
+export { Modal, ModalBody, ModalActions, ModalFooter } from './Modal';
 export { Navbar, NavbarStart, NavbarCenter, NavbarEnd } from './Navbar';
 export { SelectInput } from './SelectInput';
 export { ShortcutElement } from './ShortcutElement';

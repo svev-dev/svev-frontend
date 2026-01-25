@@ -1,4 +1,4 @@
-import { IS_DEV, Container } from 'svev-frontend';
+import { IS_DEV, Container, Flex } from 'svev-frontend';
 import type { Element, IPropertyRegister } from 'svev-frontend';
 import {
   type HorizontalPlacement,
@@ -64,6 +64,13 @@ export class Modal extends Container {
       }
       return undefined;
     });
+    // Handle close event, to be sure isOpen is updated
+    this.effect(() => {
+      result.addEventListener('close', this.close);
+      return (): void => {
+        result.removeEventListener('close', this.close);
+      };
+    });
     // Handle opening and closing
     this.effect(() => {
       const isOpen = this.isOpen();
@@ -72,13 +79,6 @@ export class Modal extends Container {
       } else if (!isOpen && result.open) {
         result.close();
       }
-    });
-    // Listen to close event
-    this.effect(() => {
-      result.addEventListener('close', this.close);
-      return (): void => {
-        result.removeEventListener('close', this.close);
-      };
     });
     const dispose = this.fragment.render({ in: result });
     this.addDisposable(dispose);
@@ -143,6 +143,14 @@ export class ModalActions extends Container {
     const dispose = this.fragment.render({ in: form });
     this.addDisposable(dispose);
     return result;
+  }
+}
+
+export class ModalFooter extends Flex {
+  public constructor() {
+    super();
+    this.direction('row');
+    this.addClass('modal-footer');
   }
 }
 

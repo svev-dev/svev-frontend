@@ -23,6 +23,7 @@ import {
   NavbarStart,
   NavbarCenter,
   NavbarEnd,
+  ModalFooter,
 } from 'svev-daisyui';
 
 // Stopwatch app
@@ -453,26 +454,41 @@ const cardExamples = new Flex()
   .addClass('group-examples');
 
 // Modal example
-const modal = new Modal()
-  .closeOnBackdrop(false)
+const modal1 = new Modal()
+  .closeOnBackdrop(true)
   .closeOnEscape(true)
-  .setChildren([
+  .addChild(
     new ModalBody().setChildren([
       new Paragraph().text('This is the header. '),
       new Text().text('This is the rest of the body.'),
       new ModalActions().setChildren([
-        new Button().label('Got it!').variant('primary'),
-        new Button().label('Close').setOnInvoke(() => modal.close()),
+        new Button().label('Stay Open').variant('primary'),
+        new Button().label('Close').setOnInvoke(() => modal1.close()),
       ]),
-    ]),
-  ]);
+    ])
+  );
 
-modal.render({ in: document.body });
+const modal2 = new Modal()
+  .closeOnBackdrop(true)
+  .closeOnEscape(true)
+  .addChild(
+    new ModalBody().setChildren([
+      new Paragraph().text('This is the header. '),
+      new Text().text('This is the rest of the body.'),
+      new ModalFooter().setChildren([
+        new Button().label('Stay Open').variant('primary'),
+        new Button().label('Close').setOnInvoke(() => modal2.close()),
+      ]),
+    ])
+  );
+
+modal1.render({ in: document.body });
+modal2.render({ in: document.body });
 
 const modalButton = new Button()
   .label('Show Popup Message')
   .variant('primary')
-  .setOnInvoke(() => modal.open());
+  .setOnInvoke(() => modal2.open());
 
 // Dropdown examples container
 const dropdownExamples = new Flex()
