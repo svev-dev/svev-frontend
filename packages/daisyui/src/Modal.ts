@@ -121,6 +121,10 @@ export class Modal extends Container {
 export class ModalHeader extends UIElement {
   public readonly text = this.prop('');
 
+  public constructor() {
+    super();
+  }
+
   protected createUI(): Element {
     const element = document.createElement('h3');
     this.effect(() => {

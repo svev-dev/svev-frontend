@@ -467,6 +467,7 @@ const modal = new Modal().setChildren([
     new Button().label('Close').setOnInvoke(() => modal.close()),
   ]),
 ]);
+
 modal.render({ in: document.body });
 
 const modalButton = new Button()
