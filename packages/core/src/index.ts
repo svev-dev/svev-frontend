@@ -1,10 +1,11 @@
-export { UIElement } from './elements/UIElement';
 export { BaseButton } from './elements/BaseButton';
-export { Flex } from './elements/Flex';
-export { Text } from './elements/Text';
-export { Paragraph } from './elements/Paragraph';
 export { Container } from './elements/Container';
+export { Divider } from './elements/Divider';
+export { Flex } from './elements/Flex';
 export { Fragment } from './elements/Fragment';
+export { Paragraph } from './elements/Paragraph';
+export { Text } from './elements/Text';
+export { UIElement } from './elements/UIElement';
 
 export type { IPropertyRegister } from './elements/IPropertyRegister';
 export type { Property } from './elements/Property';
@@ -16,6 +17,7 @@ export { onShortcut, shortcutToStringParts } from './Shortcut';
 
 export { IS_DEV } from './utils/isDev';
 export { createSVGElement } from './utils/svg';
+export { randomInt, randomString, randomElement } from './utils/Random';
 
 export { signal, effect, computed, batch, untracked } from './signals/signals';
 export type { Signal, ReadonlySignal } from './signals/signals';

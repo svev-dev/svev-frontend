@@ -12,7 +12,7 @@ export class StringInput extends UIElement implements IInvokable {
     const input = document.createElement('input');
     input.id = this.id();
     input.type = 'text';
-    input.className = 'input';
+    this.applyClassesTo(input, ['input']);
     this.effect(() => {
       input.placeholder = this.placeholder();
       input.disabled = !this.isEnabled();

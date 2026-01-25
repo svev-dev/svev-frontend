@@ -6,3 +6,20 @@
 
   themes: dark --default;
 }
+
+.app {
+  padding-top: 50px;
+  padding-bottom: 200px;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.group-examples {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+}
