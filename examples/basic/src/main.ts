@@ -464,14 +464,14 @@ const modal = new Modal().setChildren([
   ]),
   new ModalFooter().setChildren([
     new Button().label('Stay Open').variant('primary'),
-    new Button().label('Close').setOnInvoke(() => modal.close()),
+    new Button().label('Close Modal').setOnInvoke(() => modal.close()),
   ]),
 ]);
 
 modal.render({ in: document.body });
 
 const modalButton = new Button()
-  .label('Show Popup Message')
+  .label('Show Modal')
   .variant('primary')
   .setOnInvoke(() => modal.open());
 
