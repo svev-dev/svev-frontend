@@ -4,10 +4,6 @@ import { BoolInputStory } from './elementStories/BoolInputStory';
 import { TabsStory } from './elementStories/TabsStory';
 import { Menu, MenuItem } from 'svev-daisyui';
 
-const buttonStory = new ButtonStory();
-const boolInputStory = new BoolInputStory();
-const tabsStory = new TabsStory();
-
 // const navigator = new BrowserNavigator();
 //     .setSubmenu(new Menu().setChildren([ ]))
 
@@ -34,24 +30,12 @@ const mainMenu = new Menu().setChildren([
     ),
 ]);
 
-const flex = new Flex().setChildren([mainMenu, buttonStory, boolInputStory, tabsStory]);
-//const app = new Flex().setChildren([flex]).addClass('app');
+const buttonStory = new ButtonStory();
+const boolInputStory = new BoolInputStory();
+const tabsStory = new TabsStory();
 
-// const app = new Flex().setChildren([flex]).setCss({
-//   minHeight: '100vh',
-//   minWidth: '100vw',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   flexDirection: 'column',
-// });
+const flex = new Flex().setChildren([buttonStory, boolInputStory, tabsStory]);
 
-// const router = new Router(navigator, createNavigationUI)
-//   .add('/', createHomeUI)
-//   .add('/about', createAboutUI)
-//   .add('/users/*', userRouter)
-//   .add('*', create404UI);
+const app = new Flex().setChildren([flex]).addClass('app');
 
-// router.render({ in: document.body });
-
-flex.render({ in: document.body });
+app.render({ in: document.body });
